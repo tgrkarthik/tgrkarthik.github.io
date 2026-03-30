@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I Built an Audio Tool That Doesn't Exist - Karthik Tiruvarur</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .article-header {
+            max-width: 700px;
+            margin: 3rem auto 2rem;
+            padding: 0 var(--spacing-lg);
+        }
+
+        .article-title {
+            font-size: 36px;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .article-meta {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            font-size: 14px;
+            color: var(--secondary-color);
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .article-body {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-lg);
+            line-height: 1.8;
+        }
+
+        .article-body p {
+            margin-bottom: 1.5rem;
+            font-size: 16px;
+            color: var(--secondary-color);
+        }
+
+        .article-body h2 {
+            font-size: 24px;
+            margin-top: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .article-body h3 {
+            font-size: 18px;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .article-body strong {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .article-footer {
+            max-width: 700px;
+            margin: 3rem auto 0;
+            padding: 2rem var(--spacing-lg);
+            background: var(--light-color);
+            text-align: center;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            font-size: 14px;
+            color: var(--secondary-color);
+        }
+
+        .back-link:hover {
+            color: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            .article-title {
+                font-size: 24px;
+            }
+
+            .article-body p {
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">Karthik</div>
+            <ul class="nav-links">
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="../../ai-experiments.html">← Back</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Article Header -->
+    <div class="article-header">
+        <a href="../ai-experiments.html" class="back-link">← Back to AI Experiments</a>
+        <h1 class="article-title">I Built an Audio Tool That Doesn't Exist. Claude Helped.</h1>
+        <div class="article-meta">
+            <span>March 2026</span>
+            <span>•</span>
+            <span>Audio Processing & Machine Learning</span>
+        </div>
+    </div>
+
+    <!-- Article Body -->
+    <article class="article-body">
+        <p>I've been taking music lessons for eight years now. The first several years were in person, where my teacher and I met and recorded audio of our hour-long class. During the COVID pandemic, most of the classes moved online to Zoom; and since I now live in a different city from my teacher, Zoom is the default.</p>
+
+        <p>There is a certain structure to the classes. I'm taught a song in several steps, usually a few lines at a time. As I've been taught through several iterations how to sing those lines or the stanza, my teacher sings the particular set of lines that were taught to me in a way that is performance-ready and to aid me in my practice after the class. In an hour-long class, there are usually 4–5 minutes of recording of the near-perfect song.</p>
+
+        <p>Ideally, if I were to extract those segments, that's something I could play as I walk, as I take a shower, or as I'm strolling around leisurely. As they say, "practice makes a man perfect." Listening to those segments repeatedly would be a better way of getting my 10,000 hours of practice.</p>
+
+        <p>I have over 300 recordings now, and this idea of creating snippets came to me only about 4–5 years ago, about 120 recordings in. Since there was a lot of backlog to cover, it seemed like a project where I'd have to find a paid amateur musician online who could transcribe these for me at a cost that's not prohibitive.</p>
+
+        <p>With the advent of tools like Codex and Claude, I wanted to try if I could get Claude to write code for me and build an extraction tool that didn't exist. I described the problem to Claude, and we started building one together. It took five versions, a lot of wrong turns, and some blunt conversations to get there.</p>
+
+        <h2>I Started By Telling Claude What I Didn't Want</h2>
+
+        <p>Before we wrote any code, I set four rules: keep it simple, don't depend on libraries that break every other month, don't ship me buggy code to debug on Claude's behalf, and — this one mattered most — tune it for singing, not speech. Speech processing tools are a dime a dozen. Singing voice separation for my purpose? Basically nobody has built that. I didn't know the technical solution, but I knew enough about the problem to fence it in. That turned out to be more useful than any technical spec would have been.</p>
+
+        <p>It's worth noting that my earlier attempts at creating tools with AI gave me the insight to specifically articulate what I didn't want it to do to start with. For example, in the past, Claude had confidently given me code that I would run and then realize wasn't working and would get back, to which Claude would then say "You are absolutely right. This does not work" and then go on to make a small tweak that would annoy me because it was something Claude should have caught in the first instance.</p>
+
+        <h2>The First Version Ran Fine and Got Everything Wrong</h2>
+
+        <p>Claude built a version using MFCCs — acoustic fingerprints that summarize what a voice sounds like in short windows. Cluster the windows, label them, find the long runs. Clean idea. The output was garbage. Both voices were getting jumbled together. I could have said "this doesn't work, try again" and that would've gone nowhere. Instead, I went through the recording and pulled three specific timestamps where I knew for certain my teacher was singing alone: 21:23–22:30, 29:42–30:53, 49:58–51:41. Now we had something to measure against. Of course, this idea was prompted by my reading about software tools being built by AI and listening to podcasts where people talk about evals and measuring AI output against very specific benchmarks.</p>
+
+        <h2>We Tried Three More Approaches. Two Failed, and How!</h2>
+
+        <p>Version 2 tried to detect the moment the singer changes instead of identifying who's singing. Clever in theory. In practice, a singer changing pitch or pausing between phrases looks exactly like a handoff to the algorithm. My ground-truth timestamps showed false triggers all over the place — 3, 2, and 4 false change points inside passages where only one person was singing.</p>
+
+        <p>Versions 3 and 4 took a known sample of my teacher's voice and tried to find matching sections. We threw 38 different audio features at it — spectral shape, dynamics, pitch variation. At the best settings, it found four segments. There should have been many more. Two voices trained in the same musical tradition, singing similar material, were just too close for hand-picked features to tell apart.</p>
+
+        <p>At this point I told Claude: "This is going off track. Are you sure there aren't better tools for this?" That one message changed the direction of the whole project since it realized fine-tuning and overfitting for outputs I was testing it against wasn't helping. We had to take a different approach altogether.</p>
+
+        <h2>What Actually Worked</h2>
+
+        <p>Claude suggested Resemblyzer, a neural network that creates a 256-dimensional voiceprint from audio. It was built for speech, but it works on singing too. Where we'd been manually picking 38 features and hoping they captured the right differences, Resemblyzer learns what makes a voice distinctive from thousands of training examples. The results were immediately better. Segments started lining up with reality.</p>
+
+        <p>From there, I kept pushing on the practical side. I don't want to hand-label reference timestamps for every recording — make it automatic. I have dozens of lesson files — make it process a whole folder. I want one continuous file per voice — stitch the segments together. Each ask forced real changes to the architecture: automatic clustering replaced reference matching, batch processing replaced single-file mode, and ffmpeg concatenation handled the stitching. The stitching actually broke on the first try because the individual segments had mismatched audio formats internally. We fixed it by forcing every segment to re-encode to a uniform format before joining them.</p>
+
+        <h2>What I Learned About Working with AI on a Problem Like This</h2>
+
+        <p>A few things that made this work:</p>
+
+        <h3>Constraints up front are worth more than requirements.</h3>
+        <p>"This is for music, not speech" shaped every decision. I didn't need to understand the algorithms to set that boundary.</p>
+
+        <h3>Specific failure evidence beats vague complaints.</h3>
+        <p>Timestamps, not vibes. "43:58–44:55 has student bleed" gives Claude something to work with. "It's not accurate" doesn't.</p>
+
+        <h3>Say when it's not working.</h3>
+        <p>I almost let Claude keep tuning parameters on an approach that had hit its ceiling. Saying "this is going off track" directly led to the switch that made the tool actually useful.</p>
+
+        <h3>Keep pushing past each prototype.</h3>
+        <p>As the code produced output, I started demanding more of it. Producing code that works and pushing it constantly to do something better is very addictive and a rabbit hole. I found myself routinely working way beyond midnight, something unusual for me these days since I'm an early riser now (4:30 AM starts). This thrill of coding took me back to my experience from two decades ago, when as a sophomore and junior undergrad pursuing computer science and engineering, I'd stay up till early dawn pounding away at the keyboard writing code and pulling all-nighters. This feels kind of exciting but at times exhausting. AI is exhilarating!</p>
+
+        <h2>So Where Did We End Up?</h2>
+
+        <p>Five iterations, one extended conversation, a tool that takes a folder of hour-long music lesson recordings and spits out separated, stitched audio for each voice. It runs on both Windows and Mac. It's about 500 lines of Python. I don't think any existing software does this particular task like I created it to do. Custom software.</p>
+
+        <p>It's not perfect — two similar voices singing in the same tradition will always have some bleed. But it's useful. I've figured out several edge cases that exist as I kept working with Claude in bringing this to life. I think about the structure of my classes now very differently.</p>
+
+        <p>More importantly, as I have been working through creating several solutions for myself, my own working style with Claude has substantially improved. You can't get to your hundredth blog post without writing your first. It's kind of like that: your first one I'm sure would suck, but there's no way you get your hundredth without your first.</p>
+    </article>
+
+    <!-- Footer -->
+    <div class="article-footer">
+        <p style="margin-bottom: 1.5rem;">Want more stories about building with AI?</p>
+        <div class="social-links" style="justify-content: center;">
+            <a href="../../ai-experiments.html" class="btn btn-primary">Back to Experiments</a>
+            <a href="https://tgrkarthik.substack.com/" target="_blank" class="btn btn-secondary">Subscribe</a>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Karthik Tiruvarur. Building with AI.</p>
+        </div>
+    </footer>
+</body>
+</html>

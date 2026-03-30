@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Experiments with AI - Karthik Tiruvarur</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* AI Experiments specific styles */
+        .experiments-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .experiment-card {
+            background: var(--light-color);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 1.5rem;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .experiment-card:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .experiment-meta {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .experiment-badge {
+            font-size: 11px;
+            font-weight: 500;
+            padding: 0.35rem 0.75rem;
+            background: var(--white);
+            border: 0.5px solid var(--border-color);
+            border-radius: 2px;
+            color: var(--secondary-color);
+            text-transform: capitalize;
+        }
+
+        .experiment-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            line-height: 1.3;
+        }
+
+        .experiment-description {
+            font-size: 14px;
+            color: var(--secondary-color);
+            margin-bottom: 1.25rem;
+            flex-grow: 1;
+            line-height: 1.6;
+        }
+
+        .experiment-footer {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            font-size: 12px;
+            color: var(--secondary-color);
+        }
+
+        .experiment-link {
+            display: inline-block;
+            margin-top: auto;
+            padding-top: 1rem;
+            border-top: 0.5px solid var(--border-color);
+        }
+
+        .experiment-link a {
+            font-weight: 500;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .experiment-link a:hover {
+            opacity: 0.7;
+        }
+
+        .experiments-intro {
+            max-width: 700px;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .experiments-intro p {
+            font-size: 16px;
+            color: var(--secondary-color);
+            line-height: 1.7;
+        }
+
+        @media (max-width: 768px) {
+            .experiments-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .experiment-title {
+                font-size: 16px;
+            }
+
+            .experiment-description {
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">Karthik</div>
+            <ul class="nav-links">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#writing">Writing</a></li>
+                <li><a href="ai-experiments.html">AI Experiments</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- AI Experiments Section -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-number">02</span>
+                <h2>My Experiments with AI</h2>
+            </div>
+
+            <div class="experiments-intro">
+                <p>I spend a lot of time building with Claude. These are some of my favorite experiments — projects that started with a problem I wanted to solve, turned into conversations about how to build, and evolved into tools I actually use. Each one taught me something different about working with AI on real problems.</p>
+            </div>
+
+            <div class="experiments-grid">
+                <!-- Experiment 1: IR Scraper -->
+                <div class="experiment-card">
+                    <div class="experiment-meta">
+                        <span class="experiment-badge">Infrastructure</span>
+                        <span class="experiment-badge">Python</span>
+                    </div>
+                    <h3 class="experiment-title">I Tried to Scrape Every Investor Relations Site on Earth</h3>
+                    <p class="experiment-description">Building a generic scraper that auto-detects IR website platforms, finds all documents, and downloads them. The ambition was simple. The internet disagreed. Twenty companies profiled, six platform types fingerprinted, and lessons learned about how the web actually works under the surface.</p>
+                    <div class="experiment-link">
+                        <a href="ai-experiments/ir-scraper.html">Read full story →</a>
+                    </div>
+                </div>
+
+                <!-- Experiment 2: Music Transcription Tool -->
+                <div class="experiment-card">
+                    <div class="experiment-meta">
+                        <span class="experiment-badge">Audio Processing</span>
+                        <span class="experiment-badge">Python</span>
+                    </div>
+                    <h3 class="experiment-title">I Built an Audio Tool That Doesn't Exist</h3>
+                    <p class="experiment-description">Five iterations to create a tool that separates singing voices in music lesson recordings. Started with MFCCs and hand-picked features. Ended up using neural networks and learned about constraints, specific failure evidence, and when to tell AI an approach has hit its ceiling.</p>
+                    <div class="experiment-link">
+                        <a href="ai-experiments/music-transcription.html">Read full story →</a>
+                    </div>
+                </div>
+
+                <!-- Experiment 3: ChatGPT Hallucinations -->
+                <div class="experiment-card">
+                    <div class="experiment-meta">
+                        <span class="experiment-badge">Analysis</span>
+                        <span class="experiment-badge">LLMs</span>
+                    </div>
+                    <h3 class="experiment-title">How Bad Are the Hallucinations?</h3>
+                    <p class="experiment-description">Deep dive into ChatGPT's hallucination problem. Testing accuracy on factual questions, understanding when and why models confidently state false information, and what this means for building with language models in production.</p>
+                    <div class="experiment-footer">
+                        <span>Published on Substack</span>
+                    </div>
+                    <div class="experiment-link">
+                        <a href="https://tgrkarthik.substack.com/p/how-bad-are-the-hallucinations-chatgpt" target="_blank">Read on Substack →</a>
+                    </div>
+                </div>
+
+                <!-- Experiment 4: Two Words for 2024 -->
+                <div class="experiment-card">
+                    <div class="experiment-meta">
+                        <span class="experiment-badge">Predictions</span>
+                        <span class="experiment-badge">AI Trends</span>
+                    </div>
+                    <h3 class="experiment-title">Two Words for 2024</h3>
+                    <p class="experiment-description">My predictions for how AI will evolve in 2024. Two key words that capture the direction of the technology, the market, and the kinds of problems people will solve with language models.</p>
+                    <div class="experiment-footer">
+                        <span>Published on Substack</span>
+                    </div>
+                    <div class="experiment-link">
+                        <a href="https://tgrkarthik.substack.com/p/two-words-for-2024" target="_blank">Read on Substack →</a>
+                    </div>
+                </div>
+
+                <!-- Experiment 5: DALL-E Dilly -->
+                <div class="experiment-card">
+                    <div class="experiment-meta">
+                        <span class="experiment-badge">Image Generation</span>
+                        <span class="experiment-badge">DALL-E</span>
+                    </div>
+                    <h3 class="experiment-title">Dilly-DALL-E-ing</h3>
+                    <p class="experiment-description">Exploring DALL-E's capabilities and quirks. Testing the boundaries of image generation, understanding what works, what breaks, and the gap between what these models can do and what we actually want them to do.</p>
+                    <div class="experiment-footer">
+                        <span>Published on Medium</span>
+                    </div>
+                    <div class="experiment-link">
+                        <a href="https://medium.com/@karthiktiruvarur/dilly-dall-e-ing-63bc4bbc886" target="_blank">Read on Medium →</a>
+                    </div>
+                </div>
+
+                <!-- Experiment 6: Placeholder for future -->
+                <div class="experiment-card">
+                    <div class="experiment-meta">
+                        <span class="experiment-badge">Coming Soon</span>
+                    </div>
+                    <h3 class="experiment-title">Your Next Experiment</h3>
+                    <p class="experiment-description">More experiments coming as I continue building with AI. Each project teaches something new about problem-solving, AI capabilities, and the gap between what's theoretically possible and what actually works in practice.</p>
+                    <div class="experiment-link">
+                        <span style="color: var(--secondary-color);">Stay tuned →</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Back to Home -->
+    <section class="section" style="background: var(--light-color);">
+        <div class="container" style="text-align: center;">
+            <p style="font-size: 16px; color: var(--secondary-color); margin-bottom: 1.5rem;">
+                Want to see more writing? Check out my main portfolio or subscribe to my Substack for regular essays.
+            </p>
+            <div class="social-links" style="justify-content: center;">
+                <a href="index.html" class="btn btn-primary">Back to Portfolio</a>
+                <a href="https://tgrkarthik.substack.com/" target="_blank" class="btn btn-secondary">Subscribe to Substack</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Karthik Tiruvarur. Building, writing, and learning with AI.</p>
+        </div>
+    </footer>
+</body>
+</html>
