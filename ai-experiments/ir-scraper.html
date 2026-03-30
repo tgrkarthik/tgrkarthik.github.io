@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I Tried to Scrape Every Investor Relations Site on Earth - Karthik Tiruvarur</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .article-header {
+            max-width: 700px;
+            margin: 3rem auto 2rem;
+            padding: 0 var(--spacing-lg);
+        }
+
+        .article-title {
+            font-size: 36px;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .article-meta {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            font-size: 14px;
+            color: var(--secondary-color);
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .article-body {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-lg);
+            line-height: 1.8;
+        }
+
+        .article-body p {
+            margin-bottom: 1.5rem;
+            font-size: 16px;
+            color: var(--secondary-color);
+        }
+
+        .article-body h2 {
+            font-size: 24px;
+            margin-top: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .article-body h3 {
+            font-size: 18px;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .article-body strong {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .article-footer {
+            max-width: 700px;
+            margin: 3rem auto 0;
+            padding: 2rem var(--spacing-lg);
+            background: var(--light-color);
+            text-align: center;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            font-size: 14px;
+            color: var(--secondary-color);
+        }
+
+        .back-link:hover {
+            color: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            .article-title {
+                font-size: 24px;
+            }
+
+            .article-body p {
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">Karthik</div>
+            <ul class="nav-links">
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="../../ai-experiments.html">← Back</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Article Header -->
+    <div class="article-header">
+        <a href="../ai-experiments.html" class="back-link">← Back to AI Experiments</a>
+        <h1 class="article-title">I Tried to Scrape Every Investor Relations Site on Earth. It Went About How You'd Expect.</h1>
+        <div class="article-meta">
+            <span>March 2026</span>
+            <span>•</span>
+            <span>Infrastructure & Web Scraping</span>
+        </div>
+    </div>
+
+    <!-- Article Body -->
+    <article class="article-body">
+        <p>As someone who spends a lot of time analyzing companies, I have a recurring problem: getting my hands on the actual documents. Annual reports, quarterly filings, earnings presentations, transcripts, governance docs — they're all sitting on investor relations websites, usually behind three clicks, a cookie consent wall, and a dropdown menu from 2018. There are paid services that aggregate this stuff, but they're expensive, often incomplete, and they don't cover the smaller or non-US companies I tend to follow.</p>
+
+        <p>So I decided to build a scraper. Not for one company — a generic one that could walk into any IR website, figure out what it was looking at, and download everything. I'd describe the problem to Claude, and Claude would write the code. I figured it would take a weekend. It has now been several weeks, and I'm still not done.</p>
+
+        <p>The ambition was simple. The internet disagreed.</p>
+
+        <h2>The Idea</h2>
+
+        <p>The idea was straightforward: give the scraper a URL like https://investor.meesho.com/ or https://ir.veeva.com/, and it would auto-detect the site's platform, find all the document sections, expand any dropdowns or year filters, and download every PDF, Excel file, and presentation it could find. No site-specific code. One engine for everything.</p>
+
+        <p>Claude built the first version quickly. It worked on two sites and broke on the third. That became the pattern for the next several weeks: fix something for one company, break it for another, discover a completely new class of problem on the next one. I tested it across about twenty companies — US-listed, India-listed, European, Latin American — across six different web platforms. Each one taught me something new about how the modern web conspires against people who just want to download a PDF.</p>
+
+        <h2>What Actually Worked</h2>
+
+        <p>Some things went surprisingly well. The platform auto-detection — fingerprinting whether a site runs on WordPress, Q4, Drupal, Next.js, or something custom — turned out to be reliable. The two-pass download strategy, where fast HTTP downloads handle the easy files and a full browser fallback picks up anything that gets a 403 error, solved a whole class of problems in one architectural decision. The classifier that sorts documents into categories like "annual report" vs. "earnings presentation" vs. "governance" works well enough that I rarely have to manually re-sort.</p>
+
+        <p>And when the scraper hits a site it understands, the results can be dramatic. One company went from 163 documents discovered to over 1,800 after we fixed the expansion logic. Another site that had been returning zero documents started producing close to a thousand once we figured out its custom dropdown widget.</p>
+
+        <p>But those wins came at a cost. Every one of them was the result of a specific failure on a specific company that required a specific investigation and fix. Nothing came for free.</p>
+
+        <h2>Where It Has Been a Miserable Failure</h2>
+
+        <p>I'll be honest: several dimensions of this project have been persistently, stubbornly broken.</p>
+
+        <p>Certain company sites just defeat the scraper. Not because they're complex — sometimes because they're too simple, or too weird. Sites with heavy anti-bot protection will serve challenge pages instead of content. We built detection for four different WAF vendors and a browser strategy escalation that tries headless Chromium, then HTTP/1.1, then system Chrome, then headed Chrome. It works sometimes. Other times the site just wins. One European company required a fully visible Chrome window to get past its security. Some Indian sites have bespoke React SPAs where the documents aren't in the HTML at all — they're embedded in compiled JavaScript bundles, and you have to scan the source code to find them.</p>
+
+        <p>The frustrating part is that each site fails in its own unique way. One site's dropdown toggles its state on click, so clicking an already-open dropdown closes it instead of selecting a year. Another site's section buttons appeared on every page, and the scraper kept re-expanding them on every visit until it consumed 95% of available RAM. A third site's page would crash mid-scrape because the browser context died silently and every subsequent call threw an error that the scraper caught and logged but never recovered from. Each of these took hours to diagnose and fix, and the fix for one never helped with the next.</p>
+
+        <p>File naming and organization has been a recurring headache. The scraper downloads files, but the names are often useless. A site might serve eight quarterly results files all named the same thing with collision suffixes. Or the URL is a UUID with no human-readable information at all. We built content inspection — opening Excel files and reading the cover sheet to extract a proper title and period — and it works on the files it can open. But PDFs need a separate library, and the metadata is often wrong or empty, and the fallback heuristics for "guess a good name from the first page of text" are fragile. Every time I think the naming is solved, I run it on a new company and find a fresh batch of files named document_7.pdf.</p>
+
+        <p>The scraper breaks when sites change. This is the one that bothers me most. I'll get a company working perfectly, come back two weeks later, and it finds zero documents. The site didn't move — it just rearranged its navigation, or changed a CSS class name, or swapped from tabs to accordions, or migrated from Drupal to a React SPA. The scraper has no memory of what worked before except the saved profile, and the profile captures the site's structure at a point in time. When that structure shifts, everything downstream fails silently. You don't get an error — you just get fewer documents than you expected, and you have to diff the output against the last run to figure out what's missing.</p>
+
+        <p>Speed and reliability remain a problem. A full scrape of a company with hundreds of documents can take fifteen to thirty minutes. Browser crashes happen. Pages time out. The browser enters an indeterminate state after a timeout, and every subsequent operation hangs unless you navigate to a blank page first and reset it. We built recovery for this — dead-page detection, fresh-page creation, consecutive-failure limits — but it's duct tape on a fundamentally fragile operation. I'd estimate that about one in every five full scrapes fails partway through and needs to be restarted. That's not good enough for something I want to run routinely.</p>
+
+        <h2>What the Process Taught Me About Working with AI on Infrastructure</h2>
+
+        <p>Building this with Claude was different from other tools I've built in the past. A contained problem — two voices in a recording, separate them — has a clear definition of success, a small number of approaches to try, and a clean moment when one approach works and the others don't.</p>
+
+        <p>The scraper has no such clean moment. Every fix introduces the possibility of a regression on a previously working site. The problem space isn't bounded — there are as many edge cases as there are investor relations websites, and I keep finding new ones. Claude and I would go deep on one company's issues, celebrate when it worked, and then immediately discover the fix had broken something for a different company. The emotional arc is less "breakthrough moment" and more "Sisyphus with a debugger."</p>
+
+        <p>A few things I've learned from this process:</p>
+
+        <h3>You have to test broadly, not just deeply.</h3>
+        <p>Early on, I'd fix something for one company and call it done. Now I test every change against at least three or four companies across different platforms. This is boring and slow and has saved me from shipping broken code to myself more times than I can count. The diversity of the test cases is what makes the scraper robust — not the sophistication of any individual fix.</p>
+
+        <h3>Tell the AI when its approach is fundamentally wrong, not just superficially wrong.</h3>
+        <p>Claude's instinct, like any engineer's, is to tweak parameters and tune thresholds when something isn't working. Sometimes the right move is to say "this entire approach has hit its ceiling, we need a different architecture." I said this when the scraper was trying to handle all pagination with a single function that couldn't distinguish between three fundamentally different pagination patterns. The rewrite was painful but necessary — one function became three specialized ones, and the reliability jumped.</p>
+
+        <h3>Infrastructure projects don't have a done state.</h3>
+        <p>Other tools I've built reached a point where they worked and I could stop. The scraper is a living thing. Sites change, new platforms emerge, anti-bot systems evolve. Every time I add a new company, I potentially discover a gap in the engine. I've accepted that this is maintenance software, not a finished product, and that changes how I think about the time I invest in it.</p>
+
+        <h3>The session notes are the product, not just the code.</h3>
+        <p>Early on I didn't bother documenting what we fixed and why. Then I'd come back to a new session, describe a problem, and Claude would suggest a fix we'd already tried and rejected three sessions ago. Now I maintain detailed session notes — which bugs were found, what the root cause was, what was tried and failed, what the current state of the code is. These notes are what let a new session pick up where the last one left off without re-discovering old ground. The code is maybe 1,800 lines of Python. The notes are almost as long, and arguably more valuable.</p>
+
+        <h2>Where This Stands</h2>
+
+        <p>Twenty companies profiled. Six platform types fingerprinted. About 1,800 lines of scraping logic, plus supporting code for classification, organization, and download. It works well on most sites most of the time. It fails in ways that are predictable once you know the site, and in ways that are completely surprising when you don't. I keep coming back to it because the problem is genuinely useful to me and because each iteration teaches me something about how the web actually works under the surface.</p>
+
+        <p>Honestly, it's a tool I use but I'm not sure is ready for others to use just yet. But this tool also taught me why there is value in the likes of what BAMSEC, ACE Equity, and Quartr are building. Databases have a role.</p>
+
+        <p>The gap between "works for me with patience" and "works for anyone reliably" is likely asymptotic and can be infuriating at times. But the process of building it — the back-and-forth with Claude, the increasingly specific bug reports, the slow accumulation of edge cases into a genuinely robust engine — has been one of the more satisfying things I've done with AI.</p>
+
+        <p>Not because the result is perfect, but because the collaboration feels like real engineering. Messy, iterative, occasionally infuriating, and gradually getting better. And as an investor, it also makes me approach the whole "SaaSpocalypse" being much better informed than otherwise.</p>
+    </article>
+
+    <!-- Footer -->
+    <div class="article-footer">
+        <p style="margin-bottom: 1.5rem;">Want more stories about building with AI?</p>
+        <div class="social-links" style="justify-content: center;">
+            <a href="../../ai-experiments.html" class="btn btn-primary">Back to Experiments</a>
+            <a href="https://tgrkarthik.substack.com/" target="_blank" class="btn btn-secondary">Subscribe</a>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Karthik Tiruvarur. Building with AI.</p>
+        </div>
+    </footer>
+</body>
+</html>
