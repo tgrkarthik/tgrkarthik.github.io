@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en" data-depth="1">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Companies (Investments) - Karthik Tiruvarur</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .portfolio-intro {
+            max-width: 700px;
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .portfolio-intro p {
+            font-size: 16px;
+            color: var(--secondary-color);
+            line-height: 1.7;
+        }
+
+        /* Grid */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            max-width: 900px;
+        }
+
+        /* Tile */
+        .portfolio-tile {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            aspect-ratio: 1;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background: var(--white);
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .portfolio-tile:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            opacity: 1;
+        }
+
+        /* Logo */
+        .portfolio-logo {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Company name below logo */
+        .portfolio-name {
+            margin-top: 0.75rem;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--primary-color);
+            text-align: center;
+            padding: 0 0.5rem;
+        }
+
+        /* Acquired tag */
+        .portfolio-tag {
+            font-size: 10px;
+            color: var(--secondary-color);
+            opacity: 0.6;
+            margin-top: 0.2rem;
+        }
+
+        /* Hover overlay — desktop only */
+        .portfolio-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.88);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1.25rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+        .portfolio-tile:hover .portfolio-overlay {
+            opacity: 1;
+        }
+        .portfolio-overlay-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+        .portfolio-overlay-desc {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        /* Mobile description — shown below tile on mobile */
+        .portfolio-desc-mobile {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .portfolio-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+            .portfolio-logo {
+                width: 60px;
+                height: 60px;
+            }
+            .portfolio-name {
+                font-size: 13px;
+            }
+            /* Hide hover overlay on mobile */
+            .portfolio-overlay {
+                display: none;
+            }
+            /* Show description below each tile on mobile */
+            .portfolio-desc-mobile {
+                display: block;
+                font-size: 12px;
+                color: var(--secondary-color);
+                text-align: center;
+                padding: 0.5rem 0.25rem 0;
+                line-height: 1.4;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .portfolio-grid {
+                gap: 0.75rem;
+            }
+            .portfolio-logo {
+                width: 50px;
+                height: 50px;
+            }
+            .portfolio-name {
+                font-size: 12px;
+                margin-top: 0.5rem;
+            }
+            .portfolio-desc-mobile {
+                font-size: 11px;
+            }
+        }
+    </style>
+</head>
+<body data-protected-page="companies">
+    <nav id="shared-nav"></nav>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Companies <span style="font-weight: 400; font-size: 0.6em; color: var(--secondary-color);">(Investments)</span></h2>
+            </div>
+
+            <div id="page-locked" class="password-form">
+                <p class="section-intro">This section is password-protected. Enter the password to view.</p>
+                <div class="form-group">
+                    <input type="password" id="pagePassword" placeholder="Enter password" class="password-input">
+                    <button onclick="unlockPage()" class="btn btn-primary">Unlock</button>
+                </div>
+                <p class="error-message" id="errorMessage" style="display: none; color: #d32f2f; margin-top: 1rem;">Incorrect password. Please try again.</p>
+            </div>
+
+            <div id="page-content" style="display: none;">
+
+            <div class="portfolio-intro">
+                <p>A selection of companies I've invested in or studied closely over the years, spanning consumer tech, fintech, healthcare, logistics, and e-commerce across multiple geographies.</p>
+            </div>
+
+            <div class="portfolio-grid">
+
+                <div class="portfolio-item">
+                    <a href="https://www.lenskart.com" target="_blank" class="portfolio-tile">
+                        <img src="https://logo.clearbit.com/lenskart.com" alt="Lenskart" class="portfolio-logo">
+                        <div class="portfolio-name">Lenskart</div>
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-overlay-name">Lenskart</div>
+                            <div class="portfolio-overlay-desc">Asia's largest eyewear company, vertically integrated from manufacturing to retail across India and Southeast Asia.</div>
+                        </div>
+                    </a>
+                    <div class="portfolio-desc-mobile">Asia's largest eyewear company, vertically integrated from manufacturing to retail.</div>
+                </div>
+
+                <div class="portfolio-item">
+                    <a href="https://www.billiontoone.com" target="_blank" class="portfolio-tile">
+                        <img src="https://logo.clearbit.com/billiontoone.com" alt="BillionToOne" class="portfolio-logo">
+                        <div class="portfolio-name">BillionToOne</div>
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-overlay-name">BillionToOne</div>
+                            <div class="portfolio-overlay-desc">Molecular diagnostics company pioneering non-invasive prenatal and oncology testing using single-molecule counting technology.</div>
+                        </div>
+                    </a>
+                    <div class="portfolio-desc-mobile">Molecular diagnostics — non-invasive prenatal and oncology testing.</div>
+                </div>
+
+                <div class="portfolio-item">
+                    <a href="https://www.amazon.ae" target="_blank" class="portfolio-tile">
+                        <img src="https://logo.clearbit.com/souq.com" alt="Souq.com" class="portfolio-logo">
+                        <div class="portfolio-name">Souq.com</div>
+                        <div class="portfolio-tag">Acquired by Amazon</div>
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-overlay-name">Souq.com</div>
+                            <div class="portfolio-overlay-desc">The Middle East's leading e-commerce platform, acquired by Amazon in 2017 and rebranded as Amazon.ae.</div>
+                        </div>
+                    </a>
+                    <div class="portfolio-desc-mobile">Middle East e-commerce leader, acquired by Amazon in 2017.</div>
+                </div>
+
+                <div class="portfolio-item">
+                    <a href="https://www.hepsiburada.com" target="_blank" class="portfolio-tile">
+                        <img src="https://logo.clearbit.com/hepsiburada.com" alt="Hepsiburada" class="portfolio-logo">
+                        <div class="portfolio-name">Hepsiburada</div>
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-overlay-name">Hepsiburada</div>
+                            <div class="portfolio-overlay-desc">Turkey's leading e-commerce platform and marketplace, publicly listed on NASDAQ.</div>
+                        </div>
+                    </a>
+                    <div class="portfolio-desc-mobile">Turkey's leading e-commerce platform, listed on NASDAQ.</div>
+                </div>
+
+                <div class="portfolio-item">
+                    <a href="https://nephroplus.com" target="_blank" class="portfolio-tile">
+                        <img src="https://logo.clearbit.com/nephroplus.com" alt="NephroPlus" class="portfolio-logo">
+                        <div class="portfolio-name">NephroPlus</div>
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-overlay-name">NephroPlus</div>
+                            <div class="portfolio-overlay-desc">Asia's largest dialysis network, operating hundreds of centers across India and expanding internationally.</div>
+                        </div>
+                    </a>
+                    <div class="portfolio-desc-mobile">Asia's largest dialysis network, operating across India and beyond.</div>
+                </div>
+
+                <div class="portfolio-item">
+                    <a href="https://groww.in" target="_blank" class="portfolio-tile">
+                        <img src="https://logo.clearbit.com/groww.in" alt="Groww" class="portfolio-logo">
+                        <div class="portfolio-name">Groww</div>
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-overlay-name">Groww</div>
+                            <div class="portfolio-overlay-desc">India's largest investment platform by active users, offering stocks, mutual funds, and digital gold.</div>
+                        </div>
+                    </a>
+                    <div class="portfolio-desc-mobile">India's largest investment platform by active users.</div>
+                </div>
+
+                <div class="portfolio-item">
+                    <a href="https://www.bigbasket.com" target="_blank" class="portfolio-tile">
+                        <img src="https://logo.clearbit.com/bigbasket.com" alt="BigBasket" class="portfolio-logo">
+                        <div class="portfolio-name">BigBasket</div>
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-overlay-name">BigBasket</div>
+                            <div class="portfolio-overlay-desc">India's largest online grocery platform, now part of the Tata Group ecosystem.</div>
+                        </div>
+                    </a>
+                    <div class="portfolio-desc-mobile">India's largest online grocery platform, part of Tata Group.</div>
+                </div>
+
+                <div class="portfolio-item">
+                    <a href="https://www.shadowfax.in" target="_blank" class="portfolio-tile">
+                        <img src="https://logo.clearbit.com/shadowfax.in" alt="Shadowfax" class="portfolio-logo">
+                        <div class="portfolio-name">Shadowfax</div>
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-overlay-name">Shadowfax Technologies</div>
+                            <div class="portfolio-overlay-desc">India's largest crowdsourced logistics platform, powering last-mile delivery for e-commerce and hyperlocal businesses.</div>
+                        </div>
+                    </a>
+                    <div class="portfolio-desc-mobile">India's largest crowdsourced logistics and last-mile delivery platform.</div>
+                </div>
+
+                <div class="portfolio-item">
+                    <a href="https://www.loggi.com" target="_blank" class="portfolio-tile">
+                        <img src="https://logo.clearbit.com/loggi.com" alt="Loggi" class="portfolio-logo">
+                        <div class="portfolio-name">Loggi</div>
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-overlay-name">Loggi</div>
+                            <div class="portfolio-overlay-desc">Brazil's leading tech-driven logistics company, building end-to-end delivery infrastructure across Latin America.</div>
+                        </div>
+                    </a>
+                    <div class="portfolio-desc-mobile">Brazil's leading tech-driven logistics company.</div>
+                </div>
+
+            </div>
+
+            </div><!-- /page-content -->
+
+            <button id="lockBtn" class="btn btn-secondary" onclick="lockPage()" style="display: none; margin-top: 2rem;">Lock</button>
+        </div>
+    </section>
+
+    <footer id="shared-footer"></footer>
+    <script src="../components/nav-footer.js"></script>
+    <script src="../script.js"></script>
+</body>
+</html>

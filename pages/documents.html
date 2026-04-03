@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Documents - Karthik Tiruvarur</title>
+    <title>Vault - Karthik Tiruvarur</title>
     <link rel="stylesheet" href="../styles.css">
 </head>
-<body>
+<body data-protected-page="vault">
     <!-- Shared Navigation -->
     <nav id="shared-nav"></nav>
 
@@ -14,24 +14,24 @@
     <section class="section documents-section">
         <div class="container">
             <div class="section-header">
-                <h2>Documents</h2>
+                <h2>Vault</h2>
             </div>
 
-            <div id="documents-locked" class="password-form">
+            <div id="page-locked" class="password-form">
                 <p class="section-intro">This section contains password-protected documents. Enter the password to access.</p>
                 <div class="form-group">
                     <input
                         type="password"
-                        id="documentPassword"
+                        id="pagePassword"
                         placeholder="Enter password"
                         class="password-input"
                     >
-                    <button onclick="unlockDocuments()" class="btn btn-primary">Unlock</button>
+                    <button onclick="unlockPage()" class="btn btn-primary">Unlock</button>
                 </div>
                 <p class="error-message" id="errorMessage" style="display: none; color: #d32f2f; margin-top: 1rem;">Incorrect password. Please try again.</p>
             </div>
 
-            <div id="documents-content" class="documents-grid" style="display: none;">
+            <div id="page-content" class="documents-grid" style="display: none;">
                 <div class="document-card">
                     <div class="document-icon">&#128196;</div>
                     <h4>Research Report 2024</h4>
@@ -61,7 +61,7 @@
                 </div>
             </div>
 
-            <button id="logoutBtn" class="btn btn-secondary" onclick="logoutDocuments()" style="display: none; margin-top: 2rem;">Lock Documents</button>
+            <button id="lockBtn" class="btn btn-secondary" onclick="lockPage()" style="display: none; margin-top: 2rem;">Lock Vault</button>
         </div>
     </section>
 
