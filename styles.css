@@ -557,7 +557,7 @@ a:hover {
 
     .hero {
         min-height: auto;
-        padding: var(--spacing-lg) 2.5rem 0;
+        padding: var(--spacing-lg) 2.5rem;
         align-items: flex-start;
     }
 
