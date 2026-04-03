@@ -555,6 +555,10 @@ a:hover {
         padding: 0 var(--spacing-md);
     }
 
+    .logo {
+        font-size: 22px;
+    }
+
     .hero {
         min-height: auto;
         padding: var(--spacing-lg) 0;
