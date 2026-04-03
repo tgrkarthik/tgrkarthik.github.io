@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" data-depth="1">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documents - Karthik Tiruvarur</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <!-- Shared Navigation -->
+    <nav id="shared-nav"></nav>
+
+    <!-- Password Protected Documents Section -->
+    <section class="section documents-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Documents</h2>
+            </div>
+
+            <div id="documents-locked" class="password-form">
+                <p class="section-intro">This section contains password-protected documents. Enter the password to access.</p>
+                <div class="form-group">
+                    <input
+                        type="password"
+                        id="documentPassword"
+                        placeholder="Enter password"
+                        class="password-input"
+                    >
+                    <button onclick="unlockDocuments()" class="btn btn-primary">Unlock</button>
+                </div>
+                <p class="error-message" id="errorMessage" style="display: none; color: #d32f2f; margin-top: 1rem;">Incorrect password. Please try again.</p>
+            </div>
+
+            <div id="documents-content" class="documents-grid" style="display: none;">
+                <div class="document-card">
+                    <div class="document-icon">&#128196;</div>
+                    <h4>Research Report 2024</h4>
+                    <p>Detailed market analysis and insights on emerging technology trends.</p>
+                    <a href="../documents/research-report-2024.pdf" download class="document-link">Download &rarr;</a>
+                </div>
+
+                <div class="document-card">
+                    <div class="document-icon">&#128202;</div>
+                    <h4>Investment Analysis</h4>
+                    <p>In-depth analysis of market opportunities and investment thesis.</p>
+                    <a href="../documents/investment-analysis.pdf" download class="document-link">Download &rarr;</a>
+                </div>
+
+                <div class="document-card">
+                    <div class="document-icon">&#128200;</div>
+                    <h4>Strategy Framework</h4>
+                    <p>Strategic frameworks and methodologies for market analysis.</p>
+                    <a href="../documents/strategy-framework.pdf" download class="document-link">Download &rarr;</a>
+                </div>
+
+                <div class="document-card">
+                    <div class="document-icon">&#128203;</div>
+                    <h4>Case Studies</h4>
+                    <p>Real-world case studies demonstrating analysis methodologies.</p>
+                    <a href="../documents/case-studies.pdf" download class="document-link">Download &rarr;</a>
+                </div>
+            </div>
+
+            <button id="logoutBtn" class="btn btn-secondary" onclick="logoutDocuments()" style="display: none; margin-top: 2rem;">Lock Documents</button>
+        </div>
+    </section>
+
+    <!-- Shared Footer -->
+    <footer id="shared-footer"></footer>
+
+    <script src="../components/nav-footer.js"></script>
+    <script src="../script.js"></script>
+</body>
+</html>

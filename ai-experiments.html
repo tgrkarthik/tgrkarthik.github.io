@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en" data-depth="0">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Experiments with AI - Karthik Tiruvarur</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .experiments-intro {
+            max-width: 700px;
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .experiments-intro p {
+            font-size: 16px;
+            color: var(--secondary-color);
+            line-height: 1.7;
+        }
+        .experiments-feed {
+            max-width: 800px;
+        }
+        .experiment-item {
+            display: block;
+            padding: 1.75rem 0;
+            border-bottom: 1px solid var(--border-color);
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition);
+        }
+        .experiment-item:first-child {
+            padding-top: 0;
+        }
+        .experiment-item:hover {
+            opacity: 1;
+        }
+        .experiment-item:hover .experiment-item-title {
+            color: var(--secondary-color);
+        }
+        .experiment-item-meta {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .experiment-item-badge {
+            font-size: 11px;
+            font-weight: 500;
+            padding: 0.25rem 0.6rem;
+            background: var(--light-color);
+            border: 0.5px solid var(--border-color);
+            border-radius: 2px;
+            color: var(--secondary-color);
+            text-transform: capitalize;
+        }
+        .experiment-item-date {
+            font-size: 12px;
+            color: var(--secondary-color);
+            opacity: 0.7;
+        }
+        .experiment-item-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+            transition: var(--transition);
+        }
+        .experiment-item-snippet {
+            font-size: 14px;
+            color: var(--secondary-color);
+            line-height: 1.6;
+            margin: 0;
+        }
+        .experiment-item-source {
+            display: inline-block;
+            margin-top: 0.5rem;
+            font-size: 12px;
+            color: var(--secondary-color);
+            opacity: 0.6;
+        }
+        .experiment-item-arrow {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--primary-color);
+            margin-top: 0.75rem;
+            display: inline-block;
+        }
+        .experiments-cta {
+            margin-top: 2.5rem;
+            padding: 2rem;
+            background: var(--light-color);
+            border-radius: 4px;
+            text-align: center;
+        }
+        .experiments-cta p {
+            font-size: 15px;
+            color: var(--secondary-color);
+            margin-bottom: 1.25rem;
+        }
+        @media (max-width: 768px) {
+            .experiment-item-title { font-size: 18px; }
+            .experiment-item-snippet { font-size: 13px; }
+        }
+        @media (max-width: 480px) {
+            .experiment-item-title { font-size: 16px; }
+            .experiment-item-snippet { font-size: 12px; }
+            .experiments-cta { padding: 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Shared Navigation -->
+    <nav id="shared-nav"></nav>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>My Experiments with AI</h2>
+            </div>
+            <div class="experiments-intro">
+                <p>Starting Jan 2026, I've been spending a lot of time  <b>'vibe coding'</b>, specially with Claude. Later half of 2024 and all of 2025 were NotebookLM and Gemini for the most part. These are some of my recent experiments &mdash; projects that started with a problem I wanted to solve, turned into conversations about how to build, and evolved into tools I actually use. Each one taught me something different about working with AI on real problems.</p>
+            </div>
+
+            <div class="experiments-feed">
+
+                <a href="ai-experiments/vibe-coding.html" class="experiment-item">
+                    <div class="experiment-item-meta">
+                        <span class="experiment-item-badge">Personal</span>
+                        <span class="experiment-item-date">April 2026</span>
+                    </div>
+                    <div class="experiment-item-title">Vibe Coding</div>
+                    <p class="experiment-item-snippet">A picture from 2007, a Mac in the Theoretical CS lab at IIT Madras, and why vibe coding with Claude feels exactly like those 5 a.m. all-nighters from undergrad. This is the opening note for everything that follows.</p>
+                    <span class="experiment-item-arrow">Read full story &rarr;</span>
+                </a>
+
+                <a href="ai-experiments/ir-scraper.html" class="experiment-item">
+                    <div class="experiment-item-meta">
+                        <span class="experiment-item-badge">Infrastructure</span>
+                        <span class="experiment-item-badge">Python</span>
+                    </div>
+                    <div class="experiment-item-title">Building a Scraper That Works on Any Investor Relations Website</div>
+                    <p class="experiment-item-snippet">Can a single scraper work on any company's IR website without site-specific code? Eight platform types fingerprinted, a Linnaeus-inspired taxonomy, Taleb's barbell principle applied to bot evasion, and lessons learned about why discovery is harder than downloading.</p>
+                    <span class="experiment-item-arrow">Read full story &rarr;</span>
+                </a>
+
+                <a href="ai-experiments/music-transcription.html" class="experiment-item">
+                    <div class="experiment-item-meta">
+                        <span class="experiment-item-badge">Audio Processing</span>
+                        <span class="experiment-item-badge">Indian Classical Music</span>
+                    </div>
+                    <div class="experiment-item-title">Transcribing Eight Years of Music Lessons</div>
+                    <p class="experiment-item-snippet">Using Claude to transcribe Indian classical music lessons from the guru-shishya tradition. How building a memory aid changed how I listen, why context and a "student state" document made the transcripts useful, and what it means to systematise knowledge that has resisted it for two millennia.</p>
+                    <span class="experiment-item-arrow">Read full story &rarr;</span>
+                </a>
+
+                <a href="ai-experiments/research-pipeline.html" class="experiment-item">
+                    <div class="experiment-item-meta">
+                        <span class="experiment-item-badge">Investment Research</span>
+                        <span class="experiment-item-badge">Automation</span>
+                    </div>
+                    <div class="experiment-item-title">Building a Sell-Side Research Pipeline</div>
+                    <p class="experiment-item-snippet">A five-stage pipeline that turns seventeen browser tabs into four. Intake, classification, extraction, synthesis, and flagging &mdash; each doing one thing well. The Unix pipe philosophy applied to investment research, and why defining the process was more valuable than automating it.</p>
+                    <span class="experiment-item-arrow">Read full story &rarr;</span>
+                </a>
+
+                <a href="https://tgrkarthik.substack.com/p/how-bad-are-the-hallucinations-chatgpt" target="_blank" class="experiment-item">
+                    <div class="experiment-item-meta">
+                        <span class="experiment-item-badge">Analysis</span>
+                        <span class="experiment-item-badge">LLMs</span>
+                        <span class="experiment-item-date">May 2023</span>
+                    </div>
+                    <div class="experiment-item-title">How Bad Are the Hallucinations?</div>
+                    <p class="experiment-item-snippet">Deep dive into ChatGPT's hallucination problem. Testing accuracy on factual questions, understanding when and why models confidently state false information, and what this means for building with language models in production.</p>
+                    <span class="experiment-item-source">Published on Substack</span>
+                </a>
+
+                <a href="https://tgrkarthik.substack.com/p/two-words-for-2024" target="_blank" class="experiment-item">
+                    <div class="experiment-item-meta">
+                        <span class="experiment-item-badge">Predictions</span>
+                        <span class="experiment-item-badge">AI Trends</span>
+                        <span class="experiment-item-date">Dec 2023</span>
+                    </div>
+                    <div class="experiment-item-title">Two Words for 2024</div>
+                    <p class="experiment-item-snippet">My predictions for how AI will evolve in 2024. Two key words that capture the direction of the technology, the market, and the kinds of problems people will solve with language models.</p>
+                    <span class="experiment-item-source">Published on Substack</span>
+                </a>
+
+                <a href="https://medium.com/@karthiktiruvarur/dilly-dall-e-ing-63bc4bbc886" target="_blank" class="experiment-item">
+                    <div class="experiment-item-meta">
+                        <span class="experiment-item-badge">Image Generation</span>
+                        <span class="experiment-item-badge">DALL-E</span>
+                    </div>
+                    <div class="experiment-item-title">Dilly-DALL-E-ing</div>
+                    <p class="experiment-item-snippet">Exploring DALL-E's capabilities and quirks. Testing the boundaries of image generation, understanding what works, what breaks, and the gap between what these models can do and what we actually want them to do.</p>
+                    <span class="experiment-item-source">Published on Medium</span>
+                </a>
+
+                <div class="experiment-item" style="opacity: 0.5; cursor: default;">
+                    <div class="experiment-item-meta">
+                        <span class="experiment-item-badge">Coming Soon</span>
+                    </div>
+                    <div class="experiment-item-title">Your Next Experiment</div>
+                    <p class="experiment-item-snippet">More experiments coming as I continue building with AI. Each project teaches something new about problem-solving, AI capabilities, and the gap between what's theoretically possible and what actually works in practice.</p>
+                </div>
+
+            </div>
+
+            <div class="experiments-cta">
+                <p>Want to see more writing? Subscribe to my Substack for regular essays.</p>
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <a href="index.html" class="btn btn-primary">Back to Home</a>
+                    <a href="https://tgrkarthik.substack.com/" target="_blank" class="btn btn-secondary">Subscribe to Substack</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="shared-footer"></footer>
+
+    <script src="components/nav-footer.js"></script>
+</body>
+</html>

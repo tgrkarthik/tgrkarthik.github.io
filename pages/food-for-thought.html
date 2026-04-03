@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en" data-depth="1">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food for Thought - Karthik Tiruvarur</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .fft-intro {
+            max-width: 700px;
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .fft-intro p {
+            font-size: 16px;
+            color: var(--secondary-color);
+            line-height: 1.7;
+        }
+
+        /* Category sections — collapsible */
+        .fft-category {
+            max-width: 800px;
+            margin-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .fft-category:last-child {
+            border-bottom: none;
+        }
+        .fft-category-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 1.25rem 0;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-family: var(--font-sans);
+        }
+        .fft-category-toggle:hover .fft-category-title {
+            color: var(--secondary-color);
+        }
+        .fft-category-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin: 0;
+            transition: var(--transition);
+        }
+        .fft-category-count {
+            font-size: 12px;
+            color: var(--secondary-color);
+            opacity: 0.6;
+            margin-left: 0.75rem;
+            font-weight: 400;
+        }
+        .fft-chevron {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+            color: var(--secondary-color);
+            opacity: 0.5;
+        }
+        .fft-category.open .fft-chevron {
+            transform: rotate(180deg);
+        }
+        .fft-category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+        .fft-category.open .fft-category-content {
+            max-height: 5000px;
+        }
+        .fft-category-inner {
+            padding-bottom: 1.5rem;
+        }
+
+        /* Cards — mirrors writing.html aesthetic */
+        .fft-card {
+            display: flex;
+            gap: 1.5rem;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid var(--border-color);
+            transition: var(--transition);
+            text-decoration: none;
+            color: inherit;
+        }
+        .fft-card:first-child {
+            padding-top: 0;
+        }
+        .fft-card:last-child {
+            border-bottom: none;
+        }
+        .fft-card:hover {
+            opacity: 1;
+        }
+        .fft-card:hover .fft-card-title {
+            color: var(--secondary-color);
+        }
+
+        /* Thumbnail */
+        .fft-card-image {
+            flex-shrink: 0;
+            width: 120px;
+            height: 90px;
+            border-radius: 4px;
+            overflow: hidden;
+            background: var(--light-color);
+        }
+        .fft-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Card body */
+        .fft-card-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+        .fft-card-meta {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+            font-size: 12px;
+            color: var(--secondary-color);
+            margin-bottom: 0.4rem;
+        }
+        .fft-card-type {
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+            opacity: 0.7;
+        }
+        .fft-card-date {
+            opacity: 0.7;
+        }
+        .fft-card-title {
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+            transition: var(--transition);
+        }
+
+        /* Takeaways */
+        .fft-card-takeaways {
+            font-size: 13.5px;
+            color: var(--secondary-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        .fft-card-takeaways li {
+            margin-bottom: 0.2rem;
+            list-style: none;
+            padding-left: 1rem;
+            position: relative;
+        }
+        .fft-card-takeaways li::before {
+            content: "\2014";
+            position: absolute;
+            left: 0;
+            color: var(--border-color);
+        }
+
+        /* Source label */
+        .fft-card-source {
+            font-size: 11px;
+            color: var(--secondary-color);
+            margin-top: 0.4rem;
+            opacity: 0.6;
+        }
+
+        /* Empty category note */
+        .fft-coming-soon {
+            font-size: 14px;
+            color: var(--secondary-color);
+            opacity: 0.5;
+            font-style: italic;
+            padding: 0.5rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .fft-card {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .fft-card-image {
+                width: 100%;
+                height: 180px;
+            }
+            .fft-card-title {
+                font-size: 16px;
+            }
+        }
+        @media (max-width: 480px) {
+            .fft-category-title { font-size: 17px; }
+            .fft-card-image { height: 140px; }
+            .fft-card-title { font-size: 15px; }
+            .fft-card-takeaways { font-size: 12.5px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Shared Navigation -->
+    <nav id="shared-nav"></nav>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Food for Thought</h2>
+            </div>
+
+            <div class="fft-intro">
+                <p>A curated collection of articles, videos, and podcasts that have shaped how I think about investing, technology, and the world. Each entry includes a few things I took away from it.</p>
+            </div>
+
+            <!-- ===== INVESTING ===== -->
+            <div class="fft-category">
+                <button class="fft-category-toggle" onclick="this.parentElement.classList.toggle('open')">
+                    <span><h3 class="fft-category-title">Investing<span class="fft-category-count">3 videos</span></h3></span>
+                    <svg class="fft-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </button>
+                <div class="fft-category-content"><div class="fft-category-inner">
+
+                <a href="https://www.youtube.com/watch?v=plx6Foxoam4" target="_blank" class="fft-card">
+                    <div class="fft-card-image">
+                        <img src="https://img.youtube.com/vi/plx6Foxoam4/mqdefault.jpg" alt="Henry Ellenbogen Interview">
+                    </div>
+                    <div class="fft-card-body">
+                        <div class="fft-card-meta">
+                            <span class="fft-card-type">Video</span>
+                        </div>
+                        <div class="fft-card-title">Finding The 1% of Stocks That Matter | Henry Ellenbogen</div>
+                        <ul class="fft-card-takeaways">
+                            <li>1/ Durable Capital hunts the rare 1% of public companies (~40 stocks) capable of compounding wealth at 20% annually over a decade</li>
+                            <li>2/ Founders on their second venture have a distinct edge &mdash; total clarity on solving edge cases, managing scale, and aligning their organization from day one</li>
+                            <li>3/ AI as the new Kaizen: just as physical supply chains benefited from decades of cost deflation, AI represents continuous improvement applied to human processes and white-collar IP labor</li>
+                            <li>4/ Only initiate an early-stage investment if actively excited about buying more shares at higher prices once the business proves its competitive advantage</li>
+                            <li>5/ Writing detailed investment memos is essential for executing multi-year post-mortems and intellectual honesty</li>
+                            <li>6/ The friction and scrutiny of public markets can force crucial discipline, efficiency, and cultural alignment during difficult corporate transitions</li>
+                        </ul>
+                        <div class="fft-card-source">YouTube &middot; Durable Capital</div>
+                    </div>
+                </a>
+
+                <a href="https://www.youtube.com/watch?v=mBtmTmCC0ZM" target="_blank" class="fft-card">
+                    <div class="fft-card-image">
+                        <img src="https://img.youtube.com/vi/mBtmTmCC0ZM/mqdefault.jpg" alt="Dan Sundheim Interview">
+                    </div>
+                    <div class="fft-card-body">
+                        <div class="fft-card-meta">
+                            <span class="fft-card-type">Video</span>
+                        </div>
+                        <div class="fft-card-title">Dan Sundheim of D1 Capital on the Art of Public Market Investing</div>
+                        <ul class="fft-card-takeaways">
+                            <li>1/ D1 applies the exact same deep, fundamental research process and 3&ndash;5 year time horizon regardless of whether a company is public or private</li>
+                            <li>2/ The danger of selling winners prematurely</li>
+                            <li>3/ Short-squeezes (like GameStop) proved that risk management cannot be reactive; short books must be highly diversified and sized small enough to withstand irrational melt-ups</li>
+                            <li>&ldquo;You&rsquo;re always going to make the most money from multiple expansion&hellip; sometimes people are skeptical of a business model, and then over time it gets proven out that the business model doesn&rsquo;t deserve to have that skepticism, and then the multiple expands.&rdquo;</li>
+                            <li>4/ D1 requires analysts to maintain a weekly &ldquo;mock portfolio&rdquo; that ties stated convictions directly to compensation</li>
+                            <li>5/ Sundheim halted investments in China because the government&rsquo;s heavy-handed control over resources and lack of due process create uninvestable uncertainty</li>
+                        </ul>
+                        <div class="fft-card-source">YouTube &middot; D1 Capital</div>
+                    </div>
+                </a>
+
+                <a href="https://www.youtube.com/watch?v=mPxB1oeAIIc" target="_blank" class="fft-card">
+                    <div class="fft-card-image">
+                        <img src="https://img.youtube.com/vi/mPxB1oeAIIc/mqdefault.jpg" alt="The Benchmark Partnership">
+                    </div>
+                    <div class="fft-card-body">
+                        <div class="fft-card-meta">
+                            <span class="fft-card-type">Video</span>
+                        </div>
+                        <div class="fft-card-title">The Benchmark Partnership</div>
+                        <ul class="fft-card-takeaways">
+                            <li>1/ Maximizing happiness over AUM scale</li>
+                            <li>2/ The firm thrives as an equal partnership because its founding members intentionally gave up their legacy and residual brand economics to empower the next generation &mdash; essentially &ldquo;refounded&rdquo; with each new partner</li>
+                            <li>3/ Board role viewed not as governance but as a trusted co-founder who actively spars with entrepreneurs to sharpen their thinking; firms pitching &ldquo;no board seat&rdquo; fundamentally misunderstand this</li>
+                            <li>4/ Distinguishing rare &ldquo;entrepreneurs&rdquo; who inherently challenge systems from &ldquo;founders&rdquo; who are riding a temporarily attractive trend</li>
+                            <li>5/ AI investments succeeded not through a top-down thematic market map, but through relentless focus on backing incredibly special, non-consensus founders</li>
+                        </ul>
+                        <div class="fft-card-source">YouTube &middot; Benchmark</div>
+                    </div>
+                </a>
+
+                </div></div>
+            </div>
+
+            <!-- ===== AI ===== -->
+            <div class="fft-category">
+                <button class="fft-category-toggle" onclick="this.parentElement.classList.toggle('open')">
+                    <span><h3 class="fft-category-title">AI<span class="fft-category-count">3 videos</span></h3></span>
+                    <svg class="fft-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </button>
+                <div class="fft-category-content"><div class="fft-category-inner">
+
+                <a href="https://www.youtube.com/watch?v=aR20FWCCjAs" target="_blank" class="fft-card">
+                    <div class="fft-card-image">
+                        <img src="https://img.youtube.com/vi/aR20FWCCjAs/mqdefault.jpg" alt="Ilya Sutskever">
+                    </div>
+                    <div class="fft-card-body">
+                        <div class="fft-card-meta">
+                            <span class="fft-card-type">Video</span>
+                        </div>
+                        <div class="fft-card-title">Ilya Sutskever &mdash; From the Age of Scaling to the Age of Research</div>
+                        <ul class="fft-card-takeaways">
+                            <li>The era where scaling (adding compute and data) was the primary driver of progress is concluding as pre-training data becomes finite; breakthroughs now depend on novel algorithmic ideas</li>
+                            <li>AI models ace difficult benchmarks but fail basic real-world logic (e.g., oscillating between bugs in code), highlighting a deficit in reliable generalization vs. humans</li>
+                            <li>Humans require drastically fewer samples to learn (e.g., 10 hours for driving vs. millions of simulations for AI), proving more efficient ML principles exist &mdash; Moravec&rsquo;s paradox</li>
+                            <li>SSI prioritizes a focused research path to superintelligence, insulating itself from product-cycle pressures to solve fundamental bottlenecks like sample efficiency</li>
+                        </ul>
+                        <div class="fft-card-source">YouTube &middot; SSI</div>
+                    </div>
+                </a>
+
+                <a href="https://www.youtube.com/watch?v=TgS0nFeYul8" target="_blank" class="fft-card">
+                    <div class="fft-card-image">
+                        <img src="https://img.youtube.com/vi/TgS0nFeYul8/mqdefault.jpg" alt="Demis Hassabis">
+                    </div>
+                    <div class="fft-card-body">
+                        <div class="fft-card-meta">
+                            <span class="fft-card-type">Video</span>
+                        </div>
+                        <div class="fft-card-title">Sir Demis Hassabis on The Future of Knowledge</div>
+                        <ul class="fft-card-takeaways">
+                            <li>Games (chess, Go) are not ends but data-rich, rule-governed testbeds for developing general learning algorithms</li>
+                            <li>DeepMind&rsquo;s ultimate goal: use AI to solve &ldquo;root node&rdquo; problems like protein structure (AlphaFold) to unlock entire fields of medicine and material science</li>
+                            <li>Any pattern in nature can potentially be modeled by classical learning algorithms, challenging the necessity of quantum computing for biological simulation</li>
+                            <li>Future progress relies on &ldquo;Astra&rdquo; and world models that understand intuitive physics and spatial context beyond what text-based LLMs can capture</li>
+                            <li>AI development requires new global institutions (a &ldquo;Technical UN&rdquo; or &ldquo;AI IAEA&rdquo;) to monitor risks and ensure safe progress</li>
+                        </ul>
+                        <div class="fft-card-source">YouTube &middot; Institute for Advanced Study</div>
+                    </div>
+                </a>
+
+                <a href="https://www.youtube.com/watch?v=_PioN-CpOP0" target="_blank" class="fft-card">
+                    <div class="fft-card-image">
+                        <img src="https://img.youtube.com/vi/_PioN-CpOP0/mqdefault.jpg" alt="Fei-Fei Li">
+                    </div>
+                    <div class="fft-card-body">
+                        <div class="fft-card-meta">
+                            <span class="fft-card-type">Video</span>
+                        </div>
+                        <div class="fft-card-title">Fei-Fei Li: Spatial Intelligence is the Next Frontier in AI</div>
+                        <ul class="fft-card-takeaways">
+                            <li>Spatial intelligence &mdash; the ability to perceive, reason about, and interact with the 3D world &mdash; is the essential missing piece of AGI</li>
+                            <li>Vision took 540 million years to evolve, language less than one million, highlighting the vast complexity gap between LLMs and &ldquo;World Models&rdquo;</li>
+                            <li>ImageNet (2009) was a bold bet that a paradigm shift toward data-driven methods was necessary for machines to generalize</li>
+                            <li>World Labs aims to solve &ldquo;delusional&rdquo; problems in 3D world modeling, combining generation with physical reconstruction and causal reasoning</li>
+                            <li>Academia is now severely under-resourced compared to industry, requiring researchers to pivot toward interdisciplinary and theoretical North Stars</li>
+                        </ul>
+                        <div class="fft-card-source">YouTube &middot; World Labs</div>
+                    </div>
+                </a>
+
+                </div></div>
+            </div>
+
+            <!-- ===== MACRO ===== -->
+            <div class="fft-category">
+                <button class="fft-category-toggle" onclick="this.parentElement.classList.toggle('open')">
+                    <span><h3 class="fft-category-title">Macro<span class="fft-category-count">4 videos</span></h3></span>
+                    <svg class="fft-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </button>
+                <div class="fft-category-content"><div class="fft-category-inner">
+
+                <a href="https://www.youtube.com/watch?v=j8JDmZgrprc" target="_blank" class="fft-card">
+                    <div class="fft-card-image">
+                        <img src="https://img.youtube.com/vi/j8JDmZgrprc/mqdefault.jpg" alt="The Loonie Hour Episode 230">
+                    </div>
+                    <div class="fft-card-body">
+                        <div class="fft-card-meta">
+                            <span class="fft-card-type">Video</span>
+                        </div>
+                        <div class="fft-card-title">A War of Attrition &mdash; Missiles, Oil, and Global Power | The Loonie Hour</div>
+                        <ul class="fft-card-takeaways">
+                            <li>Oil and gas are the new foundation of US military strength</li>
+                            <li>The current Middle East conflict is a war of attrition and depletion of US military inventories &mdash; the US is dangerously short on air defense missiles</li>
+                            <li>China and Russia benefit from a prolonged Middle East war; China has prepared by building massive refining capacity and stockpiling</li>
+                            <li>Global oil markets are no longer a free, frictionless trade</li>
+                        </ul>
+                        <div class="fft-card-source">YouTube &middot; The Loonie Hour</div>
+                    </div>
+                </a>
+
+                <a href="https://www.youtube.com/watch?v=rzMkhA-DuDo" target="_blank" class="fft-card">
+                    <div class="fft-card-image">
+                        <img src="https://img.youtube.com/vi/rzMkhA-DuDo/mqdefault.jpg" alt="India Economy 2026">
+                    </div>
+                    <div class="fft-card-body">
+                        <div class="fft-card-meta">
+                            <span class="fft-card-type">Video</span>
+                        </div>
+                        <div class="fft-card-title">Future Forward: What India&rsquo;s Economy Looks Like in 2026 | Open Dialogue</div>
+                        <ul class="fft-card-takeaways">
+                            <li>India achieved growth despite massive fiscal and monetary headwinds</li>
+                            <li>Fiscal consolidation will slow in FY26; credit growth is reviving, state-level labor reforms are unlocking potential, and the real estate cycle is picking back up</li>
+                            <li>The Rupee&rsquo;s depreciation is a capital account issue, not a fundamental problem &mdash; gold speculation effectively shorts the Rupee; the Rupee remains competitive on a trade-weighted basis</li>
+                        </ul>
+                        <div class="fft-card-source">YouTube &middot; Open Dialogue</div>
+                    </div>
+                </a>
+
+                <a href="https://www.youtube.com/watch?v=Ohfb1kAbvb0" target="_blank" class="fft-card">
+                    <div class="fft-card-image">
+                        <img src="https://img.youtube.com/vi/Ohfb1kAbvb0/mqdefault.jpg" alt="Russell Napier">
+                    </div>
+                    <div class="fft-card-body">
+                        <div class="fft-card-meta">
+                            <span class="fft-card-type">Video</span>
+                        </div>
+                        <div class="fft-card-title">Russell Napier on The Solid Ground, Anatomy of a Bear</div>
+                        <ul class="fft-card-takeaways">
+                            <li>Economic theory relies on the &ldquo;rational economic man,&rdquo; completely ignoring the realities of psychology, sociology, and political behavior</li>
+                            <li>Financial repression forces savers to pay for government debt; the state uses regulations (like mandating pension fund purchases) to keep bond yields below inflation</li>
+                            <li>The US is adopting China&rsquo;s style of &ldquo;social capitalism&rdquo; &mdash; abandoning pure free-market principles to heavily subsidize its own industries to compete with state-sponsored overcapacity</li>
+                            <li>Gold is critical because it lacks counterparty risk; value stocks will thrive in this new environment</li>
+                        </ul>
+                        <div class="fft-card-source">YouTube &middot; The Solid Ground</div>
+                    </div>
+                </a>
+
+                <a href="https://www.youtube.com/watch?v=C1Ejtgp1gzQ" target="_blank" class="fft-card">
+                    <div class="fft-card-image">
+                        <img src="https://img.youtube.com/vi/C1Ejtgp1gzQ/mqdefault.jpg" alt="Doomberg">
+                    </div>
+                    <div class="fft-card-body">
+                        <div class="fft-card-meta">
+                            <span class="fft-card-type">Video</span>
+                        </div>
+                        <div class="fft-card-title">WW3, Energy, Markets &amp; Politics with Doomberg</div>
+                        <ul class="fft-card-takeaways">
+                            <li>The world is actively fighting an economic World War III; the Middle East is exclusively about oil and gas &mdash; the US no longer needs it for itself but uses its presence to constrain China</li>
+                            <li>Social media training algorithms show opposing sides starkly different, highly propagandized versions of reality &mdash; dangerous &ldquo;parallel universes&rdquo;</li>
+                            <li>Taiwan can be defeated without an invasion: complete reliance on imported LNG for power means China only needs a blockade to force capitulation</li>
+                            <li>Redeploying US defenses (Patriot and THAAD) from South Korea to the Middle East leaves Asian allies vulnerable to aggressive moves by North Korea and China</li>
+                        </ul>
+                        <div class="fft-card-source">YouTube &middot; Doomberg</div>
+                    </div>
+                </a>
+
+                </div></div>
+            </div>
+
+            <!-- ===== TECH / SOFTWARE ===== -->
+            <div class="fft-category">
+                <button class="fft-category-toggle" onclick="this.parentElement.classList.toggle('open')">
+                    <span><h3 class="fft-category-title">Tech &amp; Software<span class="fft-category-count">6 videos</span></h3></span>
+                    <svg class="fft-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </button>
+                <div class="fft-category-content"><div class="fft-category-inner">
+
+                <a href="https://www.youtube.com/watch?v=oUSWtLu2RCE" target="_blank" class="fft-card">
+                    <div class="fft-card-image">
+                        <img src="https://img.youtube.com/vi/oUSWtLu2RCE/mqdefault.jpg" alt="Ben Thompson on Cheeky Pint">
+                    </div>
+                    <div class="fft-card-body">
+                        <div class="fft-card-meta">
+                            <span class="fft-card-type">Video</span>
+                        </div>
+                        <div class="fft-card-title">Ben Thompson (Stratechery) on AI Ads, the End of SaaS, and the Future of Media</div>
+                        <ul class="fft-card-takeaways">
+                            <li>&ldquo;Agent commerce&rdquo; could trigger brutal perfect competition &mdash; AI making optimal purchasing decisions strips emotion from commerce, devastating retail margins</li>
+                            <li>SaaS valuations are compressing as AI agents and self-serve tech limit headcount growth, forcing legacy businesses into massive valuation haircuts</li>
+                            <li>A major chip shortage is looming by 2029 &mdash; TSMC is underbuilding because the downside of excess fabrication capacity is too severe</li>
+                            <li>Google&rsquo;s lack of optimization is its hidden strength &mdash; excess cash flow and organizational slack give it the flexibility to survive major disruption</li>
+                        </ul>
+                        <div class="fft-card-source">Cheeky Pint (Stripe) &middot; John Collison</div>
+                    </div>
+                </a>
+
+                <a href="https://www.youtube.com/watch?v=02YLwsCKUww" target="_blank" class="fft-card">
+                    <div class="fft-card-image">
+                        <img src="https://img.youtube.com/vi/02YLwsCKUww/mqdefault.jpg" alt="Hassabis and Amodei at Davos">
+                    </div>
+                    <div class="fft-card-body">
+                        <div class="fft-card-meta">
+                            <span class="fft-card-type">Video</span>
+                        </div>
+                        <div class="fft-card-title">Demis Hassabis &amp; Dario Amodei &mdash; The Day After AGI (Davos 2026)</div>
+                        <ul class="fft-card-takeaways">
+                            <li>AI may fully automate software engineering within 6&ndash;12 months &mdash; models could handle the entirety of what SWEs do end-to-end</li>
+                            <li>Once AI can write code and conduct AI research, it will dramatically accelerate next-generation models &mdash; closing the loop triggers exponential progress</li>
+                            <li>AI revenue scaling exponentially: Anthropic went $0 &rarr; $100M (2023) &rarr; $1B (2024) &rarr; $10B (2025)</li>
+                            <li>Geopolitics prevents a coordinated AI slowdown &mdash; chip export restrictions are the most critical lever for buying time</li>
+                        </ul>
+                        <div class="fft-card-source">World Economic Forum &middot; Davos 2026</div>
+                    </div>
+                </a>
+
+                <a href="https://www.youtube.com/watch?v=JUsb1FYOstA" target="_blank" class="fft-card">
+                    <div class="fft-card-image">
+                        <img src="https://img.youtube.com/vi/JUsb1FYOstA/mqdefault.jpg" alt="Gokul Rajaram on Invest Like the Best">
+                    </div>
+                    <div class="fft-card-body">
+                        <div class="fft-card-meta">
+                            <span class="fft-card-type">Video</span>
+                        </div>
+                        <div class="fft-card-title">Gokul Rajaram &mdash; Lessons from Investing in 700 Companies</div>
+                        <ul class="fft-card-takeaways">
+                            <li>Human judgment is the most future-proof skill &mdash; with AI generating massive output, humans must determine what actually matters</li>
+                            <li>AI startups must own a scarce asset or control point to survive &mdash; proprietary data, financial movement, or hardware</li>
+                            <li>Non-deterministic software forces heavy evaluation (evals) &mdash; a PM&rsquo;s primary role is now building evaluations to confirm if AI output is safe to ship</li>
+                            <li>The future of management is orchestrating fleets of AI agents rather than managing human employees</li>
+                        </ul>
+                        <div class="fft-card-source">Invest Like the Best &middot; Patrick O&rsquo;Shaughnessy</div>
+                    </div>
+                </a>
+
+                <a href="https://www.youtube.com/watch?v=KwZ35kaay-s" target="_blank" class="fft-card">
+                    <div class="fft-card-image">
+                        <img src="https://img.youtube.com/vi/KwZ35kaay-s/mqdefault.jpg" alt="Venky Ganesan on AI">
+                    </div>
+                    <div class="fft-card-body">
+                        <div class="fft-card-meta">
+                            <span class="fft-card-type">Video</span>
+                        </div>
+                        <div class="fft-card-title">Venky Ganesan (Menlo Ventures) &mdash; Inside Silicon Valley&rsquo;s AI Gold Rush</div>
+                        <ul class="fft-card-takeaways">
+                            <li>AI is the biggest platform shift of our lifetime &mdash; bigger than the internet, and the value will eventually move to the application layer</li>
+                            <li>Infrastructure is overvalued, applications are undervalued &mdash; too much capital going to AI infra, leaving apps as the opportunity</li>
+                            <li>India faces critical choices on sovereign AI &mdash; build closed-source, embrace open-source, or partner with US companies for localized models</li>
+                            <li>Tech shifts do not cause long-term job destruction &mdash; historical precedents (agriculture, ATMs) show AI will alter roles, not eliminate employment</li>
+                        </ul>
+                        <div class="fft-card-source">YouTube &middot; Menlo Ventures</div>
+                    </div>
+                </a>
+
+                <a href="https://www.youtube.com/watch?v=UWIE0_PxMKE" target="_blank" class="fft-card">
+                    <div class="fft-card-image">
+                        <img src="https://img.youtube.com/vi/UWIE0_PxMKE/mqdefault.jpg" alt="Bret Taylor on Big Technology Podcast">
+                    </div>
+                    <div class="fft-card-body">
+                        <div class="fft-card-meta">
+                            <span class="fft-card-type">Video</span>
+                        </div>
+                        <div class="fft-card-title">Bret Taylor &mdash; Is AI Killing Software?</div>
+                        <ul class="fft-card-takeaways">
+                            <li>&ldquo;Vibe coding&rdquo; will become the standard expectation &mdash; the idea that your software is something you can change yourself will be something we expect</li>
+                            <li>Software form factors will shift from browsers and forms to autonomous agents operating against databases</li>
+                            <li>Personal AI agents will become the internet&rsquo;s front door &mdash; consumers will delegate browsing and purchasing to their agents</li>
+                            <li>Business model transitions (e.g., outcomes-based pricing) will be far harder for incumbents than adopting the underlying technology</li>
+                        </ul>
+                        <div class="fft-card-source">Big Technology Podcast &middot; Alex Kantrowitz</div>
+                    </div>
+                </a>
+
+                <a href="https://www.youtube.com/watch?v=AnAKE8qBKYU" target="_blank" class="fft-card">
+                    <div class="fft-card-image">
+                        <img src="https://img.youtube.com/vi/AnAKE8qBKYU/mqdefault.jpg" alt="Sridhar Ramaswamy on Sequoia">
+                    </div>
+                    <div class="fft-card-body">
+                        <div class="fft-card-meta">
+                            <span class="fft-card-type">Video</span>
+                        </div>
+                        <div class="fft-card-title">Sridhar Ramaswamy (Snowflake) &mdash; Data&rsquo;s Role in the AI Era</div>
+                        <ul class="fft-card-takeaways">
+                            <li>Enterprise AI demands a single source of truth &mdash; built on security, auditability, and trust; customer data is never used to train external models</li>
+                            <li>AI delivers extreme accelerations &mdash; software engineering projects that took four weeks now take forty minutes (100x speedup)</li>
+                            <li>Agile organizational setups matter more than pure hardware &mdash; team structure for fast deployment beats massive hardware spending</li>
+                            <li>AI is redefining corporate workflows &mdash; enterprises are using AI tools to completely replace legacy software and rip out old processes</li>
+                        </ul>
+                        <div class="fft-card-source">Sequoia Capital &middot; Training Data</div>
+                    </div>
+                </a>
+
+                </div></div>
+            </div>
+
+            <!-- ===== PRODUCTIVITY ===== -->
+            <div class="fft-category">
+                <button class="fft-category-toggle" onclick="this.parentElement.classList.toggle('open')">
+                    <span><h3 class="fft-category-title">Productivity<span class="fft-category-count">coming soon</span></h3></span>
+                    <svg class="fft-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </button>
+                <div class="fft-category-content"><div class="fft-category-inner">
+                <p class="fft-coming-soon">Content coming soon.</p>
+                </div></div>
+            </div>
+
+            <!-- ===== GENERAL ===== -->
+            <div class="fft-category">
+                <button class="fft-category-toggle" onclick="this.parentElement.classList.toggle('open')">
+                    <span><h3 class="fft-category-title">General<span class="fft-category-count">coming soon</span></h3></span>
+                    <svg class="fft-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </button>
+                <div class="fft-category-content"><div class="fft-category-inner">
+                <p class="fft-coming-soon">Content coming soon.</p>
+                </div></div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Shared Footer -->
+    <footer id="shared-footer"></footer>
+
+    <script src="../components/nav-footer.js"></script>
+</body>
+</html>

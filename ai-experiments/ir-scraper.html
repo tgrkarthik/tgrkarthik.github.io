@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" data-depth="1">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building a Scraper That Works on Any IR Website - Karthik Tiruvarur</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .article-header { max-width: 700px; margin: 3rem auto 2rem; padding: 0 var(--spacing-lg); }
+        .article-title { font-size: 36px; font-weight: 600; margin-bottom: 1rem; line-height: 1.2; }
+        .article-meta { display: flex; gap: 1rem; align-items: center; font-size: 14px; color: var(--secondary-color); margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border-color); }
+        .article-body { max-width: 700px; margin: 0 auto; padding: 0 var(--spacing-lg); line-height: 1.8; }
+        .article-body p { margin-bottom: 1.5rem; font-size: 16px; color: var(--secondary-color); }
+        .article-body h2 { font-size: 24px; margin-top: 2.5rem; margin-bottom: 1.5rem; color: var(--primary-color); }
+        .article-body h3 { font-size: 18px; margin-top: 2rem; margin-bottom: 1rem; color: var(--primary-color); }
+        .article-body strong { font-weight: 600; color: var(--primary-color); }
+        .article-footer { max-width: 700px; margin: 3rem auto 0; padding: 2rem var(--spacing-lg); background: var(--light-color); text-align: center; }
+        .back-link { display: inline-block; margin-bottom: 2rem; font-size: 14px; color: var(--secondary-color); }
+        .back-link:hover { color: var(--primary-color); }
+        @media (max-width: 768px) { .article-title { font-size: 24px; } .article-body p { font-size: 15px; } }
+        @media (max-width: 480px) { .article-title { font-size: 20px; } .article-body p { font-size: 14px; } .article-footer { padding: 1.25rem var(--spacing-md); } }
+    </style>
+</head>
+<body>
+    <nav id="shared-nav"></nav>
+    <div class="article-header">
+        <a href="../ai-experiments.html" class="back-link">&larr; Back to AI Experiments</a>
+        <h1 class="article-title">Building a Scraper That Works on Any Investor Relations Website</h1>
+        <div class="article-meta">
+            <span>March 2026</span>
+            <span>&bull;</span>
+            <span>Infrastructure &amp; Web Scraping</span>
+        </div>
+    </div>
+    <article class="article-body">
+        <p>Every public company has an investor relations website. None of them is designed for you.</p>
+        <p>They exist to satisfy regulatory disclosure requirements, to look credible to the analysts who visit once a year, and &mdash; not incidentally &mdash; to resist automated access. Most IR sites deploy the same arsenal: Cloudflare WAF, Akamai Bot Manager, PerimeterX, rate limiting, cookie consent walls, region gates. They do this to block scrapers. Which is precisely what I needed to build.</p>
+        <p>The question I started with: can a single scraper work on any company's investor relations website without needing site-specific code? I have 23 companies in my portfolio. I did not want 23 scrapers. I wanted one.</p>
+        <h2>What Linnaeus Would Have Done</h2>
+        <p>The naturalist's instinct is to classify before you act. Carl Linnaeus didn't describe every plant individually &mdash; he built a taxonomy. Kingdom, phylum, class, order, family, genus, species. Once the system existed, you didn't characterise a new organism from scratch; you placed it in the tree and inherited everything the tree already knew about its relatives.</p>
+        <p>The IR scraper works the same way. Instead of writing Tesla-specific code and Veeva-specific code and HDFC-specific code, the first problem to solve was: how many types of investor relations websites actually exist? The answer, after testing enough of them, is eight. WordPress. Q4 web platform. Drupal. GCS-Web. React/Next.js SPAs. Angular. Vue. And everything else.</p>
+        <p>Platform detection runs before any scraping begins. It reads the raw HTML for fingerprints &mdash; wp-content or wp-json for WordPress, __NEXT_DATA__ for Next.js, q4cdn.com in URL patterns. Ninety percent of the time, detection completes in under two seconds.</p>
+        <p><strong>Once you know which platform a site runs on, you know how to scrape it. The taxonomy is the strategy.</strong></p>
+        <p>A Q4 site has predictable URL patterns and loads its documents via JavaScript. A React SPA has document URLs embedded in compiled bundle files or triggered by API calls that you can intercept. A WordPress site is almost trivially easy &mdash; everything is in the HTML. The platform fingerprint collapses an open-ended problem into one of eight known patterns.</p>
+        <h2>The Bot Problem &mdash; and the Barbell</h2>
+        <p>The other ten percent is more interesting.</p>
+        <p>Some IR sites deploy serious anti-bot infrastructure. When you hit Akamai's Bot Manager or Cloudflare's challenge page, a naive scraper returns a 403 and stops. That's not good enough.</p>
+        <p>Nassim Taleb's barbell principle is about combining a very safe position with a very aggressive one, and eliminating the middle. Applied here: one end of the barbell is a lightweight requests session &mdash; no JavaScript rendering, minimal headers, fast and silent. It passes through most sites without triggering any defences. The other end is a full Playwright Chromium browser: real TLS fingerprint, full cookie handling, JavaScript execution, complete DOM rendering. Heavy, slow, but almost indistinguishable from a human.</p>
+        <p>Most documents get downloaded at the fast end. Documents that fail &mdash; 403s, CloudFront CDN blocks, authentication walls &mdash; go to the Playwright fallback automatically. You get the speed of a lightweight session for the easy cases and the power of a full browser for the hard ones. The wins compound: PB Fintech returned 720 documents with 99.8% download success. HDFC Bank returned 445 with 99.5%. Sea, a Q4 platform site, completed at 100%.</p>
+        <p>The scraper also handles four distinct WAF vendors &mdash; Akamai, Cloudflare, PerimeterX, DataDome &mdash; and escalates through a four-step browser strategy: Chromium headless &rarr; Chromium with HTTP/1.1 &rarr; system Chrome headless &rarr; system Chrome headed. When a French engineering company (Dassault Syst&egrave;mes, 3DS) required a headed browser to pass Akamai's challenge, that information was saved to the company's profile. The next run starts headed.</p>
+        <h2>What I Didn't Expect: Discovery Is Harder Than Downloading</h2>
+        <p>Downloading is a solved problem once you have the URL. Discovery &mdash; finding all the URLs in the first place &mdash; is not.</p>
+        <p>Every IR site organises its content differently. Some use anchor tags pointing directly to PDFs. Some load document URLs through API calls triggered by clicking "Annual Reports." Some paginate their document listings across fifteen pages of ten results each. Some hide everything behind a year selector &mdash; you click "2024," the page refreshes, you click "2023," and so on back to the beginning. IndiaMART had one section and needed entirely different discovery logic than PDD Holdings, which runs on GCS-Web and required its own platform handler.</p>
+        <p>The discovery engine runs four phases: static HTML extraction, dynamic content expansion (clicking year selectors, expanding accordions, following "Load More" buttons), JavaScript bundle scanning for document URLs embedded in compiled React code, and fallbacks (sitemaps, common IR path patterns, CDN enumeration).</p>
+        <p>The Palantir run revealed a subtler problem: after discovery, 1,638 of 1,728 documents were not real documents. They were EDGAR filing viewer artifacts &mdash; phantom PDF links each with a UUID in the URL, each labelled exactly "PDF" or "XBRL." The classifier now filters any link where the text is a bare file-type label and the URL contains a UUID pattern. Real document links have descriptive text.</p>
+        <h2>What I've Learned</h2>
+        <p>The generic approach outperforms the specific one &mdash; but only after you've done enough classification work to understand what "generic" actually covers. Eight platform types isn't a universal solution. It's eight specific handlers that are each somewhat more general than the company-specific code they replaced.</p>
+        <p>Each company I tested taught me something that made the next one easier. The Palantir session taught me about section-button deduplication and EDGAR junk filtering. The Blackbuck session taught me about React SPAs that trigger downloads on page load rather than on click. The 3DS session taught me about Akamai's headed-mode requirement. The taxonomy compounds. Each new case either fits an existing branch or forces a new one.</p>
+        <p>The scraper now runs on 18 companies. Before I write a single line of analysis on a new company, the scraper goes first &mdash; fifteen minutes of automated discovery and download versus what used to be an afternoon of manual browsing across investor pages.</p>
+        <p>What I find most interesting is the inversion: the harder problem was never the downloading. It was the listening &mdash; understanding what each site was saying about how it organised its knowledge, and building a system general enough to hear it.</p>
+    </article>
+    <div class="article-footer">
+        <p style="margin-bottom: 1.5rem;">Want more stories about building with AI?</p>
+        <div class="social-links" style="justify-content: center;">
+            <a href="../ai-experiments.html" class="btn btn-primary">Back to Experiments</a>
+            <a href="https://tgrkarthik.substack.com/" target="_blank" class="btn btn-secondary">Subscribe</a>
+        </div>
+    </div>
+    <footer id="shared-footer"></footer>
+
+    <script src="../components/nav-footer.js"></script>
+</body>
+</html>

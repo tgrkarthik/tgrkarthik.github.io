@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" data-depth="1">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibe Coding - Karthik Tiruvarur</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .article-header { max-width: 700px; margin: 3rem auto 2rem; padding: 0 var(--spacing-lg); }
+        .article-title { font-size: 36px; font-weight: 600; margin-bottom: 1rem; line-height: 1.2; }
+        .article-meta { display: flex; gap: 1rem; align-items: center; font-size: 14px; color: var(--secondary-color); margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border-color); }
+        .article-body { max-width: 700px; margin: 0 auto; padding: 0 var(--spacing-lg); line-height: 1.8; }
+        .article-body p { margin-bottom: 1.5rem; font-size: 16px; color: var(--secondary-color); }
+        .article-body h2 { font-size: 24px; margin-top: 2.5rem; margin-bottom: 1.5rem; color: var(--primary-color); }
+        .article-body strong { font-weight: 600; color: var(--primary-color); }
+        .article-footer { max-width: 700px; margin: 3rem auto 0; padding: 2rem var(--spacing-lg); background: var(--light-color); text-align: center; }
+        .back-link { display: inline-block; margin-bottom: 2rem; font-size: 14px; color: var(--secondary-color); }
+        .back-link:hover { color: var(--primary-color); }
+
+        /* Photo strip — two images side by side, compact */
+        .photo-strip {
+            display: flex;
+            gap: 0.75rem;
+            margin: 1.5rem 0 2rem;
+        }
+        .photo-strip img {
+            width: 50%;
+            height: auto;
+            border-radius: 4px;
+            object-fit: cover;
+            max-height: 240px;
+            filter: grayscale(0.1);
+        }
+        .photo-caption {
+            font-size: 13px;
+            color: var(--secondary-color);
+            opacity: 0.7;
+            margin-top: -0.75rem;
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+
+        /* Tweet embed container */
+        .tweet-embed {
+            max-width: 500px;
+            margin: 2rem auto;
+        }
+
+        /* Styled quote block */
+        .styled-quote {
+            margin: 2.5rem 0;
+            padding: 2rem 2.5rem;
+            background: var(--light-color);
+            border-left: 3px solid var(--primary-color);
+            border-radius: 0 4px 4px 0;
+        }
+        .styled-quote p {
+            font-size: 16px;
+            line-height: 1.9;
+            color: var(--primary-color);
+            margin-bottom: 0;
+            font-style: italic;
+        }
+        .styled-quote .quote-attribution {
+            display: block;
+            margin-top: 1.25rem;
+            font-size: 13px;
+            font-style: normal;
+            font-weight: 500;
+            color: var(--secondary-color);
+            letter-spacing: 0.03em;
+        }
+
+        @media (max-width: 768px) {
+            .article-title { font-size: 24px; }
+            .article-body p { font-size: 15px; }
+            .photo-strip img { max-height: 160px; }
+            .styled-quote { padding: 1.5rem; }
+            .tweet-embed { max-width: 100%; }
+        }
+        @media (max-width: 480px) {
+            .article-title { font-size: 20px; }
+            .article-body p { font-size: 14px; }
+            .photo-strip { gap: 0.4rem; }
+            .photo-strip img { max-height: 120px; }
+            .styled-quote { padding: 1rem; font-size: 14px; }
+        }
+    </style>
+</head>
+<body>
+    <nav id="shared-nav"></nav>
+
+    <div class="article-header">
+        <a href="../ai-experiments.html" class="back-link">&larr; Back to AI Experiments</a>
+        <h1 class="article-title">Vibe Coding</h1>
+        <div class="article-meta">
+            <span>April 2026</span>
+            <span>&bull;</span>
+            <span>Personal</span>
+        </div>
+    </div>
+
+    <article class="article-body">
+
+        <p>This is a picture from the summer of 2007. When I was half my current age. Amusingly, the vibe I inhabit as I go down many rabbit holes with Claude (Code / Cowork) these days.</p>
+
+        <div class="photo-strip">
+            <img src="CS1.jpg" alt="IIT Madras CS department, summer 2007 — friends posing for the camera">
+            <img src="CS2.jpg" alt="IIT Madras CS department, summer 2007 — the computer lab after an all-nighter">
+        </div>
+        <p class="photo-caption">Theoretical Computer Science lab, IIT Madras, ~5 a.m., summer 2007.</p>
+
+        <p>This picture is from the Theoretical Computer Science lab at IIT Madras, which had the swankiest desktop our CS department could afford (a Mac, with a built-in web camera). Probably around 4:30 or 5 a.m., after a bunch of us had pulled an all-nighter. Those were the final few weeks of our undergrad days, as we were wrapping up our individual B.Tech projects. Ah, the shenanigans! This was our attempt at a Friends&rsquo; style picture.</p>
+
+        <p>I find myself in a remarkably similar headspace now &mdash; nearly two decades later &mdash; with Claude and my AI experiments. The same rabbit hole. You code something, watch it come to life, spot the edge cases, go back to fix it, introduce a new edge case of errors, rinse and repeat. But the joy of seeing something come alive is real. Like it was, when we wrote code and took part in programming contests.</p>
+
+        <p>I just came across this tweet today. Truly feels like it.</p>
+
+        <div class="tweet-embed">
+            <blockquote class="twitter-tweet" data-dnt="true" data-theme="light">
+                <a href="https://x.com/naval/status/2039617101221224858"></a>
+            </blockquote>
+        </div>
+
+        <p>This will hopefully be an evolving webpage where I want to capture my own learnings as I build these products &mdash; not as a tutorial, not as a guide, but as a personal log. Something born out of good vibe coding.</p>
+
+        <div class="styled-quote">
+            <p>
+                Your first workout will be bad.<br>
+                Your first podcast will be bad.<br>
+                Your first speech will be bad.<br>
+                Your first video will be bad.<br>
+                Your first ANYTHING will be bad.<br>
+                But you can't make your 100th without making your first.
+            </p>
+            <span class="quote-attribution">&mdash; Alec Zamora</span>
+        </div>
+
+        <p>Vibe away ;)</p>
+
+    </article>
+
+    <div class="article-footer">
+        <p style="margin-bottom: 1.5rem;">Want more stories about building with AI?</p>
+        <div class="social-links" style="justify-content: center;">
+            <a href="../ai-experiments.html" class="btn btn-primary">Back to Experiments</a>
+            <a href="https://tgrkarthik.substack.com/" target="_blank" class="btn btn-secondary">Subscribe</a>
+        </div>
+    </div>
+
+    <footer id="shared-footer"></footer>
+
+    <script src="../components/nav-footer.js"></script>
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</body>
+</html>

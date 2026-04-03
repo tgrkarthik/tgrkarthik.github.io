@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en" data-depth="1">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Writing - Karthik Tiruvarur</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .writing-intro {
+            max-width: 700px;
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .writing-intro p {
+            font-size: 16px;
+            color: var(--secondary-color);
+            line-height: 1.7;
+        }
+        .articles-feed {
+            max-width: 800px;
+        }
+        .article-card {
+            display: flex;
+            gap: 1.5rem;
+            padding: 1.75rem 0;
+            border-bottom: 1px solid var(--border-color);
+            transition: var(--transition);
+            text-decoration: none;
+            color: inherit;
+        }
+        .article-card:first-child {
+            padding-top: 0;
+        }
+        .article-card:hover {
+            opacity: 1;
+        }
+        .article-card:hover .article-card-title {
+            color: var(--secondary-color);
+        }
+        .article-card-image {
+            flex-shrink: 0;
+            width: 140px;
+            height: 140px;
+            border-radius: 4px;
+            overflow: hidden;
+            background: var(--light-color);
+        }
+        .article-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .article-card-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .article-card-date {
+            font-size: 12px;
+            color: var(--secondary-color);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+        .article-card-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+            transition: var(--transition);
+        }
+        .article-card-snippet {
+            font-size: 14px;
+            color: var(--secondary-color);
+            line-height: 1.6;
+            margin: 0;
+        }
+        .article-card-source {
+            font-size: 11px;
+            color: var(--secondary-color);
+            margin-top: 0.5rem;
+            opacity: 0.7;
+        }
+        .substack-cta {
+            margin-top: 2.5rem;
+            padding: 2rem;
+            background: var(--light-color);
+            border-radius: 4px;
+            text-align: center;
+        }
+        .substack-cta p {
+            font-size: 15px;
+            color: var(--secondary-color);
+            margin-bottom: 1.25rem;
+        }
+        @media (max-width: 768px) {
+            .article-card {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .article-card-image {
+                width: 100%;
+                height: 200px;
+            }
+            .article-card-title {
+                font-size: 18px;
+            }
+        }
+        @media (max-width: 480px) {
+            .article-card-image { height: 160px; }
+            .article-card-title { font-size: 16px; }
+            .article-card-snippet { font-size: 13px; }
+            .substack-cta { padding: 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Shared Navigation -->
+    <nav id="shared-nav"></nav>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Writing</h2>
+            </div>
+
+            <div class="writing-intro">
+                <p>I write about technology, markets, investing, music and occasionally spirituality. Most of my writing lives on Substack, with some pieces on LinkedIn and Medium.</p>
+            </div>
+
+            <div class="articles-feed">
+
+                <a href="https://tgrkarthik.substack.com/p/when-the-prism-disappears" target="_blank" class="article-card">
+                    <div class="article-card-image">
+                        <img src="https://substack-post-media.s3.amazonaws.com/public/images/90755276-3f1d-4acb-b73b-020ca7e3f198_597x594.jpeg" alt="When the prism disappears">
+                    </div>
+                    <div class="article-card-body">
+                        <div class="article-card-date">Aug 24, 2024</div>
+                        <div class="article-card-title">When the prism disappears</div>
+                        <p class="article-card-snippet">A coming together of one of my learnings in computer science, biology and meditation.</p>
+                    </div>
+                </a>
+
+                <a href="https://tgrkarthik.substack.com/p/from-the-finger-to-the-moon" target="_blank" class="article-card">
+                    <div class="article-card-image">
+                        <img src="https://substack-post-media.s3.amazonaws.com/public/images/4a6fbed2-e40f-400d-b816-c36986d4b7a6_1024x1024.webp" alt="From the finger, to the moon">
+                    </div>
+                    <div class="article-card-body">
+                        <div class="article-card-date">May 17, 2024</div>
+                        <div class="article-card-title">From the finger, to the moon</div>
+                        <p class="article-card-snippet">'Sidekick', 'Number-2 man' &mdash; these sobriquets were my first introduction to the phenomenon, Charlie Munger. Through a journey of 6 years I learnt more&hellip;</p>
+                    </div>
+                </a>
+
+                <a href="https://tgrkarthik.substack.com/p/saying-no" target="_blank" class="article-card">
+                    <div class="article-card-image">
+                        <img src="https://substack-post-media.s3.amazonaws.com/public/images/1bfcc942-35b1-42bd-b0c7-c81f620f586b_755x1024.jpeg" alt="Saying No">
+                    </div>
+                    <div class="article-card-body">
+                        <div class="article-card-date">Jan 27, 2024</div>
+                        <div class="article-card-title">Saying No</div>
+                        <p class="article-card-snippet">Our time on the planet is finite and everyone is constrained by a constant &mdash; 24 hours of the day.</p>
+                    </div>
+                </a>
+
+                <a href="https://tgrkarthik.substack.com/p/takes-one-to-know-one" target="_blank" class="article-card">
+                    <div class="article-card-image">
+                        <img src="https://substack-post-media.s3.amazonaws.com/public/images/06f6ba2f-e95b-45e7-b283-500cb8811ae3_1024x1024.png" alt="Takes one to know one">
+                    </div>
+                    <div class="article-card-body">
+                        <div class="article-card-date">Jan 15, 2024</div>
+                        <div class="article-card-title">Takes one to know one</div>
+                        <p class="article-card-snippet">It was early 2000s when I was first introduced to DVDs in my teenage years.</p>
+                    </div>
+                </a>
+
+                <a href="https://tgrkarthik.substack.com/p/happy-100th-charlie" target="_blank" class="article-card">
+                    <div class="article-card-image">
+                        <img src="https://substack-post-media.s3.amazonaws.com/public/images/7bc6d20e-d350-4d36-9453-08dfe84d0cf5_700x350.jpeg" alt="Happy 100th, Charlie!">
+                    </div>
+                    <div class="article-card-body">
+                        <div class="article-card-date">Dec 31, 2023</div>
+                        <div class="article-card-title">Happy 100th, Charlie!</div>
+                        <p class="article-card-snippet">Here's my gift to you (and myself).</p>
+                    </div>
+                </a>
+
+                <a href="https://tgrkarthik.substack.com/p/silence" target="_blank" class="article-card">
+                    <div class="article-card-image">
+                        <img src="https://substack-post-media.s3.amazonaws.com/public/images/3e97a675-b534-4caf-aa8a-26a40e404350_1024x1024.png" alt="Silence">
+                    </div>
+                    <div class="article-card-body">
+                        <div class="article-card-date">Dec 31, 2023</div>
+                        <div class="article-card-title">Silence</div>
+                        <p class="article-card-snippet">When Gautama Buddha was posed certain questions, he chose to stay silent. What does that silence mean?</p>
+                    </div>
+                </a>
+
+                <a href="https://tgrkarthik.substack.com/p/two-words-for-2024" target="_blank" class="article-card">
+                    <div class="article-card-image">
+                        <img src="https://substack-post-media.s3.amazonaws.com/public/images/dcdc466c-36e3-4aa4-832a-3848f6dafc24_1536x1536.jpeg" alt="Two words for 2024">
+                    </div>
+                    <div class="article-card-body">
+                        <div class="article-card-date">Dec 30, 2023</div>
+                        <div class="article-card-title">Two words for 2024</div>
+                        <p class="article-card-snippet">Some ideas hit you like a ton of bricks when you encounter them the first time and you are never the same after.</p>
+                    </div>
+                </a>
+
+                <a href="https://tgrkarthik.substack.com/p/how-bad-are-the-hallucinations-chatgpt" target="_blank" class="article-card">
+                    <div class="article-card-body">
+                        <div class="article-card-date">May 14, 2023</div>
+                        <div class="article-card-title">ChatGPT hallucinations</div>
+                        <p class="article-card-snippet">Mimetic as it may be, a hobby I've picked up past two years is to explore tech products and services that make life better.</p>
+                    </div>
+                </a>
+
+            </div>
+
+            <div class="substack-cta">
+                <p>For new essays, subscribe to my Substack.</p>
+                <a href="https://tgrkarthik.substack.com/" target="_blank" class="btn btn-primary">Subscribe on Substack</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Shared Footer -->
+    <footer id="shared-footer"></footer>
+
+    <script src="../components/nav-footer.js"></script>
+</body>
+</html>

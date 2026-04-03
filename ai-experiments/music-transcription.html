@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" data-depth="1">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transcribing Eight Years of Music Lessons - Karthik Tiruvarur</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .article-header { max-width: 700px; margin: 3rem auto 2rem; padding: 0 var(--spacing-lg); }
+        .article-title { font-size: 36px; font-weight: 600; margin-bottom: 1rem; line-height: 1.2; }
+        .article-meta { display: flex; gap: 1rem; align-items: center; font-size: 14px; color: var(--secondary-color); margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border-color); }
+        .article-body { max-width: 700px; margin: 0 auto; padding: 0 var(--spacing-lg); line-height: 1.8; }
+        .article-body p { margin-bottom: 1.5rem; font-size: 16px; color: var(--secondary-color); }
+        .article-body h2 { font-size: 24px; margin-top: 2.5rem; margin-bottom: 1.5rem; color: var(--primary-color); }
+        .article-body h3 { font-size: 18px; margin-top: 2rem; margin-bottom: 1rem; color: var(--primary-color); }
+        .article-body strong { font-weight: 600; color: var(--primary-color); }
+        .article-footer { max-width: 700px; margin: 3rem auto 0; padding: 2rem var(--spacing-lg); background: var(--light-color); text-align: center; }
+        .back-link { display: inline-block; margin-bottom: 2rem; font-size: 14px; color: var(--secondary-color); }
+        .back-link:hover { color: var(--primary-color); }
+        @media (max-width: 768px) { .article-title { font-size: 24px; } .article-body p { font-size: 15px; } }
+        @media (max-width: 480px) { .article-title { font-size: 20px; } .article-body p { font-size: 14px; } .article-footer { padding: 1.25rem var(--spacing-md); } }
+    </style>
+</head>
+<body>
+    <nav id="shared-nav"></nav>
+    <div class="article-header">
+        <a href="../ai-experiments.html" class="back-link">&larr; Back to AI Experiments</a>
+        <h1 class="article-title">Transcribing Eight Years of Music Lessons</h1>
+        <div class="article-meta">
+            <span>March 2026</span>
+            <span>&bull;</span>
+            <span>Audio Processing &amp; Indian Classical Music</span>
+        </div>
+    </div>
+    <article class="article-body">
+        <p>Indian classical music has no sheet music.</p>
+        <p>There is no notated score for a raga. The tradition &mdash; two thousand years of it &mdash; has been transmitted through a single mechanism: a teacher and a student, in a room, one phrase repeated until it is absorbed. The guru-shishya parampara. The lineage of listening.</p>
+        <p>I've been studying Indian classical music for eight years. I take lessons every week. My teacher sings a phrase; I sing it back. He corrects; I adjust. The lesson lasts ninety minutes and by the end, something has been transmitted that cannot be fully described in words. Most of what I've learned is not in any notebook.</p>
+        <p>Last year, I started recording the lessons and giving them to Claude.</p>
+        <h2>What Transcription Does to Listening</h2>
+        <p>Paul Graham argues that writing is thinking &mdash; that the act of putting ideas into sentences is not a way of recording what you already believe, but a way of discovering it. You don't know what you think until you've tried to write it. The act of writing surfaces the gaps.</p>
+        <p>Transcription does something similar to listening. When I started asking Claude to produce timestamped breakdowns of each lesson &mdash; which phrase was introduced, what the teacher corrected, what the student repeated and how &mdash; I had to listen differently. Not passively, not the way you hear music on a commute, but attentively enough to verify that what Claude had captured was what actually happened.</p>
+        <p><strong>The transcription wasn't for the future. It was changing how I listened in the present.</strong></p>
+        <p>I found myself pausing recordings at the thirty-minute mark to read the transcript so far. Reading it changed what I heard in the next thirty minutes. The places where Claude had described a phrase correctly but missed the intent of the correction &mdash; where my teacher's "more breath" referred to a specific technique of sustained vowel support, not simply louder &mdash; forced me to re-listen and articulate what was actually being said. That articulation was the learning.</p>
+        <h2>The Technical Part</h2>
+        <p>The workflow is straightforward in principle and has more edge cases than I expected.</p>
+        <p>I record each lesson on my phone. The recording goes to Claude, which produces a timestamped transcript. The transcript covers: the raga or composition section being studied, each iteration of the teacher singing and the student responding, any verbal corrections, and a closing summary distinguishing what was new from what was revision.</p>
+        <p>The first version produced transcripts that were technically accurate and musically useless. Claude captured the words perfectly and missed the music entirely. When my teacher said "that phrase needs more weight on the fourth beat," the transcript said exactly that &mdash; but without knowing which phrase, what the fourth beat was in that composition, or how "weight" manifests in that specific raga, the note was a placeholder for understanding rather than understanding itself.</p>
+        <p>The fix was context. Each session prompt now includes the raga being studied, the composition we're working on, and a glossary of the terms my teacher uses consistently. Weighted phrases like "more breath," "looser," "let it fall" appear with annotations connecting them to the specific technique they reference. The transcript went from a log to a teaching document.</p>
+        <p>The second problem was memory. The guru-shishya tradition works precisely because the teacher knows what the student has internalised, where the gaps are, and what the next challenge should be. Claude, at the start of every session, knows none of this. The solution was a "student state" document &mdash; a two-page summary of where I am in each composition, what I've been corrected on most frequently, and what the teacher said I should focus on before next time. This feeds into every session. Claude arrives briefed.</p>
+        <h2>A Note on the Tradition</h2>
+        <p>There is something worth sitting with in using AI to preserve knowledge that has specifically resisted systematisation for two millennia.</p>
+        <p>Indian classical music is not just untranscribed because notation hasn't caught up. It is untranscribed because the tradition holds that some knowledge cannot survive the journey from teacher to notation to student without losing what matters most. The ornaments &mdash; the gamakas, the subtle pitch movements, the living quality of a phrase &mdash; are not in the notes. They are in the relationship: in a teacher who knows exactly which mistake a particular student keeps making, and knows which correction, delivered at which moment, will shift something.</p>
+        <p>I don't think Claude changes this. My teacher is still the knowledge. The transcript is a memory aid, not a replacement for the room. What I have found is that building that memory aid &mdash; of taking what was purely auditory and making it partially textual &mdash; has made me a more attentive student, not a lazier one.</p>
+        <p>There is an old idea in the Lindy tradition that things which have survived for a very long time carry evidence of their fitness in that very survival. Indian classical music has transmitted itself orally across two millennia of political upheaval, colonisation, and now the full force of recorded and streaming audio. It is still here because oral transmission, with all its apparent inefficiency, preserves something that notation does not.</p>
+        <p>The lessons are still in the room. The transcript helps me hear them more fully when I return.</p>
+    </article>
+    <div class="article-footer">
+        <p style="margin-bottom: 1.5rem;">Want more stories about building with AI?</p>
+        <div class="social-links" style="justify-content: center;">
+            <a href="../ai-experiments.html" class="btn btn-primary">Back to Experiments</a>
+            <a href="https://tgrkarthik.substack.com/" target="_blank" class="btn btn-secondary">Subscribe</a>
+        </div>
+    </div>
+    <footer id="shared-footer"></footer>
+
+    <script src="../components/nav-footer.js"></script>
+</body>
+</html>
