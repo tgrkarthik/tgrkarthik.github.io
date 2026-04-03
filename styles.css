@@ -556,8 +556,9 @@ a:hover {
     }
 
     .hero {
-        min-height: 400px;
-        padding: var(--spacing-xl) 0;
+        min-height: auto;
+        padding: var(--spacing-lg) 0;
+        align-items: flex-start;
     }
 
     .section-header {
