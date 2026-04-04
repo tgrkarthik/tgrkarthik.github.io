@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" data-depth="1">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Assembly Problem - Karthik Tiruvarur</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .article-header { max-width: 700px; margin: 3rem auto 2rem; padding: 0 var(--spacing-lg); }
+        .article-title { font-size: 36px; font-weight: 600; margin-bottom: 1rem; line-height: 1.2; }
+        .article-meta { display: flex; gap: 1rem; align-items: center; font-size: 14px; color: var(--secondary-color); margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border-color); }
+        .article-body { max-width: 700px; margin: 0 auto; padding: 0 var(--spacing-lg); line-height: 1.8; }
+        .article-body p { margin-bottom: 1.5rem; font-size: 16px; color: var(--secondary-color); }
+        .article-body h2 { font-size: 24px; margin-top: 2.5rem; margin-bottom: 1.5rem; color: var(--primary-color); }
+        .article-body strong { font-weight: 600; color: var(--primary-color); }
+        .article-footer { max-width: 700px; margin: 3rem auto 0; padding: 2rem var(--spacing-lg); background: var(--light-color); text-align: center; }
+        .back-link { display: inline-block; margin-bottom: 2rem; font-size: 14px; color: var(--secondary-color); }
+        .back-link:hover { color: var(--primary-color); }
+
+        /* Styled quote block */
+        .styled-quote {
+            margin: 2.5rem 0;
+            padding: 2rem 2.5rem;
+            background: var(--light-color);
+            border-left: 3px solid var(--primary-color);
+            border-radius: 0 4px 4px 0;
+        }
+        .styled-quote p {
+            font-size: 16px;
+            line-height: 1.9;
+            color: var(--primary-color);
+            margin-bottom: 0;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .article-title { font-size: 24px; }
+            .article-body p { font-size: 15px; }
+            .styled-quote { padding: 1.5rem; }
+        }
+        @media (max-width: 480px) {
+            .article-title { font-size: 20px; }
+            .article-body p { font-size: 14px; }
+            .styled-quote { padding: 1rem; font-size: 14px; }
+        }
+    </style>
+</head>
+<body>
+    <nav id="shared-nav"></nav>
+
+    <div class="article-header">
+        <a href="../ai-experiments.html" class="back-link">&larr; Back to AI Experiments</a>
+        <h1 class="article-title">The Assembly Problem</h1>
+        <div class="article-meta">
+            <span>April 2026</span>
+            <span>&bull;</span>
+            <span>Engineering</span>
+        </div>
+    </div>
+
+    <article class="article-body">
+
+        <p>LLMs are good at generating analysis. Give one a 400-line skill file, access to a financial data API, and a company ticker, and it&rsquo;ll produce a 13-section initiation report with sourced figures, internal consistency checks, and a variant perception thesis. I&rsquo;ve now run this pipeline on over a dozen companies &mdash; Veeva, Palantir, Amazon, Snowflake, Thermo Fisher, Danaher &mdash; and the generation step works. It isn&rsquo;t perfect, but it&rsquo;s structurally sound and directionally useful.</p>
+
+        <p>What doesn&rsquo;t work is what comes after: taking four separately generated files and assembling them into one coherent report.</p>
+
+        <p>The pipeline has four stages: a closed-book draft, an audit pass, an open-book valuation, and an earnings sentiment analysis. Each stage reads a skill file, calls the Quartr API, and writes a markdown file. The natural implementation was to spawn each stage as a subagent with the right model assignment and then spawn a fifth subagent to merge the four outputs and convert to a Word document. The merge agent received a clear instruction: &ldquo;Combine these four files into a single report following the 13-section structure.&rdquo; Sounds trivial. It isn&rsquo;t.</p>
+
+        <p>The merge agent has no memory of my formatting preferences, no access to the tested document converter, and no awareness that the section structure is defined in a separate skill file. So it improvises. It reorders sections based on its own judgment. It writes an ad-hoc Python converter that doesn&rsquo;t handle markdown bold syntax or table parsing. It paraphrases content during assembly, subtly altering source-tagged figures. Thermo Fisher&rsquo;s report came back with 795 paragraphs of unrendered bold markers. Danaher&rsquo;s sections were completely renumbered. The two reports, produced by the same pipeline minutes apart, had different structures.</p>
+
+        <p>That&rsquo;s the assembly problem: the step that requires the least intelligence is the step most damaged by LLM involvement.</p>
+
+        <p>The fix was almost embarrassingly simple. I replaced the merge agent with a Python script. Three hundred lines of deterministic code that reads the canonical section structure from the skill file, pattern-matches headers in each stage output, slots content into the right positions, downgrades internal headings so they don&rsquo;t leak as top-level sections, runs a post-processor for known markdown edge cases, calls the tested Node.js converter, and verifies the output. Broken bold count must be zero. Table count must be positive. Heading structure must match the canonical set exactly. Same input, same output, every time.</p>
+
+        <p>The generation stages stayed as LLM subagents because that&rsquo;s genuinely LLM work &mdash; reading filings, synthesizing analysis, building financial models. The assembly step became code because it&rsquo;s mechanical work that needs to be identical every run.</p>
+
+        <div class="styled-quote">
+            <p>Know which parts of your system need intelligence and which parts need consistency, and don&rsquo;t use one where you need the other.</p>
+        </div>
+
+        <p>There&rsquo;s a second lesson buried in the debugging. Every failure I encountered &mdash; a cross-line regex that corrupted a financial table by matching newlines, an annotation tag that broke the bold parser, Stage 3 valuation headings appearing as peer-level sections in the merged output &mdash; was caught not by me reading the document, but by automated verification checks. <code>grep &quot;^## &quot;</code> on the final markdown tells you instantly if the section structure is clean. A three-line Python snippet counting <code>**</code> in the docx paragraphs tells you if the converter worked. Trivial to write. I should have built them from the start.</p>
+
+        <p>The debugging tax I paid in this session &mdash; hours tracing a <code>\s</code> regex that matched across line boundaries, hours finding a triple-bold pattern in one company&rsquo;s filing that no other company produced &mdash; was the cost of delivering output without verification and discovering problems only when I looked at the final product.</p>
+
+        <p>The pipeline now has a single entry point, a unique trigger phrase, verbatim subagent prompts that leave no room for interpretation, a deterministic merge, and automated verification. It also has a failure log that persists across sessions, so the system accumulates knowledge instead of repeating mistakes.</p>
+
+        <p>The most useful thing I did in this entire session wasn&rsquo;t writing code or fixing regex. It was asking Claude a simple question: &ldquo;Under what conditions will this break?&rdquo; The response was a structured taxonomy of failure modes, sorted by probability and severity, with honest assessments of what&rsquo;s solved, what&rsquo;s mitigated, and what&rsquo;s still an accepted risk. Then I took that taxonomy and fed it back into the orchestrator itself as a mandatory pre-read. Before the system runs a single stage, it now reads its own failure log. The LLM that might break the pipeline starts every run by studying exactly how and why it has broken before.</p>
+
+        <p>That&rsquo;s the move I didn&rsquo;t expect to matter this much. You can use an LLM&rsquo;s self-awareness as an engineering input. It knows its own failure modes better than you&rsquo;d guess, and if you ask the right question, it&rsquo;ll give you a structured answer you can operationalize. The feedback loop closes: the system breaks, you diagnose it together, the diagnosis becomes part of the system&rsquo;s own instructions, and the next run is harder to break in the same way.</p>
+
+        <p>The honest assessment: this eliminates the systematic failures and reduces the probabilistic ones to edge cases the verification step will catch. It doesn&rsquo;t make the pipeline infallible. A subagent might still format a header in a way the regex doesn&rsquo;t expect. A future company&rsquo;s filings might produce a markdown pattern nobody&rsquo;s seen before. But when something breaks, I&rsquo;ll know which stage broke, what the expected output was, and where in the code to look. That&rsquo;s the real product of this session &mdash; not a fixed report, but a system that fails gracefully and learns incrementally.</p>
+
+    </article>
+
+    <div class="article-footer">
+        <p style="margin-bottom: 1.5rem;">Want more stories about building with AI?</p>
+        <div class="social-links" style="justify-content: center;">
+            <a href="../ai-experiments.html" class="btn btn-primary">Back to Experiments</a>
+            <a href="https://tgrkarthik.substack.com/" target="_blank" class="btn btn-secondary">Subscribe</a>
+        </div>
+    </div>
+
+    <footer id="shared-footer"></footer>
+
+    <script src="../components/nav-footer.js"></script>
+</body>
+</html>
