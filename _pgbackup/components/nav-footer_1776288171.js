@@ -10,7 +10,7 @@
 
     const navHTML = `
     <div class="nav-container">
-        <a href="${prefix}index.html" class="logo">KARTHIK TIRUVARUR</a>
+        <a href="${prefix}index.html" class="logo">Karthik Tiruvarur</a>
         <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
             <span class="nav-toggle-bar"></span>
             <span class="nav-toggle-bar"></span>

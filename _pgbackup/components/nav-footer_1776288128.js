@@ -10,7 +10,7 @@
 
     const navHTML = `
     <div class="nav-container">
-        <a href="${prefix}index.html" class="logo">KARTHIK TIRUVARUR</a>
+        <a href="${prefix}index.html" class="logo">Karthik Tiruvarur</a>
         <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
             <span class="nav-toggle-bar"></span>
             <span class="nav-toggle-bar"></span>
@@ -29,7 +29,7 @@
 
     const footerHTML = `
     <div class="container">
-        <p>&copy; 2025 Karthik Tiruvarur.</p>
+        <p>&copy; 2025 Karthik Tiruvarur. Exploring digital markets and technology.</p>
         <p class="footer-note">Powered by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a></p>
     </div>`;
 

@@ -17,6 +17,7 @@
      Small   14px        Base    16px        Large   18px
      XL      24px        2XL     32px        3XL     48px
    ===================================================================== */
+
 /* ===== RESET ===== */
 * {
     margin: 0;
@@ -223,7 +224,7 @@ a:hover {
 
 /* ===== HERO SECTION ===== */
 .hero {
-    padding: 3rem 0 2rem;
+    padding: 4rem 0;
     background: linear-gradient(135deg, rgba(0,0,0,0.02) 0%, rgba(0,0,0,0.01) 100%);
     display: flex;
     align-items: flex-start;
@@ -703,7 +704,7 @@ a:hover {
 
 /* Explore section — the grid of cards below the hero */
 .explore-section {
-    padding: 1rem 0;
+    padding: 3rem 0;
 }
 
 .explore-section h2 {
@@ -817,5 +818,3 @@ a:hover {
     }
 
     .explore-card {
-    }
-}
