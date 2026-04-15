@@ -243,6 +243,11 @@ a:hover {
     margin-bottom: var(--spacing-xl);
 }
 
+/* Hero description spacing — desktop default; mobile override lives in the 768px media query below */
+.hero-description {
+    margin-top: 2rem;
+}
+
 .social-links {
     display: flex;
     gap: var(--spacing-md);
@@ -563,6 +568,11 @@ a:hover {
         min-height: auto;
         padding: var(--spacing-lg) 0;
         align-items: flex-start;
+    }
+
+    /* Mobile override for hero description spacing — tweak independently of desktop */
+    .hero-description {
+        margin-top: 1rem;
     }
 
     .section-header {
