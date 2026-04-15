@@ -632,3 +632,171 @@ a:hover {
         padding: var(--spacing-md);
     }
 }
+
+/* =====================================================================
+   HOME PAGE STYLES
+   These rules apply only to index.html — hero section layout,
+   the social sidebar, the site description (desktop vs mobile),
+   and the Explore cards grid.
+   Edit these to change spacing, colors, or layout on the home page.
+   ===================================================================== */
+
+/* Hero — two-column layout: text left, social sidebar right */
+.hero-layout {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xl);
+}
+.hero-text {
+    flex: 1;
+    max-width: 700px;
+}
+
+/* The "opposites" link inside the h3 — subtle dotted underline */
+.opposites-link {
+    border-bottom: 1px dotted #666;
+    color: inherit;
+}
+
+/* Social sidebar — right side on desktop */
+.social-sidebar {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding-top: 0.5rem;
+}
+.social-sidebar a {
+    display: block;
+    padding: 0.5rem 1.25rem;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--secondary-color);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    text-align: center;
+    text-decoration: none;
+    transition: var(--transition);
+    white-space: nowrap;
+}
+.social-sidebar a:hover {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+    opacity: 1;
+}
+
+/* Site description — shown in hero on desktop, after Explore on mobile */
+.hero-description {
+    display: block;
+    margin-top: 2rem;  /* ← blank-line gap above "This site features…". Tweak this number. */
+}
+.site-description-mobile {
+    display: none;
+}
+
+/* Explore section — the grid of cards below the hero */
+.explore-section {
+    padding: var(--spacing-xl) 0;
+}
+.explore-section h2 {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--spacing-lg);
+}
+.explore-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-md);
+}
+.explore-card {
+    display: block;
+    padding: var(--spacing-lg);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    text-decoration: none;
+    color: inherit;
+    transition: var(--transition);
+}
+.explore-card:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    opacity: 1;
+}
+.explore-card-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 0.4rem;
+}
+.explore-card-desc {
+    font-size: 13px;
+    color: var(--secondary-color);
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Mobile: inline social text under the hero, no sidebar */
+.social-links-inline {
+    display: none;
+}
+
+/* ---- Home page MOBILE overrides (below 768px wide) ---- */
+@media (max-width: 768px) {
+    .hero-layout {
+        flex-direction: column;
+        gap: 0;
+    }
+    .social-sidebar {
+        display: none;
+    }
+
+    /* Tighter hero with clearer text hierarchy on mobile */
+    .hero-text h1 {
+        font-size: 28px;
+        line-height: 1.25;
+        margin-bottom: 1.75rem;
+    }
+    .hero-text h3 {
+        font-size: 18px;
+        margin-bottom: 1rem;
+    }
+    .hero-text h5 {
+        font-size: 13px;
+        margin-bottom: 1.5rem;
+        color: var(--secondary-color);
+    }
+
+    /* Hide description in hero on mobile, show it after Explore */
+    .hero-description {
+        display: none;
+    }
+    .site-description-mobile {
+        display: block;
+        padding: var(--spacing-lg) 0 0;
+        font-size: 15px;
+        color: var(--secondary-color);
+        line-height: 1.7;
+    }
+
+    /* Inline mobile social links shown under the hero text */
+    .social-links-inline {
+        display: block;
+        font-size: 14px;
+        color: var(--secondary-color);
+    }
+    .social-links-inline a {
+        color: var(--secondary-color);
+        border-bottom: 1px dotted var(--border-color);
+        margin: 0 0.3rem;
+    }
+    .social-links-inline a:hover {
+        color: var(--primary-color);
+    }
+
+    /* Explore grid collapses to single column on mobile */
+    .explore-grid {
+        grid-template-columns: 1fr;
+    }
+    .explore-card {
+        padding: var(--spacing-md);
+    }
+}
