@@ -121,9 +121,9 @@ a:hover {
 }
 
 .logo {
-    font-size: 18px;
-    font-weight: 600;
-    color: #000000;
+    font-size: 24px;
+    font-weight: 700;
+    color: #8b4513;  /* ← warm dark brown, Claude-ish. Try #a0522d for more sienna, #c15f3c for terracotta, #6b3410 for deeper brown */
 }
 
 .nav-links {
@@ -692,7 +692,7 @@ a:hover {
 /* Site description — shown in hero on desktop, after Explore on mobile */
 .hero-description {
     display: block;
-    margin-top: 2rem;
+    margin-top: 4rem;
 
     /* ← blank-line gap above "This site features…". Tweak this number. */
 }

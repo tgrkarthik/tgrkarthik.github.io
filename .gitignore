@@ -1,0 +1,23 @@
+# ============================================================
+# Ignore Pinegrow's working files so they never get tracked
+# or pushed to GitHub. If you ever open this folder in Pinegrow
+# again, these folders and files will be created but git will
+# stay clean.
+# ============================================================
+
+# Pinegrow auto-backups and metadata
+_pgbackup/
+_pginfo/
+pinegrow.json
+projectdb.pgml
+
+# Pinegrow-generated theme file (contains variables we don't want)
+css/theme.css
+
+# Editor / OS cruft
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
