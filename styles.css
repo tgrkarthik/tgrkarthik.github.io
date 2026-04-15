@@ -223,9 +223,8 @@ a:hover {
 .hero {
     padding: var(--spacing-2xl) 0;
     background: linear-gradient(135deg, rgba(0,0,0,0.02) 0%, rgba(0,0,0,0.01) 100%);
-    min-height: 600px;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .hero-content {
@@ -241,11 +240,6 @@ a:hover {
     font-size: var(--font-size-lg);
     color: var(--secondary-color);
     margin-bottom: var(--spacing-xl);
-}
-
-/* Hero description spacing — desktop default; mobile override lives in the 768px media query below */
-.hero-description {
-    margin-top: 2rem;
 }
 
 .social-links {
@@ -568,11 +562,6 @@ a:hover {
         min-height: auto;
         padding: var(--spacing-lg) 0;
         align-items: flex-start;
-    }
-
-    /* Mobile override for hero description spacing — tweak independently of desktop */
-    .hero-description {
-        margin-top: 1rem;
     }
 
     .section-header {
