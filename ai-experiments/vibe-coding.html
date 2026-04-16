@@ -40,10 +40,27 @@
             font-style: italic;
         }
 
-        /* Tweet embed container */
+        /* Tweet screenshot */
         .tweet-embed {
-            max-width: 500px;
+            max-width: 600px;
             margin: 2rem auto;
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            transition: box-shadow 0.2s ease;
+        }
+        .tweet-embed:hover {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+        }
+        .tweet-embed a {
+            display: block;
+        }
+        .tweet-embed img {
+            width: 100%;
+            height: auto;
+            display: block;
         }
 
         /* Styled quote block */
@@ -117,10 +134,9 @@
         <p>I just came across this tweet today. Truly feels like it.</p>
 
         <div class="tweet-embed">
-            <blockquote class="twitter-tweet" data-dnt="true" data-theme="light">
-                <p>&ldquo;Vibe coding is more addictive than any video game ever made (if you know what you want to build).&rdquo;</p>
-                &mdash; Naval (@naval) <a href="https://x.com/naval/status/2039617101221224858">April 2, 2026</a>
-            </blockquote>
+            <a href="https://x.com/naval/status/2039617101221224858" target="_blank">
+                <img src="Screenshot%202026-04-16%20083812.png" alt="Naval on X: Vibe coding is more addictive than any video game ever made (if you know what you want to build).">
+            </a>
         </div>
 
         <p>This will hopefully be an evolving webpage where I want to capture my own learnings as I build these products &mdash; not as a tutorial, not as a guide, but as a personal log. Something born out of good vibe coding.</p>
@@ -152,6 +168,5 @@
     <footer id="shared-footer"></footer>
 
     <script src="../components/nav-footer.js"></script>
-    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 </body>
 </html>

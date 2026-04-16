@@ -6,112 +6,177 @@
     <title>My Experiments with AI - Karthik Tiruvarur</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        .experiments-intro {
-            max-width: 700px;
-            margin-bottom: 2.5rem;
-            padding-bottom: 2rem;
-            border-bottom: 1px solid var(--border-color);
+        /* ===== Two-column layout ===== */
+        .ai-layout {
+            display: flex;
+            gap: 3rem;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem;
         }
-        .experiments-intro p {
+        .ai-main {
+            flex: 3;
+            min-width: 0;
+        }
+        .ai-sidebar {
+            flex: 2;
+            min-width: 0;
+        }
+
+        /* ===== Main column: vibe coding content ===== */
+        .ai-main p {
             font-size: 16px;
-            color: var(--secondary-color);
-            line-height: 1.7;
+            color: #666666;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
         }
-        .experiments-feed {
-            max-width: 800px;
+        .ai-main strong {
+            font-weight: 600;
+            color: #000000;
         }
-        .experiment-item {
-            display: block;
-            padding: 1.75rem 0;
-            border-bottom: 1px solid var(--border-color);
-            text-decoration: none;
-            color: inherit;
-            transition: var(--transition);
-        }
-        .experiment-item:first-child {
-            padding-top: 0;
-        }
-        .experiment-item:hover {
-            opacity: 1;
-        }
-        .experiment-item:hover .experiment-item-title {
-            color: var(--secondary-color);
-        }
-        .experiment-item-meta {
+
+        /* Photo strip */
+        .photo-strip {
             display: flex;
             gap: 0.75rem;
-            margin-bottom: 0.75rem;
-            flex-wrap: wrap;
-            align-items: center;
+            margin: 1.5rem 0 0.5rem;
         }
-        .experiment-item-badge {
-            font-size: 11px;
+        .photo-strip img {
+            width: 50%;
+            height: auto;
+            border-radius: 4px;
+            object-fit: cover;
+            max-height: 220px;
+            filter: grayscale(0.1);
+        }
+        .photo-caption {
+            font-size: 13px;
+            color: #666666;
+            opacity: 0.7;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        /* Tweet screenshot */
+        .tweet-embed {
+            max-width: 480px;
+            margin: 1.5rem 0;
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            transition: box-shadow 0.2s ease;
+        }
+        .tweet-embed:hover {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+        }
+        .tweet-embed a { display: block; }
+        .tweet-embed img { width: 100%; height: auto; display: block; }
+
+        /* Styled quote */
+        .styled-quote {
+            margin: 2rem 0;
+            padding: 1.5rem 2rem;
+            background: #f5f5f5;
+            border-left: 3px solid #000000;
+            border-radius: 0 4px 4px 0;
+        }
+        .styled-quote p {
+            font-size: 15px;
+            line-height: 1.9;
+            color: #000000;
+            margin-bottom: 0;
+            font-style: italic;
+        }
+        .styled-quote .quote-attribution {
+            display: block;
+            margin-top: 1rem;
+            font-size: 13px;
+            font-style: normal;
             font-weight: 500;
-            padding: 0.25rem 0.6rem;
-            background: var(--light-color);
-            border: 0.5px solid var(--border-color);
-            border-radius: 2px;
-            color: var(--secondary-color);
-            text-transform: capitalize;
+            color: #666666;
+            letter-spacing: 0.03em;
         }
-        .experiment-item-date {
-            font-size: 12px;
-            color: var(--secondary-color);
+
+        /* ===== Sidebar: article list ===== */
+        .sidebar-heading {
+            font-size: 18px;
+            font-weight: 600;
+            color: #000000;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid #000000;
+        }
+        .sidebar-item {
+            display: block;
+            padding: 1rem 0;
+            border-bottom: 1px solid #e0e0e0;
+            text-decoration: none;
+            color: inherit;
+            transition: opacity 0.2s ease;
+        }
+        .sidebar-item:hover {
             opacity: 0.7;
         }
-        .experiment-item-title {
-            font-size: 20px;
+        .sidebar-item-title {
+            font-size: 15px;
             font-weight: 600;
-            color: var(--primary-color);
-            margin-bottom: 0.5rem;
+            color: #000000;
+            margin-bottom: 0.35rem;
             line-height: 1.3;
-            transition: var(--transition);
         }
-        .experiment-item-snippet {
-            font-size: 14px;
-            color: var(--secondary-color);
-            line-height: 1.6;
+        .sidebar-item-desc {
+            font-size: 13px;
+            color: #666666;
+            line-height: 1.5;
             margin: 0;
         }
-        .experiment-item-source {
-            display: inline-block;
-            margin-top: 0.5rem;
-            font-size: 12px;
-            color: var(--secondary-color);
+        .sidebar-item-meta {
+            font-size: 11px;
+            color: #666666;
             opacity: 0.6;
+            margin-top: 0.35rem;
         }
-        .experiment-item-arrow {
-            font-size: 13px;
-            font-weight: 500;
-            color: var(--primary-color);
-            margin-top: 0.75rem;
-            display: inline-block;
-        }
+
+        /* CTA at bottom */
         .experiments-cta {
-            margin-top: 2.5rem;
+            max-width: 1100px;
+            margin: 3rem auto 0;
             padding: 2rem;
-            background: var(--light-color);
+            background: #f5f5f5;
             border-radius: 4px;
             text-align: center;
         }
         .experiments-cta p {
             font-size: 15px;
-            color: var(--secondary-color);
+            color: #666666;
             margin-bottom: 1.25rem;
         }
+
+        /* ===== Mobile: stack columns ===== */
         @media (max-width: 768px) {
-            .experiment-item-title { font-size: 18px; }
-            .experiment-item-snippet { font-size: 13px; }
+            .ai-layout {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            .photo-strip img { max-height: 160px; }
+            .styled-quote { padding: 1.25rem; }
+            .tweet-embed { max-width: 100%; }
+            .sidebar-heading { margin-top: 0.5rem; }
         }
         @media (max-width: 480px) {
-            .experiment-item-title { font-size: 16px; }
-            .experiment-item-snippet { font-size: 12px; }
+            .ai-main p { font-size: 14px; }
+            .photo-strip { gap: 0.4rem; }
+            .photo-strip img { max-height: 120px; }
+            .styled-quote { padding: 1rem; font-size: 14px; }
+            .sidebar-item-title { font-size: 14px; }
+            .sidebar-item-desc { font-size: 12px; }
             .experiments-cta { padding: 1.25rem; }
         }
     </style>
 </head>
 <body>
-    <!-- Shared Navigation -->
     <nav id="shared-nav"></nav>
 
     <section class="section">
@@ -119,101 +184,89 @@
             <div class="section-header">
                 <h2>My Experiments with AI</h2>
             </div>
-            <div class="experiments-intro">
-                <p>Starting Jan 2026, I've been spending a lot of time  <b>'vibe coding'</b>, specially with Claude. Later half of 2024 and all of 2025 were NotebookLM and Gemini for the most part. These are some of my recent experiments &mdash; projects that started with a problem I wanted to solve, turned into conversations about how to build, and evolved into tools I actually use. Each one taught me something different about working with AI on real problems.</p>
-            </div>
 
-            <div class="experiments-feed">
+            <div class="ai-layout">
 
-                <a href="ai-experiments/vibe-coding.html" class="experiment-item">
-                    <div class="experiment-item-meta">
-                        <span class="experiment-item-badge">Personal</span>
-                        <span class="experiment-item-date">April 2026</span>
+                <!-- LEFT COLUMN: Vibe Coding content -->
+                <div class="ai-main">
+                    <p>This is a picture from the summer of 2007. When I was half my current age. This picture captures the vibe I inhabit these days as I go down many rabbit holes with Claude (Code / Cowork).</p>
+
+                    <div class="photo-strip">
+                        <img src="ai-experiments/CS1.jpg" alt="IIT Madras CS department, summer 2007 — friends posing for the camera">
+                        <img src="ai-experiments/CS2.jpg" alt="IIT Madras CS department, summer 2007 — the computer lab after an all-nighter">
                     </div>
-                    <div class="experiment-item-title">Vibe Coding</div>
-                    <p class="experiment-item-snippet">A picture from 2007, a Mac in the Theoretical CS lab at IIT Madras, and why vibe coding with Claude feels exactly like those 5 a.m. all-nighters from undergrad. This is the opening note for everything that follows.</p>
-                    <span class="experiment-item-arrow">Read full story &rarr;</span>
-                </a>
+                    <p class="photo-caption">Theoretical Computer Science lab, IIT Madras, ~5 a.m., summer 2007.</p>
 
-                <a href="ai-experiments/llm-assembly-problem.html" class="experiment-item">
-                    <div class="experiment-item-meta">
-                        <span class="experiment-item-badge">Engineering</span>
-                        <span class="experiment-item-badge">LLMs</span>
-                        <span class="experiment-item-date">April 2026</span>
-                    </div>
-                    <div class="experiment-item-title">The Assembly Problem</div>
-                    <p class="experiment-item-snippet">LLMs are good at generating analysis. What they&rsquo;re bad at is assembling separately generated files into one coherent report. The fix was replacing the merge agent with 300 lines of deterministic Python &mdash; and using Claude&rsquo;s own failure taxonomy as an engineering input.</p>
-                    <span class="experiment-item-arrow">Read full story &rarr;</span>
-                </a>
+                    <p>This picture is from the Theoretical Computer Science lab at IIT Madras, which had the swankiest desktop our CS department could afford (a Mac, with a built-in web camera). Probably around 4:30 or 5 a.m., after a bunch of us had pulled an all-nighter. Those were the final few weeks of our undergrad days, as we were wrapping up our individual B.Tech projects. Ah, the shenanigans! This was our attempt at a Friends&rsquo; style picture.</p>
 
-                <a href="ai-experiments/ir-scraper.html" class="experiment-item">
-                    <div class="experiment-item-meta">
-                        <span class="experiment-item-badge">Infrastructure</span>
-                        <span class="experiment-item-badge">Python</span>
-                    </div>
-                    <div class="experiment-item-title">Building a Scraper That Works on Any Investor Relations Website</div>
-                    <p class="experiment-item-snippet">Can a single scraper work on any company's IR website without site-specific code? Eight platform types fingerprinted, a Linnaeus-inspired taxonomy, Taleb's barbell principle applied to bot evasion, and lessons learned about why discovery is harder than downloading.</p>
-                    <span class="experiment-item-arrow">Read full story &rarr;</span>
-                </a>
+                    <p>I find myself in a remarkably similar headspace now &mdash; nearly two decades later &mdash; with Claude and my AI experiments. The same rabbit hole. You code something, watch it come to life, spot the edge cases, go back to fix it, introduce a new edge case of errors, rinse and repeat. But the joy of seeing something come alive is real. Like it was, when we wrote code and took part in programming contests.</p>
 
-                <a href="ai-experiments/music-transcription.html" class="experiment-item">
-                    <div class="experiment-item-meta">
-                        <span class="experiment-item-badge">Audio Processing</span>
-                        <span class="experiment-item-badge">Indian Classical Music</span>
-                    </div>
-                    <div class="experiment-item-title">Transcribing Eight Years of Music Lessons</div>
-                    <p class="experiment-item-snippet">Using Claude to transcribe Indian classical music lessons from the guru-shishya tradition. How building a memory aid changed how I listen, why context and a "student state" document made the transcripts useful, and what it means to systematise knowledge that has resisted it for two millennia.</p>
-                    <span class="experiment-item-arrow">Read full story &rarr;</span>
-                </a>
+                    <p>I just came across this tweet today. Truly feels like it.</p>
 
-                <a href="ai-experiments/research-pipeline.html" class="experiment-item">
-                    <div class="experiment-item-meta">
-                        <span class="experiment-item-badge">Investment Research</span>
-                        <span class="experiment-item-badge">Automation</span>
+                    <div class="tweet-embed">
+                        <a href="https://x.com/naval/status/2039617101221224858" target="_blank">
+                            <img src="ai-experiments/Screenshot%202026-04-16%20083812.png" alt="Naval on X: Vibe coding is more addictive than any video game ever made (if you know what you want to build).">
+                        </a>
                     </div>
-                    <div class="experiment-item-title">Building a Sell-Side Research Pipeline</div>
-                    <p class="experiment-item-snippet">A five-stage pipeline that turns seventeen browser tabs into four. Intake, classification, extraction, synthesis, and flagging &mdash; each doing one thing well. The Unix pipe philosophy applied to investment research, and why defining the process was more valuable than automating it.</p>
-                    <span class="experiment-item-arrow">Read full story &rarr;</span>
-                </a>
 
-                <a href="https://tgrkarthik.substack.com/p/how-bad-are-the-hallucinations-chatgpt" target="_blank" class="experiment-item">
-                    <div class="experiment-item-meta">
-                        <span class="experiment-item-badge">Analysis</span>
-                        <span class="experiment-item-badge">LLMs</span>
-                        <span class="experiment-item-date">May 2023</span>
-                    </div>
-                    <div class="experiment-item-title">How Bad Are the Hallucinations?</div>
-                    <p class="experiment-item-snippet">Deep dive into ChatGPT's hallucination problem. Testing accuracy on factual questions, understanding when and why models confidently state false information, and what this means for building with language models in production.</p>
-                    <span class="experiment-item-source">Published on Substack</span>
-                </a>
+                    <p>This will hopefully be an evolving webpage where I want to capture my own learnings as I build these products &mdash; not as a tutorial, not as a guide, but as a personal log. Something born out of good vibe coding.</p>
 
-                <a href="https://tgrkarthik.substack.com/p/two-words-for-2024" target="_blank" class="experiment-item">
-                    <div class="experiment-item-meta">
-                        <span class="experiment-item-badge">Predictions</span>
-                        <span class="experiment-item-badge">AI Trends</span>
-                        <span class="experiment-item-date">Dec 2023</span>
+                    <div class="styled-quote">
+                        <p>
+                            Your first workout will be bad.<br>
+                            Your first podcast will be bad.<br>
+                            Your first speech will be bad.<br>
+                            Your first video will be bad.<br>
+                            Your first ANYTHING will be bad.<br>
+                            But you can't make your 100th without making your first.
+                        </p>
+                        <span class="quote-attribution">&mdash; Alec Zamora</span>
                     </div>
-                    <div class="experiment-item-title">Two Words for 2024</div>
-                    <p class="experiment-item-snippet">My predictions for how AI will evolve in 2024. Two key words that capture the direction of the technology, the market, and the kinds of problems people will solve with language models.</p>
-                    <span class="experiment-item-source">Published on Substack</span>
-                </a>
 
-                <a href="https://medium.com/@karthiktiruvarur/dilly-dall-e-ing-63bc4bbc886" target="_blank" class="experiment-item">
-                    <div class="experiment-item-meta">
-                        <span class="experiment-item-badge">Image Generation</span>
-                        <span class="experiment-item-badge">DALL-E</span>
-                    </div>
-                    <div class="experiment-item-title">Dilly-DALL-E-ing</div>
-                    <p class="experiment-item-snippet">Exploring DALL-E's capabilities and quirks. Testing the boundaries of image generation, understanding what works, what breaks, and the gap between what these models can do and what we actually want them to do.</p>
-                    <span class="experiment-item-source">Published on Medium</span>
-                </a>
+                    <p>Vibe away ;)</p>
+                </div>
 
-                <div class="experiment-item" style="opacity: 0.5; cursor: default;">
-                    <div class="experiment-item-meta">
-                        <span class="experiment-item-badge">Coming Soon</span>
-                    </div>
-                    <div class="experiment-item-title">Your Next Experiment</div>
-                    <p class="experiment-item-snippet">More experiments coming as I continue building with AI. Each project teaches something new about problem-solving, AI capabilities, and the gap between what's theoretically possible and what actually works in practice.</p>
+                <!-- RIGHT COLUMN: Article list -->
+                <div class="ai-sidebar">
+                    <div class="sidebar-heading">Experiments</div>
+
+                    <a href="ai-experiments/llm-assembly-problem.html" class="sidebar-item">
+                        <div class="sidebar-item-title">The Assembly Problem</div>
+                        <p class="sidebar-item-desc">Why LLMs are good at generating analysis but bad at assembling it &mdash; and how 300 lines of deterministic Python fixed it.</p>
+                    </a>
+
+                    <a href="ai-experiments/ir-scraper.html" class="sidebar-item">
+                        <div class="sidebar-item-title">Building a Scraper That Works on Any IR Website</div>
+                        <p class="sidebar-item-desc">A single scraper for any company's investor relations site. Eight platform types, a Linnaeus-inspired taxonomy, and Taleb's barbell for bot evasion.</p>
+                    </a>
+
+                    <a href="ai-experiments/music-transcription.html" class="sidebar-item">
+                        <div class="sidebar-item-title">Transcribing Eight Years of Music Lessons</div>
+                        <p class="sidebar-item-desc">Using Claude to isolate my teacher's voice from mine in Indian classical music lessons. Three versions, a Tkinter applet, and ground truth validation.</p>
+                    </a>
+
+                    <a href="ai-experiments/research-pipeline.html" class="sidebar-item">
+                        <div class="sidebar-item-title">Building a Sell-Side Research Pipeline</div>
+                        <p class="sidebar-item-desc">A five-stage pipeline that turns seventeen browser tabs into four. The Unix pipe philosophy applied to investment research.</p>
+                    </a>
+
+                    <a href="https://tgrkarthik.substack.com/p/how-bad-are-the-hallucinations-chatgpt" target="_blank" class="sidebar-item">
+                        <div class="sidebar-item-title">How Bad Are the Hallucinations?</div>
+                        <p class="sidebar-item-desc">Testing ChatGPT's accuracy on factual questions and understanding when models confidently state false information.</p>
+                        <div class="sidebar-item-meta">Substack &middot; May 2023</div>
+                    </a>
+
+                    <a href="https://tgrkarthik.substack.com/p/two-words-for-2024" target="_blank" class="sidebar-item">
+                        <div class="sidebar-item-title">Two Words for 2024</div>
+                        <p class="sidebar-item-desc">Predictions for how AI would evolve in 2024 &mdash; two words that captured the direction of the technology and the market.</p>
+                        <div class="sidebar-item-meta">Substack &middot; Dec 2023</div>
+                    </a>
+
+                    <a href="https://medium.com/@karthiktiruvarur/dilly-dall-e-ing-63bc4bbc886" target="_blank" class="sidebar-item">
+                        <div class="sidebar-item-title">Dilly-DALL-E-ing</div>
+                        <p class="sidebar-item-desc">Exploring DALL-E's capabilities and quirks &mdash; what works, what breaks, and the gap between possibility and usefulness.</p>
+                        <div class="sidebar-item-meta">Medium</div>
+                    </a>
                 </div>
 
             </div>
