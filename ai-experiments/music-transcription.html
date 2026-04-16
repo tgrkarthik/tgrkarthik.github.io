@@ -6,19 +6,26 @@
     <title>Transcribing Eight Years of Music Lessons - Karthik Tiruvarur</title>
     <link rel="stylesheet" href="../styles.css">
     <style>
-        .article-header { max-width: 700px; margin: 3rem auto 2rem; padding: 0 var(--spacing-lg); }
+        .article-header { max-width: 1050px; margin: 3rem auto 2rem; padding: 0 2rem; }
         .article-title { font-size: 36px; font-weight: 600; margin-bottom: 1rem; line-height: 1.2; }
-        .article-meta { display: flex; gap: 1rem; align-items: center; font-size: 14px; color: var(--secondary-color); margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border-color); }
-        .article-body { max-width: 700px; margin: 0 auto; padding: 0 var(--spacing-lg); line-height: 1.8; }
-        .article-body p { margin-bottom: 1.5rem; font-size: 16px; color: var(--secondary-color); }
-        .article-body h2 { font-size: 24px; margin-top: 2.5rem; margin-bottom: 1.5rem; color: var(--primary-color); }
-        .article-body h3 { font-size: 18px; margin-top: 2rem; margin-bottom: 1rem; color: var(--primary-color); }
-        .article-body strong { font-weight: 600; color: var(--primary-color); }
-        .article-footer { max-width: 700px; margin: 3rem auto 0; padding: 2rem var(--spacing-lg); background: var(--light-color); text-align: center; }
-        .back-link { display: inline-block; margin-bottom: 2rem; font-size: 14px; color: var(--secondary-color); }
-        .back-link:hover { color: var(--primary-color); }
-        @media (max-width: 768px) { .article-title { font-size: 24px; } .article-body p { font-size: 15px; } }
-        @media (max-width: 480px) { .article-title { font-size: 20px; } .article-body p { font-size: 14px; } .article-footer { padding: 1.25rem var(--spacing-md); } }
+        .article-meta { display: flex; gap: 1rem; align-items: center; font-size: 14px; color: #666666; margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid #e0e0e0; }
+        .article-body { max-width: 1050px; margin: 0 auto; padding: 0 2rem; line-height: 1.8; }
+        .article-body p { margin-bottom: 1.5rem; font-size: 16px; color: #666666; }
+        .article-body h2 { font-size: 24px; margin-top: 2.5rem; margin-bottom: 1.5rem; color: #000000; }
+        .article-body h3 { font-size: 18px; margin-top: 2rem; margin-bottom: 1rem; color: #000000; }
+        .article-body strong { font-weight: 600; color: #000000; }
+        .article-body ol { margin-bottom: 1.5rem; padding-left: 1.5rem; }
+        .article-body ol li { margin-bottom: 1rem; font-size: 16px; color: #666666; line-height: 1.8; }
+        .glossary { max-width: 1050px; margin: 2rem auto; padding: 0 2rem; }
+        .glossary h2 { font-size: 24px; margin-bottom: 1.5rem; color: #000000; }
+        .glossary dl { line-height: 1.8; }
+        .glossary dt { font-weight: 600; color: #000000; font-size: 16px; margin-top: 1.25rem; }
+        .glossary dd { font-size: 16px; color: #666666; margin-left: 0; margin-bottom: 0.5rem; }
+        .article-footer { max-width: 1050px; margin: 3rem auto 0; padding: 2rem; background: #f5f5f5; text-align: center; }
+        .back-link { display: inline-block; margin-bottom: 2rem; font-size: 14px; color: #666666; }
+        .back-link:hover { color: #000000; }
+        @media (max-width: 768px) { .article-title { font-size: 24px; } .article-body p, .article-body ol li { font-size: 15px; } .glossary dt { font-size: 15px; } .glossary dd { font-size: 15px; } }
+        @media (max-width: 480px) { .article-title { font-size: 20px; } .article-body p, .article-body ol li { font-size: 14px; } .article-footer { padding: 1.25rem 1rem; } .glossary dt { font-size: 14px; } .glossary dd { font-size: 14px; } }
     </style>
 </head>
 <body>
@@ -33,28 +40,77 @@
         </div>
     </div>
     <article class="article-body">
-        <p>Indian classical music has no sheet music.</p>
-        <p>There is no notated score for a raga. The tradition &mdash; two thousand years of it &mdash; has been transmitted through a single mechanism: a teacher and a student, in a room, one phrase repeated until it is absorbed. The guru-shishya parampara. The lineage of listening.</p>
-        <p>I've been studying Indian classical music for eight years. I take lessons every week. My teacher sings a phrase; I sing it back. He corrects; I adjust. The lesson lasts ninety minutes and by the end, something has been transmitted that cannot be fully described in words. Most of what I've learned is not in any notebook.</p>
-        <p>Last year, I started recording the lessons and giving them to Claude.</p>
-        <h2>What Transcription Does to Listening</h2>
-        <p>Paul Graham argues that writing is thinking &mdash; that the act of putting ideas into sentences is not a way of recording what you already believe, but a way of discovering it. You don't know what you think until you've tried to write it. The act of writing surfaces the gaps.</p>
-        <p>Transcription does something similar to listening. When I started asking Claude to produce timestamped breakdowns of each lesson &mdash; which phrase was introduced, what the teacher corrected, what the student repeated and how &mdash; I had to listen differently. Not passively, not the way you hear music on a commute, but attentively enough to verify that what Claude had captured was what actually happened.</p>
-        <p><strong>The transcription wasn't for the future. It was changing how I listened in the present.</strong></p>
-        <p>I found myself pausing recordings at the thirty-minute mark to read the transcript so far. Reading it changed what I heard in the next thirty minutes. The places where Claude had described a phrase correctly but missed the intent of the correction &mdash; where my teacher's "more breath" referred to a specific technique of sustained vowel support, not simply louder &mdash; forced me to re-listen and articulate what was actually being said. That articulation was the learning.</p>
-        <h2>The Technical Part</h2>
-        <p>The workflow is straightforward in principle and has more edge cases than I expected.</p>
-        <p>I record each lesson on my phone. The recording goes to Claude, which produces a timestamped transcript. The transcript covers: the raga or composition section being studied, each iteration of the teacher singing and the student responding, any verbal corrections, and a closing summary distinguishing what was new from what was revision.</p>
-        <p>The first version produced transcripts that were technically accurate and musically useless. Claude captured the words perfectly and missed the music entirely. When my teacher said "that phrase needs more weight on the fourth beat," the transcript said exactly that &mdash; but without knowing which phrase, what the fourth beat was in that composition, or how "weight" manifests in that specific raga, the note was a placeholder for understanding rather than understanding itself.</p>
-        <p>The fix was context. Each session prompt now includes the raga being studied, the composition we're working on, and a glossary of the terms my teacher uses consistently. Weighted phrases like "more breath," "looser," "let it fall" appear with annotations connecting them to the specific technique they reference. The transcript went from a log to a teaching document.</p>
-        <p>The second problem was memory. The guru-shishya tradition works precisely because the teacher knows what the student has internalised, where the gaps are, and what the next challenge should be. Claude, at the start of every session, knows none of this. The solution was a "student state" document &mdash; a two-page summary of where I am in each composition, what I've been corrected on most frequently, and what the teacher said I should focus on before next time. This feeds into every session. Claude arrives briefed.</p>
-        <h2>A Note on the Tradition</h2>
-        <p>There is something worth sitting with in using AI to preserve knowledge that has specifically resisted systematisation for two millennia.</p>
-        <p>Indian classical music is not just untranscribed because notation hasn't caught up. It is untranscribed because the tradition holds that some knowledge cannot survive the journey from teacher to notation to student without losing what matters most. The ornaments &mdash; the gamakas, the subtle pitch movements, the living quality of a phrase &mdash; are not in the notes. They are in the relationship: in a teacher who knows exactly which mistake a particular student keeps making, and knows which correction, delivered at which moment, will shift something.</p>
-        <p>I don't think Claude changes this. My teacher is still the knowledge. The transcript is a memory aid, not a replacement for the room. What I have found is that building that memory aid &mdash; of taking what was purely auditory and making it partially textual &mdash; has made me a more attentive student, not a lazier one.</p>
-        <p>There is an old idea in the Lindy tradition that things which have survived for a very long time carry evidence of their fitness in that very survival. Indian classical music has transmitted itself orally across two millennia of political upheaval, colonisation, and now the full force of recorded and streaming audio. It is still here because oral transmission, with all its apparent inefficiency, preserves something that notation does not.</p>
-        <p>The lessons are still in the room. The transcript helps me hear them more fully when I return.</p>
+        <h2>Context</h2>
+        <p>I've been learning Indian classical music for about eight years and I train as a vocalist. I take online lessons every week usually on Sundays from my teacher Sudarshan. For the first several years, my lessons were in person and the lessons moved online during the COVID pandemic. As I moved cities from Washington, D.C. to Nashville, my classes have now primarily become online.</p>
+        <p>A couple of years ago, it occurred to me that it would be extremely beneficial for me to have snippets from these classes where I just have the voice of my teacher demonstrating how these lines are sung perfectly stitched together. Cliff notes to memorize, and perfect. Snippets I could listen to while walking or transiting through an airport or at my own leisure and perfect over time.</p>
+        <p>This post shares my experience at trying to create an app for that and lessons I learnt along the way.</p>
+
+        <h2>Structure of a Lesson</h2>
+        <p>My lessons usually last an hour. We pick up a piece of music, typically called a keerthana (a poetic song set to a musical scale called a Raaga), and I learn one Keerthana over maybe two or three classes. A keerthana is usually structured as a chorus followed by stanzas. I go through learning lines of the chorus and once I've learnt it well enough, move to the stanza and the next and so on.</p>
+        <p>My teacher sings a phrase; I sing it back. He teaches me the various nuances, corrects me where I am wrong, I sing back, and we move ahead once I can reproduce a line ~75% accurate. The process is iterative. After I have learnt a few lines in succession, my teacher revisits those lines and sings back those lines in a way that is concert ready. The intent is that when I revisit those lines after my class, I have a sample of what the perfect rendition of those few lines is for posterity. 10000 hours. Practice makes one perfect. These lines are intended for rigorous practice.</p>
+        <p>Cliff notes, if you will.</p>
+
+        <h2>My Ask of Claude</h2>
+        <p>The ask was simple &mdash; or so I thought. To write code to isolate my teacher's voice from mine, and identify snippets in the one hour where my teacher sings uninterrupted for 30 seconds or longer, since those segments are most likely what I am looking for.</p>
+        <p>The workflow is straightforward in principle, but as I sat to write code for this, I realized there were so many edge cases that derailed simple efforts at producing code for this.</p>
+
+        <h2>Lessons Learnt</h2>
+        <ol>
+            <li>Providing what a good output looks like upfront is very useful. It forces one to front load work, but dramatically improves the odds of success.</li>
+            <li>Understanding the input and articulating it clearly &mdash; in this case, it occurred to me after a few iterations that specifying exactly what is present in the recording could help. For example, there is a tanpura playing throughout the class in the background. That was distorting the sound sampling and made it harder to isolate sounds. Also, there is rhythm (taala) as we sing which sounds like a hand clap, adding to distortion in the signal. These hints were critical in finding coding approaches that work.</li>
+            <li>When in doubt, overcommunicate what you need, getting into as many specifics and nuanced details as possible. It helps building a product that does not break at edge cases.</li>
+        </ol>
+
+        <h2>The Solution: Journey of Getting There</h2>
+        <p><strong>Version 1</strong> did the obvious thing and was surprisingly good. Got me all excited. It studied the music lesson, fed it through Resemblyzer's neural voice embeddings, clustered the output into two voices with KMeans, and extracted long segments of each singer (my teacher and I). It worked, technically &mdash; two separate audio files came out, each dominated by one voice. But "dominated" was doing a lot of heavy lifting. The algorithm had no concept of teacher versus student. It just saw Voice A and Voice B, extracted both, and left me to figure out which was which. The segments themselves were rough: teacher demonstrations bleeding into student repetitions, brief silences splitting what should have been continuous phrases, and &mdash; worst of all &mdash; no way to separate the moments where both voices sang together from the stretches where the teacher sang alone.</p>
+        <p><strong>Version 2</strong> swung hard in the other direction &mdash; more signals, more sophistication, more ways to fail. As I started to iterate, I came upon an insight that in my music lessons, the teacher speaks a line or two before demonstrating, effectively stating he's going to recap or something like that. That speech-to-singing transition is a clean anchor point. So v2 classified every audio window as speech, singing, or silence using zero-crossing rate and spectral flatness, found those transitional anchors, built a voice profile from them, and then scored every window on three overlap signals: cosine similarity drop (the strongest), energy spike (two voices are 3&ndash;6 dB louder than one), and spectral bandwidth increase. Five complementary detection strategies in a 975-line script. It was clever, but it was fragile in its own unique way. Resemblyzer treats a speaking voice and a singing voice from the same person as substantially different embeddings. The teacher profile built from speech anchors didn't reliably match his singing segments. The overlap detector worked well when both voices were present, but the false positive rate on solo segments was high enough to make the output unreliable without manual cleanup.</p>
+        <p><strong>Version 3</strong> abandoned the multi-signal architecture and went back to clustering &mdash; but with two ideas that made all the difference. First, a domain-specific heuristic: in the final 40% of a lesson recording, the teacher dominates. He's recapping, demonstrating full compositions, running through phrases one last time. Clustering the windows into two voices and then checking which cluster owns the late session reliably identifies the teacher without needing speech anchors at all. Second, a label-smoothing pass that fixed the single biggest failure mode. Resemblyzer would occasionally assign a window of the teacher's speaking voice to the student cluster, creating tiny holes in otherwise continuous teacher segments. The smooth_labels() function runs a thirty-second rolling window and flips any isolated minority label when the surrounding context is eighty percent or more from the other cluster. Simple, but it eliminated the most common source of fragmented output. The script then tags surviving segments as either LONGRUN (three minutes or longer, always included) or CLEAN (shorter but ninety percent or more teacher), producing two output files: one with everything, one with only the best material.</p>
+        <p>The scripts alone weren't enough for a usable workflow. Automated extraction gets you eighty percent of the way; the remaining twenty percent is judgment calls &mdash; a recap that starts a few seconds earlier than the algorithm detected, two demonstrations that belong together but got split by a brief dialogue, etc.</p>
+        <p>So I built a Tkinter applet with two tabs: one to stitch multiple audio files together in any order (drag, reorder, concatenate), and one to snip specific time ranges from a single file and stitch them into a new output. All operations re-encode to uniform AAC at 192 kbps through ffmpeg before concatenating, which sidesteps the codec mismatch issues that plagued early attempts at lossless copy. A companion diagnostic tool, inspect_window.py, dumps a per-window table for any time range &mdash; cluster assignment, voiced status, RMS energy &mdash; so when a known recap isn't being captured, I can see exactly which windows are being misclassified and why, without re-running the full extraction.</p>
+        <p>The ultimate piece that tied it together was ground truth validation. I went back through several lesson recordings and manually timestamped the teacher's solo demonstrations into companion text files. Version three reads these, compares them against its automated segments, and reports Intersection over Union scores &mdash; a single number that tells you how well the algorithm's boundaries match reality. That closed the feedback loop. Instead of listening to output files and guessing whether a parameter change helped, I let Claude Code tune merge-gap (how many seconds of silence to bridge), smoothing context window, and purity thresholds against actual measured accuracy. The current defaults &mdash; four-second merge gap, sixty-second smooth context, seventy-five percent majority threshold &mdash; are the product of that tuning, not guesswork.</p>
     </article>
+
+    <div class="glossary">
+        <h2>Glossary</h2>
+        <dl>
+            <dt>Resemblyzer</dt>
+            <dd>An open-source Python library that converts a chunk of audio into a numerical "fingerprint" (called an embedding) representing the speaker's voice. Two chunks from the same person produce similar fingerprints; two different people produce dissimilar ones. This is how the script tells teacher and student apart without being told who is who.</dd>
+
+            <dt>KMeans clustering</dt>
+            <dd>A standard algorithm that takes a pile of data points and sorts them into a specified number of groups (in this case, two) based on similarity. Here, it groups audio windows by voice embedding, effectively saying "these windows sound like Person A, and these sound like Person B."</dd>
+
+            <dt>Zero-crossing rate</dt>
+            <dd>How frequently an audio signal flips from positive to negative (crosses zero) within a window. Speech tends to have a higher zero-crossing rate than sung notes, because consonants and breath sounds create rapid, irregular oscillations. The script uses this to distinguish speaking from singing.</dd>
+
+            <dt>Spectral flatness</dt>
+            <dd>A measure of how "noise-like" versus "tone-like" a sound is. A pure sung note has low spectral flatness (energy concentrated at specific pitches); speech has higher flatness (energy spread more evenly across frequencies). Paired with zero-crossing rate, it helps classify each audio window.</dd>
+
+            <dt>Cosine similarity</dt>
+            <dd>A way to measure how alike two voice embeddings are, on a scale from &minus;1 (opposite) to 1 (identical). When only the teacher is singing, the embedding closely matches his voice profile (high similarity). When both voices overlap, the combined embedding drifts away from either individual profile (similarity drops). That drop is the strongest signal for detecting duet sections.</dd>
+
+            <dt>Merge gap</dt>
+            <dd>The maximum duration of silence the script will bridge when stitching teacher segments together. Set to four seconds: if the teacher pauses for three seconds mid-demonstration, the script treats it as one continuous segment. A five-second pause gets treated as two separate segments. Too short and you get fragmented clips; too long and you accidentally merge distinct demonstrations.</dd>
+
+            <dt>Smooth context window</dt>
+            <dd>The duration of audio the label-smoothing pass examines when deciding whether a window has been misclassified. Set to sixty seconds: the algorithm looks thirty seconds in each direction. If the surrounding minute is overwhelmingly one voice, a stray window assigned to the other voice gets flipped. This fixes the problem where the teacher's speaking voice briefly gets mistaken for the student.</dd>
+
+            <dt>Majority threshold</dt>
+            <dd>The percentage of surrounding windows that must agree before an isolated label gets overridden. Set to seventy-five percent: if fewer than three-quarters of the neighboring windows belong to the dominant cluster, the algorithm leaves the label alone. Higher values make smoothing more conservative (fewer corrections, fewer false fixes).</dd>
+
+            <dt>LONGRUN / CLEAN tags</dt>
+            <dd>The script's two quality tiers for extracted segments. LONGRUN means the segment is three minutes or longer &mdash; sustained teacher demonstrations that are almost certainly valuable regardless of minor impurities. CLEAN means a shorter segment where ninety percent or more of the windows belong to the teacher cluster. The script produces two output files: one containing everything tagged, one containing only the best material.</dd>
+
+            <dt>Intersection over Union (IoU)</dt>
+            <dd>A standard accuracy metric borrowed from computer vision. It measures how much the algorithm's detected segments overlap with manually timestamped ground truth. An IoU of 1.0 means perfect agreement; 0.0 means no overlap at all. Used here to objectively measure whether a parameter change actually improved extraction quality.</dd>
+
+                  
+            <dt>Tkinter</dt>
+            <dd>Python's built-in library for creating desktop GUIs (graphical user interfaces &mdash; windows, buttons, text fields). The snip applet uses it to provide a simple two-tab interface for stitching and trimming audio files without touching the command line.</dd>
+
+          
+        </dl>
+    </div>
+
     <div class="article-footer">
         <p style="margin-bottom: 1.5rem;">Want more stories about building with AI?</p>
         <div class="social-links" style="justify-content: center;">
