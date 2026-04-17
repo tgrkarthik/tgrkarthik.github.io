@@ -12,61 +12,131 @@
         .article-body { max-width: 1050px; margin: 0 auto; padding: 0 2rem; line-height: 1.8; }
         .article-body p { margin-bottom: 1.5rem; font-size: 16px; color: #666666; }
         .article-body h2 { font-size: 24px; margin-top: 2.5rem; margin-bottom: 1.5rem; color: #000000; }
-        .article-body h3 { font-size: 18px; margin-top: 2rem; margin-bottom: 1rem; color: #000000; }
         .article-body strong { font-weight: 600; color: #000000; }
         .article-footer { max-width: 1050px; margin: 3rem auto 0; padding: 2rem 2rem; background: #f5f5f5; text-align: center; }
         .back-link { display: inline-block; margin-bottom: 2rem; font-size: 14px; color: #666666; }
         .back-link:hover { color: #000000; }
+
+        .footnote-ref {
+            font-size: 12px;
+            vertical-align: super;
+            line-height: 0;
+            color: #000000;
+            border-bottom: 1px dotted #666666;
+            padding: 0 2px;
+        }
+        .footnote-ref:hover { opacity: 0.7; }
+
+        .footnotes {
+            max-width: 1050px;
+            margin: 2rem auto;
+            padding: 1.5rem 2rem;
+            border-top: 1px solid #e0e0e0;
+        }
+        .footnotes p {
+            font-size: 13px;
+            color: #666666;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
         @media (max-width: 768px) { .article-title { font-size: 24px; } .article-body p { font-size: 15px; } }
         @media (max-width: 480px) { .article-title { font-size: 20px; } .article-body p { font-size: 14px; } .article-footer { padding: 1.25rem 1rem; } }
     </style>
 </head>
 <body>
     <nav id="shared-nav"></nav>
+
     <div class="article-header">
         <a href="../ai-experiments.html" class="back-link">&larr; Back to AI Experiments</a>
         <h1 class="article-title">Building a Sell-Side Research Pipeline</h1>
         <div class="article-meta">
-            <span>March 2026</span>
+            <span>April 2026</span>
             <span>&bull;</span>
             <span>Investment Research &amp; Automation</span>
         </div>
     </div>
+
     <article class="article-body">
-        <p>You cannot automate a process you haven't first understood.</p>
-        <p>I had been wanting to build a structured sell-side research pipeline for over a year. The trigger was a simple frustration: seventeen browser tabs open, three broker notes partially read, an earnings call transcript running in the background &mdash; and I still couldn't tell you in one sentence what had actually changed for the company. The information was there. The synthesis wasn't.</p>
-        <p>The question I kept asking was: can Claude do this? The better question, I eventually realized, was: can I describe what "this" is precisely enough that anyone &mdash; or anything &mdash; could follow the instructions?</p>
-        <p>That realization is the starting point for everything that follows.</p>
+
+        <p>The question I kept asking was simpler than it sounds: can Claude produce a research report I would actually trust?</p>
+
+        <p>Not a summary. Not a chatbot pulling from whatever it finds on the internet. A structured document with a thesis, financial analysis, and a valuation &mdash; the kind of thing a sell-side analyst would put their name on. And with one constraint that shaped everything that followed: if a number appears in the report, I need to know exactly where it came from.</p>
+
+        <p>That constraint &mdash; call it data integrity &mdash; is the entire design of what follows.</p>
+
+        <h2>Getting the Documents Right</h2>
+
+        <p>Before any analysis begins, the documents have to be right. Two paths to get there.</p>
+
+        <p>The first is an external MCP connector &mdash; tools like Quartr Pro or Capital IQ that pipe structured financial data directly into Claude. Clean, well-structured, fast.</p>
+
+        <p>The second is the IR scraper I&rsquo;ve described elsewhere on this page. It pulls raw documents directly from a company&rsquo;s investor relations website: 10-Ks, 10-Qs, earnings transcripts, proxy statements, all of it, organised locally by document type. If the company published it on their IR site, the scraper gets it.<a href="#fn1" class="footnote-ref"><sup>1</sup></a></p>
+
+        <p>I use both depending on the situation. The scraper gives comprehensive coverage. The MCP connectors give structured data without the extraction work. The choice depends on what the company publishes and how well-maintained their IR site is.</p>
+
+        <h2>Closed-Book First</h2>
+
+        <p>Here is the decision that made the pipeline trustworthy: Claude does not have internet access during the financial analysis phase.</p>
+
+        <p>Closed-book means the model works only from the documents I&rsquo;ve provided. No browsing. No retrieval from sources I haven&rsquo;t read. Every number in the draft report traces back to a specific filing I can open.</p>
+
+        <p>This is a deliberate constraint, not a limitation I&rsquo;m working around. Every hallucination I&rsquo;ve encountered in LLM-generated financial analysis has the same root cause: the model infers or fills in data it wasn&rsquo;t given. Closing the book removes that failure mode entirely.</p>
+
+        <p>Some things genuinely need live data &mdash; the current stock price, the risk-free rate, market multiples for a peer comparison. Those get pulled separately, verified manually, and fed in at a specific stage. But the financial history, the segment analysis, the management commentary &mdash; all of that stays closed-book until the audit is complete.</p>
+
         <h2>The Process Has to Exist Before It Can Be Automated</h2>
-        <p>There's a principle in software engineering &mdash; old enough to be almost clich&eacute; &mdash; that goes: do one thing well. The Unix pipe philosophy. cat file | grep keyword | sort | uniq. The power isn't in any single command. It's in the composition &mdash; each stage does exactly one job, hands clean output to the next, and doesn't try to do more than it should.</p>
-        <p>When I started building this pipeline, I kept hitting the same wall. I couldn't instruct Claude on Stage 3 until I had understood Stage 2 completely. And Stage 2 kept breaking down until I was honest about what Stage 1 was actually producing.</p>
+
+        <p>There&rsquo;s an old principle in software engineering: do one thing well. The Unix pipe philosophy. <code>cat file | grep keyword | sort | uniq</code>. The power isn&rsquo;t in any single command; it&rsquo;s in the composition &mdash; each stage does exactly one job, hands clean output to the next, and doesn&rsquo;t try to do more than it should.</p>
+
+        <p>When I started building this pipeline, I kept hitting the same wall. I couldn&rsquo;t instruct Claude on Stage 2 until I had understood Stage 1 completely. And Stage 1 kept breaking down until I was honest about what Stage 0 was actually producing.</p>
+
         <p><strong>Building the pipeline forced me to define the process. And defining the process forced me to understand what I actually valued in research.</strong></p>
-        <p>That turned out to be the most useful thing about the exercise &mdash; not the pipeline itself, but the thinking it forced.</p>
+
+        <p>That turned out to be the most useful part of the exercise &mdash; not the pipeline itself, but the thinking it forced.</p>
+
         <h2>The Five Stages</h2>
-        <p>The pipeline, as I now run it, has five stages. Each does one thing.</p>
-        <p><strong>Stage 1: Intake.</strong> Scraping earnings call transcripts, broker notes, IR site announcements, and guidance updates. Claude can do this &mdash; but only if you've built a reliable scraper for each source. The first version of my scraper handled three companies. I now have it running on fifteen. Each new company IR site is a small engineering problem in itself.</p>
-        <p><strong>Stage 2: Classification.</strong> What is this document? Which quarter? Which company? Is this a management transcript or a broker note? A guidance revision or an analyst initiation? Classification sounds trivial. It isn't &mdash; especially when a single broker publishes twelve documents on the same company in a month.</p>
-        <p><strong>Stage 3: Extraction.</strong> This is where Claude earns its place. Given a classified document, it pulls the structured information I care about: revenue guidance versus actuals, gross margin commentary, management language around demand signals, any notable changes in tone. The output is a structured JSON &mdash; not prose.</p>
-        <p><strong>Stage 4: Synthesis.</strong> This is the hardest stage. Given extractions from Stage 3 across five quarters and three brokers, what has actually changed? What does the broker consensus assume that differs from what management is signaling? Synthesis requires a thesis. Claude can only compare against what you tell it to compare against &mdash; it has no prior context unless you give it some. In practice, I've found that writing a one-paragraph "current thesis" for each company and feeding it in with every synthesis request produces dramatically better output.</p>
-        <p><strong>Stage 5: Flagging.</strong> What needs human judgment? A guidance miss of 2% is noise. A CEO who used the word "challenging" three times in a single paragraph when they've never used it before &mdash; that needs a human. I've built a simple set of flags for material changes in language and significant deviations from prior guidance. Everything else gets deprioritized.</p>
-        <h2>How It Works, Precisely</h2>
-        <p>Stage 3 (extraction) works because I stopped asking Claude to summarize and started asking it to fill a schema. The distinction sounds minor. It isn't. A summary is prose &mdash; variable in structure, inconsistent across documents, impossible to compare programmatically. A schema forces the output into predictable fields: management_revenue_guidance, gross_margin_commentary, demand_signal_language, tone_flags. When Claude fills the same schema against every document, the extractions from five consecutive earnings calls line up column by column. That's what makes Stage 4 possible. JSON output, not prose, is what lets the pipeline actually pipeline.</p>
-        <p>The synthesis prompt (Stage 4) has a specific structure that took several iterations to get right. It opens with the current investment thesis &mdash; one paragraph, written by me, updated whenever my view materially changes. Then it feeds in the extraction outputs from the last four to six quarters, followed by the most recent broker note extractions. The instruction to Claude is precise: "What has changed materially against the thesis? Where does the data support it, and where does it challenge it? Flag anything that should change my view." Claude doesn't decide whether the thesis should change &mdash; that's my call. It surfaces the comparison. The quality of that comparison is almost entirely a function of how well-specified the thesis paragraph is. A vague thesis produces a vague synthesis.</p>
-        <p>The classifier (Stage 2) was the most technically interesting problem to solve. Broker notes don't announce what they are. An initiation of coverage looks like a routine update until you read the first paragraph. A guidance revision looks like a quarterly note until you check the date. I ended up building a two-pass approach: the first pass extracts stated metadata (company name, quarter references, broker name, document date); the second pass runs a semantic check for signals that distinguish document types &mdash; language patterns characteristic of initiations versus updates versus thesis revisions. Documents that fall below a confidence threshold on the second pass go into a human review queue rather than continuing downstream. The queue is small now &mdash; two or three documents a week at most &mdash; but building that fail-safe before I trusted any downstream output was not optional. The whole pipeline's integrity depends on Stage 2 being right.</p>
-        <h2>What I Got Wrong (And What Fixed It)</h2>
-        <p>My first version tried to do all five stages in one prompt. The output was unusable. The mistake was thinking that Claude's capability was the constraint. It wasn't. My problem specification was the constraint.</p>
-        <p>Stage 4 (synthesis) was the specific failure point. I was asking Claude to synthesize without a thesis. What I got back were accurate summaries &mdash; which I could have produced myself by reading more carefully. What I needed were comparisons: to my prior view, to consensus, to what management had said four months ago.</p>
-        <p>I also underestimated the importance of Stage 2 (classification). If a broker note gets misclassified &mdash; labeled as a quarterly update when it's actually an initiation of coverage &mdash; Stage 3 will extract numbers against the wrong template. Garbage in, garbage out. I spent three weeks building a robust classifier before I was willing to trust Stage 3's output.</p>
-        <p>The version I run today is the sixth iteration. The first five were learning.</p>
-        <h2>What the Pipeline Can't Do</h2>
-        <p>It can't catch what you didn't ask for. If there's a subtle regulatory risk buried in paragraph fourteen of a management transcript &mdash; and you haven't told the pipeline to look for regulatory language &mdash; it won't surface it. The pipeline is only as good as the questions it's been trained to ask.</p>
-        <p>It has no variant perception. It can tell you what the consensus says and what management says. It can't tell you whether either of them is wrong. That's still your job.</p>
-        <p>And it doesn't know what you know. If you spent forty-five minutes on a call with the CFO last month and came away with a specific concern about working capital discipline &mdash; that context lives in your head, not in the pipeline. The synthesis in Stage 4 is only as good as the thesis you bring to it.</p>
-        <h2>Where I've Landed</h2>
-        <p>The pipeline doesn't replace research. It replaces the parts of research that were never really research &mdash; the administrative labor of locating, organizing, and summarizing documents that were always going to say roughly the same thing.</p>
-        <p>What it freed up was time and attention for the parts that actually matter: the call with management, the cross-portfolio pattern you notice after reading three companies in the same vertical, the hunch worth chasing.</p>
-        <p>The seventeen browser tabs are down to four. That felt like the win.</p>
+
+        <p><strong>Stage 0: Document Preparation.</strong> The IR scraper runs first. For a company with a full document set, this means downloading several years of 10-Ks, quarterly filings, and earnings transcripts. Income statements, balance sheets, and cash flow statements are then extracted into structured CSVs. Claude never touches a raw PDF when constructing the financial tables. This is the work that makes Stage 1 possible.</p>
+
+        <p><strong>Stage 1: Draft.</strong> Claude reads the structured financial data and the source documents and produces a first-pass research report. Closed-book throughout. The draft covers the business model, financial history, segment breakdown, and management commentary across recent quarters. No valuation at this stage &mdash; the numbers have to be right before the analysis begins.</p>
+
+        <p><strong>Stage 2: Audit.</strong> A second pass over the draft, with one question: does this report rely on anything not in the source documents? Anything that can&rsquo;t be traced to a specific filing gets flagged or removed. This is the stage that enforces the no-hallucination contract. The framing matters: asking Claude to &ldquo;review the report for accuracy&rdquo; produces reassurances. Asking it to &ldquo;find every claim in this report not directly supported by the attached documents&rdquo; produces findings.</p>
+
+        <p><strong>Stage 3: Valuation.</strong> The closed-book constraint lifts here. Stock price, risk-free rate, peer multiples &mdash; pulled explicitly, verified, fed in. Claude runs the valuation against the audited financial data from Stage 2. The model doesn&rsquo;t find these numbers itself; I provide them. DCF, comparable companies analysis, whatever the situation calls for.</p>
+
+        <p><strong>Stage 4: Earnings Sentiment.</strong> The most recent earnings call transcript gets its own pass. Not to extract numbers &mdash; those are already in Stage 1 &mdash; but to read tone. What did management say about next quarter? What did they not say? How does the language compare to prior calls? Tone shifts in management commentary are often more informative than the numbers themselves.</p>
+
+        <h2>What I Got Wrong</h2>
+
+        <p>My first version tried to do all five stages in one prompt. The output was unusable. The mistake was thinking Claude&rsquo;s capability was the constraint. It wasn&rsquo;t. My problem specification was the constraint.</p>
+
+        <p>Stage 4 (synthesis) was the specific failure point early on. I was asking Claude to analyse without giving it a thesis to test against. What I got back were accurate summaries &mdash; which I could have produced myself by reading more carefully. What I needed were comparisons: to my prior view, to what management had said four months ago, to where the numbers had moved.</p>
+
+        <p>The version I run today is the sixth iteration. The first five were learning.<a href="#fn2" class="footnote-ref"><sup>2</sup></a></p>
+
+        <h2>What the Pipeline Can&rsquo;t Do</h2>
+
+        <p>It can&rsquo;t catch what you didn&rsquo;t ask for. If there&rsquo;s a regulatory risk buried in footnote twelve of a 10-K &mdash; and you didn&rsquo;t instruct the pipeline to look for regulatory language &mdash; it won&rsquo;t surface it. The pipeline is only as good as the questions it has been told to ask.</p>
+
+        <p>It has no variant perception. It can tell you what the consensus says and what management says. It can&rsquo;t tell you whether either is reliable. That&rsquo;s still your job.</p>
+
+        <p>And it doesn&rsquo;t know what you know. If you spent forty-five minutes on a call with the CFO last month and came away with a specific concern about working capital &mdash; that context lives in your head, not in the pipeline. The synthesis in Stage 1 is only as good as the investment thesis you bring to it.</p>
+
+        <h2>Where I&rsquo;ve Landed</h2>
+
+        <p>The report has sources I can check. The valuation uses inputs I put in myself. The numbers trace back to documents I&rsquo;ve read.</p>
+
+        <p>Seventeen browser tabs to four. That&rsquo;s the whole game &mdash; not automation, but accountability. The pipeline makes it easier to be rigorous.<a href="#fn3" class="footnote-ref"><sup>3</sup></a></p>
+
     </article>
+
+    <div class="footnotes">
+        <p id="fn1"><sup>1</sup> The single biggest time sink was building reliable scraping for each company&rsquo;s IR site. Some sites block automated access entirely. I maintain a list of sites with known issues and fallback strategies for each &mdash; that list is how the scraper got to eighteen companies.</p>
+        <p id="fn2"><sup>2</sup> Each iteration taught something specific. The third iteration was when I separated the audit into its own stage. The fourth was when I realised the synthesis needed a thesis to test against, not just data to summarise. The fifth was when I split Stage 0 out as a prerequisite rather than folding it into Stage 1.</p>
+        <p id="fn3"><sup>3</sup> Down from seventeen. Four is not zero. I&rsquo;ve accepted that.</p>
+    </div>
+
     <div class="article-footer">
         <p style="margin-bottom: 1.5rem;">Want more stories about building with AI?</p>
         <div class="social-links" style="justify-content: center;">
@@ -74,6 +144,7 @@
             <a href="https://tgrkarthik.substack.com/" target="_blank" class="btn btn-secondary">Subscribe</a>
         </div>
     </div>
+
     <footer id="shared-footer"></footer>
 
     <script src="../components/nav-footer.js"></script>

@@ -42,23 +42,22 @@
     <article class="article-body">
         <h2>Context</h2>
         <p>I've been learning Indian classical music for about eight years and I train as a vocalist. I take online lessons every week usually on Sundays from my teacher Sudarshan. For the first several years, my lessons were in person and the lessons moved online during the COVID pandemic. As I moved cities from Washington, D.C. to Nashville, my classes have now primarily become online.</p>
-        <p>A couple of years ago, it occurred to me that it would be extremely beneficial for me to have snippets from these classes where I just have the voice of my teacher demonstrating how these lines are sung perfectly stitched together. Cliff notes to memorize, and perfect. Snippets I could listen to while walking or transiting through an airport or at my own leisure and perfect over time.</p>
-        <p>This post shares my experience at trying to create an app for that and lessons I learnt along the way.</p>
+        <p>A couple of years ago, it occurred to me that it would be extremely beneficial for me to have snippets from these classes where I just have the voice of my teacher demonstrating how these lines are sung perfectly stitched together. <strong> Cliff notes to memorize . Cliff notes of voice; of a singer, demonstrating a song </strong>. Snippets I could listen to while walking or transiting through an airport or at my own leisure and perfect over time.</p>
+        <p>This post <strong> shares my experience at trying to create an app for that </strong> and lessons I learnt along the way.</p>
 
         <h2>Structure of a Lesson</h2>
         <p>My lessons usually last an hour. We pick up a piece of music, typically called a keerthana (a poetic song set to a musical scale called a Raaga), and I learn one Keerthana over maybe two or three classes. A keerthana is usually structured as a chorus followed by stanzas. I go through learning lines of the chorus and once I've learnt it well enough, move to the stanza and the next and so on.</p>
-        <p>My teacher sings a phrase; I sing it back. He teaches me the various nuances, corrects me where I am wrong, I sing back, and we move ahead once I can reproduce a line ~75% accurate. The process is iterative. After I have learnt a few lines in succession, my teacher revisits those lines and sings back those lines in a way that is concert ready. The intent is that when I revisit those lines after my class, I have a sample of what the perfect rendition of those few lines is for posterity. 10000 hours. Practice makes one perfect. These lines are intended for rigorous practice.</p>
-        <p>Cliff notes, if you will.</p>
+        <p>My teacher sings a phrase; I sing it back. He teaches me the various nuances, corrects me where I am wrong, I sing back, and we move ahead once I can reproduce a line ~75% accurate. The process is iterative. After I have learnt a few lines in succession, my teacher revisits those lines and sings back those lines in a way that is concert ready. The intent is that when I revisit those lines after my class, I have a sample of what the perfect rendition of those few lines is for posterity. 10000 hours. Practice makes one perfect. These lines are intended for rigorous practice.
 
         <h2>My Ask of Claude</h2>
-        <p>The ask was simple &mdash; or so I thought. To write code to isolate my teacher's voice from mine, and identify snippets in the one hour where my teacher sings uninterrupted for 30 seconds or longer, since those segments are most likely what I am looking for.</p>
+        <p>The ask was simple &mdash; or so I thought. To write code to isolate my teacher's voice from mine, and <strong> identify snippets in the one hour where my teacher sings uninterrupted for 30 seconds or longer, since those segments are most likely what I am looking for. </strong> </p>
         <p>The workflow is straightforward in principle, but as I sat to write code for this, I realized there were so many edge cases that derailed simple efforts at producing code for this.</p>
 
         <h2>Lessons Learnt</h2>
         <ol>
-            <li>Providing what a good output looks like upfront is very useful. It forces one to front load work, but dramatically improves the odds of success.</li>
-            <li>Understanding the input and articulating it clearly &mdash; in this case, it occurred to me after a few iterations that specifying exactly what is present in the recording could help. For example, there is a tanpura playing throughout the class in the background. That was distorting the sound sampling and made it harder to isolate sounds. Also, there is rhythm (taala) as we sing which sounds like a hand clap, adding to distortion in the signal. These hints were critical in finding coding approaches that work.</li>
-            <li>When in doubt, overcommunicate what you need, getting into as many specifics and nuanced details as possible. It helps building a product that does not break at edge cases.</li>
+            <li> Providing <strong> what a good output looks like upfront </strong> is very useful. It forces one to front load work, but dramatically improves the odds of success.</li>
+            <li>Understanding the <strong> input and articulating it </strong> clearly &mdash; in this case, it occurred to me after a few iterations that specifying exactly what is present in the recording could help. For example, there is a tanpura playing throughout the class in the background. That was distorting the sound sampling and made it harder to isolate sounds. Also, there is rhythm (taala) as we sing which sounds like a hand clap, adding to distortion in the signal. These hints were critical in finding coding approaches that work.</li>
+            <li>When in doubt, <strong> overcommunicate </strong> what you need, getting into as many specifics and nuanced details as possible. It helps building a product that does not break at edge cases.</li>
         </ol>
 
         <h2>The Solution: Journey of Getting There</h2>
