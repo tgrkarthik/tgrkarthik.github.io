@@ -93,7 +93,7 @@ a:hover {
 }
 
 .section {
-    padding: 4rem 0;
+    padding: 3rem 0;
     border-bottom: 1px solid #e0e0e0;
 }
 
@@ -296,7 +296,7 @@ a:hover {
     display: flex;
     align-items: baseline;
     gap: 2rem;
-    margin-bottom: 4rem;
+    margin-bottom: 1rem;
 }
 
 .section-number {
@@ -724,7 +724,7 @@ a:hover {
 
 .explore-card {
     display: block;
-    padding: 2rem;
+    padding: 0.5rem;
     border: 1px solid #e0e0e0;
     border-radius: 4px;
     text-decoration: none;
