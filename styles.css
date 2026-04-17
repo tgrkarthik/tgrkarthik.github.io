@@ -824,15 +824,15 @@ a:hover {
     .explore-card {
     }
 
-    /* Article body text — bumped ~40% from the per-page default of 15px */
+    /* Article body text — 17px at 768px */
     article.article-body p {
-        font-size: 21px;
+        font-size: 17px;
     }
 }
 
 @media (max-width: 480px) {
-    /* Article body text — bumped ~40% from the per-page default of 14px */
+    /* Article body text — 15px at 480px */
     article.article-body p {
-        font-size: 19px;
+        font-size: 15px;
     }
 }
