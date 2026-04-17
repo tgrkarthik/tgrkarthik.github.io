@@ -18,12 +18,11 @@
         </button>
         <ul class="nav-links">
             <li><a href="${prefix}index.html">Home</a></li>
-            <li><a href="${prefix}pages/writing.html">Writing</a></li>
             <li><a href="${prefix}ai-experiments.html">AI Experiments</a></li>
+            <li><a href="${prefix}pages/writing.html">Writing</a></li>
             <li><a href="${prefix}pages/food-for-thought.html">Food for Thought</a></li>
-            <li><a href="${prefix}pages/portfolio.html">Companies</a></li>
+            <li><a href="${prefix}pages/portfolio.html">Portfolio (Investments)</a></li>
             <li><a href="${prefix}pages/documents.html">Vault</a></li>
-            <li><a href="${prefix}index.html#contact">Contact</a></li>
         </ul>
     </div>`;
 
