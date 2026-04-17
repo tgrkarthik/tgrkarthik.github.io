@@ -217,6 +217,8 @@ a:hover {
     .nav-links a:hover {
         background-color: #f5f5f5;
         color: #000000;
+        transform: none;
+        display: block;
     }
 
     .nav-container {
@@ -822,15 +824,15 @@ a:hover {
     .explore-card {
     }
 
-    /* Article body text — bump up ~18% from the per-page default of 15px */
+    /* Article body text — bumped ~40% from the per-page default of 15px */
     article.article-body p {
-        font-size: 18px;
+        font-size: 21px;
     }
 }
 
 @media (max-width: 480px) {
-    /* Article body text — bump up ~18% from the per-page default of 14px */
+    /* Article body text — bumped ~40% from the per-page default of 14px */
     article.article-body p {
-        font-size: 16px;
+        font-size: 19px;
     }
 }
