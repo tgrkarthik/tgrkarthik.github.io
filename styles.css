@@ -665,6 +665,11 @@ a:hover {
     color: inherit;
 }
 
+/* Center justify the h4 "seeking excellence..." line */
+.hero-text h4 {
+    text-align: center;
+}
+
 /* Social sidebar — right side on desktop */
 .social-sidebar {
     flex-shrink: 0;
@@ -780,6 +785,10 @@ a:hover {
         margin-bottom: 1rem;
     }
 
+    .hero-text h4 {
+        text-align: center;
+    }
+
     .hero-text h5 {
         font-size: 13px;
         margin-bottom: 1.5rem;
@@ -835,4 +844,3 @@ a:hover {
     article.article-body p {
         font-size: 15px;
     }
-}
