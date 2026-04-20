@@ -76,7 +76,7 @@ p {
 }
 
 a {
-    color: #000000;
+    color: #666666;
     text-decoration: none;
     transition: all 0.3s ease;
 }
@@ -699,6 +699,21 @@ a:hover {
     opacity: 1;
 }
 
+/* Photo below sidebar links — desktop only */
+.sidebar-photo {
+    display: block;
+    width: 100%;
+    max-width: 200px;
+    margin-top: 1rem;
+    border-radius: 4px;
+    opacity: 0.92;
+}
+
+/* Mobile photo — hidden on desktop, shown below inline social links */
+.mobile-photo {
+    display: none;
+}
+
 /* Site description — shown in hero on desktop, after Explore on mobile */
 .hero-description {
     display: block;
@@ -823,6 +838,20 @@ a:hover {
 
     .social-links-inline a:hover {
         color: #000000;
+    }
+
+    /* Mobile photo — full width below the inline social links */
+    .mobile-photo {
+        display: block;
+        width: 100%;
+        margin-top: 1.5rem;
+        border-radius: 4px;
+        opacity: 0.92;
+    }
+
+    /* Hide desktop sidebar photo on mobile */
+    .sidebar-photo {
+        display: none;
     }
 
     /* Explore grid collapses to single column on mobile */

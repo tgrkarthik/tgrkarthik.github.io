@@ -76,7 +76,7 @@
 
         <p><strong><em>I started with a simple question:</em></strong> Can I build a scraper that scrapes the investor relations websites of the companies I study and builds me a database I could then use to unleash the power of Gemini or Claude?</p>
 
-        <p>&hellip; and one of the annoying things I discovered in the process was how different investor relations websites for every company are.</p>
+        <p>&hellip; and <strong> one of the annoying things I discovered in the process  was how different investor relations websites for every company are. </strong> </p>
 
         <p>This was one of the first products that I started building using LLMs, as early as September 2025. First attempt was with Gemini. The scraper somewhat worked but I started running into a lot of edge cases and problems with companies that had different web layouts, as you will reading through this post.</p>
 
@@ -86,7 +86,7 @@
 
         <p>I revisited building the scraper again earlier this year in January, once I started using Claude Cowork and Claude Code. After a few iterations, one of the insights Claude had was to figure out a classification for different websites before figuring out how the scraper should be written; a taxonomy of sorts.</p>
 
-        <p>Instead of writing Tesla-specific code and Veeva-specific code and HDFC-specific code, the first problem to solve was: how many types of investor relations websites actually exist? The answer, after testing enough of them, is eight. WordPress. Q4 web platform. Drupal. GCS-Web. React/Next.js SPAs. Angular. Vue. And everything else. I&rsquo;m sure newer edge cases might surface more, but eight it is for now.</p>
+        <p> <strong> Instead of writing Amazon specific code and Veeva-specific code and HDFC-specific code, the first problem to solve was: how many types of investor relations websites actually exist? The answer, after testing enough of them, is eight </strong> . WordPress. Q4 web platform. Drupal. GCS-Web. React/Next.js SPAs. Angular. Vue. And everything else. I&rsquo;m sure newer edge cases might surface more, but eight it is for now.</p>
 
         <p>Platform detection runs before any scraping begins. It reads the raw HTML for fingerprints &mdash; wp-content or wp-json for WordPress, __NEXT_DATA__ for Next.js, q4cdn.com in URL patterns. Ninety percent of the time, detection completes in under two seconds.</p>
 
@@ -94,9 +94,9 @@
 
         <h2>The Bot Problem</h2>
 
-        <p>The final percent of edge cases are more persistent and nagging! Some IR sites deploy serious anti-bot infrastructure. When you hit Akamai&rsquo;s Bot Manager or Cloudflare&rsquo;s challenge page, a naive scraper returns a 403 and stops. That&rsquo;s not good enough.</p>
+        <p>The final 20% of edge cases are more persistent and nagging! Some IR sites deploy serious anti-bot infrastructure. When you hit Akamai&rsquo;s Bot Manager or Cloudflare&rsquo;s challenge page, a naive scraper returns a 403 and stops. That&rsquo;s not good enough.</p>
 
-        <p>Taleb&rsquo;s barbell principle is about combining a very safe position with a very aggressive one, and eliminating the middle. Applied here: one end of the barbell is a lightweight requests session &mdash; no JavaScript rendering, minimal headers, fast and silent. It passes through most sites without triggering any defences. The other end is a full Playwright Chromium browser: real TLS fingerprint, full cookie handling, JavaScript execution, complete DOM rendering. Heavy, slow, but almost indistinguishable from a human.</p>
+        <p> <strong> Claude's solution was to combine lightweight requests </strong> session &mdash; no JavaScript rendering, minimal headers, fast and silent. It passes through most sites without triggering any defences, <strong> with on the other end is a full Playwright Chromium browser </strong> : real TLS fingerprint, full cookie handling, JavaScript execution, complete DOM rendering. Heavy, slow, but almost indistinguishable from a human.</p>
 
         <p>Most documents get downloaded at the fast end. Documents that fail &mdash; 403s, CloudFront CDN blocks, authentication walls &mdash; go to the Playwright fallback automatically. You get the speed of a lightweight session for the easy cases and the power of a full browser for the hard ones. The wins compound: PB Fintech returned 720 documents with 99.8% download success. HDFC Bank returned 445 with 99.5%. Sea, a Q4 platform site, completed at 100%.</p>
 
@@ -108,17 +108,17 @@
 
         <p>The discovery engine runs four phases: static HTML extraction, dynamic content expansion (clicking year selectors, expanding accordions, following &ldquo;Load More&rdquo; buttons), JavaScript bundle scanning for document URLs embedded in compiled React code, and fallbacks (sitemaps, common IR path patterns, CDN enumeration).<a href="#fn1" class="footnote-ref"><sup>1</sup></a></p>
 
-        <p>The Palantir run revealed a subtler problem: after discovery, 1,638 of 1,728 documents were not real documents.<a href="#fn2" class="footnote-ref"><sup>2</sup></a> They were EDGAR filing viewer artifacts &mdash; phantom PDF links each with a UUID in the URL, each labelled exactly &ldquo;PDF&rdquo; or &ldquo;XBRL.&rdquo; The classifier now filters any link where the text is a bare file-type label and the URL contains a UUID pattern. Real document links have descriptive text.</p>
+        <p> <strong> The Palantir run revealed a subtler problem: after discovery, 1,638 of 1,728 documents were not real documents </strong> .<a href="#fn2" class="footnote-ref"><sup>2</sup></a> They were EDGAR filing viewer artifacts &mdash; phantom PDF links each with a UUID in the URL, each labelled exactly &ldquo;PDF&rdquo; or &ldquo;XBRL.&rdquo; The classifier now filters any link where the text is a bare file-type label and the URL contains a UUID pattern. Real document links have descriptive text.</p>
 
         <h2>What I&rsquo;ve Learned</h2>
 
-        <p>The generic approach outperformed the specific one, but only after you&rsquo;ve done enough classification work to understand what &ldquo;generic&rdquo; actually covers. Eight platform types isn&rsquo;t a universal solution. It&rsquo;s eight specific handlers that are each somewhat more general than the company-specific code they replaced.</p>
+        <p>The generic approach outperformed the specific one, but only after you've done enough classification work to understand what generic actually covers. Eight platform types isn&rsquo;t a universal solution. It&rsquo;s eight specific handlers that are each somewhat more general than the company-specific code they replaced.</p>
 
-        <p>Each company I tested taught me something that made the next one easier. The Palantir session taught me about section-button deduplication and EDGAR junk filtering. The Blackbuck session taught me about React SPAs that trigger downloads on page load rather than on click. The 3DS session taught me about Akamai&rsquo;s headed-mode requirement. The taxonomy compounds. Each new case either fits an existing branch or forces a new one.</p>
+        <p>Each company I tested taught me ( well, it actually taught or directed Claude) something that made the next one easier. The Palantir session taught me about section-button deduplication and EDGAR junk filtering. The Blackbuck session taught me about React SPAs that trigger downloads on page load rather than on click. The 3DS session taught me about Akamai&rsquo;s headed-mode requirement. The taxonomy compounds. Each new case either fits an existing branch or forces a new one.</p>
 
-        <p>The scraper now is robust enough for most of my use cases. Once the scraper was working efficiently, I also had Claude build me a code to run on the downloaded files to organize them in a folder structure that&rsquo;s more readable (folders things like quarterly reports, annual reports, Excel files, etc.).</p>
+        <p>The scraper now is robust enough for most of my use cases. <strong> Once the scraper was working efficiently, I also had Claude build me a code to run on the downloaded files to organize them in a folder structure that&rsquo;s more readable (folders things like quarterly reports, annual reports, Excel files, etc.). </strong> </p>
 
-        <p>I also had Claude Code build a GUI where I can conveniently put in the name of a company and it does a lookup. It tells me on which exchange it&rsquo;s listed, picks up the ticker, investor relations webpage and then downloads. I&rsquo;ve been fairly happy with the output and this scraper is now my source of truth for downloading source documents and running LLMs to produce research reports with great accuracy, traceability without losing context and hallucinating.</p>
+        <p> <strong> I also had Claude Code build a GUI, see below </strong> where I can conveniently put in the name of a company and it does a lookup. It tells me on which exchange it&rsquo;s listed, picks up the ticker, investor relations webpage and then downloads. I&rsquo;ve been fairly happy with the output and this scraper is now my source of truth for downloading source documents and running LLMs to produce research reports with great accuracy, traceability without losing context and hallucinating.</p>
 
     </article>
 
