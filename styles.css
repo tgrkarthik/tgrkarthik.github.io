@@ -844,6 +844,8 @@ a:hover {
     .mobile-photo {
         display: block;
         width: 100%;
+        max-width: 100%;
+        height: auto;
         margin-top: 1.5rem;
         border-radius: 4px;
         opacity: 0.92;
