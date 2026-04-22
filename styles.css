@@ -244,7 +244,7 @@ a:hover {
 }
 
 .hero p {
-    font-size: 17px;
+    font-size: 16px;
     color: #666666;
     margin-bottom: 3rem;
     padding-top: 1rem;
@@ -665,6 +665,22 @@ a:hover {
     color: inherit;
 }
 
+/* Section links in hero description — brown color matching the logo, underlined like hyperlinks */
+.section-link {
+    color: #8b4513;
+    text-decoration: underline;
+    text-decoration-color: #8b4513;
+    text-underline-offset: 2px;
+}
+
+.section-link:hover {
+    opacity: 0.75;
+}
+
+.section-link strong {
+    color: #8b4513;
+}
+
 /* Center justify the h4 "seeking excellence..." line */
 .hero-text h4 {
     text-align: center;
@@ -810,17 +826,15 @@ a:hover {
         color: #666666;
     }
 
-    /* Hide description in hero on mobile, show it after Explore */
+    /* Show description in hero on mobile (before the photo), hide the old duplicate */
     .hero-description {
-        display: none;
+        display: block;
+        margin-top: 1.5rem;
+        font-size: 15px;
     }
 
     .site-description-mobile {
-        display: block;
-        padding: 2rem 0 0;
-        font-size: 15px;
-        color: #666666;
-        line-height: 1.7;
+        display: none;
     }
 
     /* Inline mobile social links shown under the hero text */
