@@ -20,12 +20,15 @@
             <div id="page-locked" class="password-form">
                 <p class="section-intro">This section contains password-protected documents. Enter the password to access.</p>
                 <div class="form-group">
-                    <input
-                        type="password"
-                        id="pagePassword"
-                        placeholder="Enter password"
-                        class="password-input"
-                    >
+                    <div class="password-input-wrapper">
+                        <input type="password" id="pagePassword" placeholder="Enter password" class="password-input">
+                        <button type="button" onclick="togglePasswordVisibility()" class="password-toggle" id="passwordToggle" aria-label="Show password">
+                            <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                        </button>
+                    </div>
                     <button onclick="unlockPage()" class="btn btn-primary">Unlock</button>
                 </div>
                 <p class="error-message" id="errorMessage" style="display: none; color: #d32f2f; margin-top: 1rem;">Incorrect password. Please try again.</p>
