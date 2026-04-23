@@ -1,7 +1,7 @@
 // ===== PASSWORD PROTECTION (Vault & Companies pages) =====
 // Password stored as SHA-256 hash only — plaintext never appears in source code.
 // Both pages share the same password.
-const CORRECT_PASSWORD_HASH = "b8b5bdd75639ea62287442eb1db628a59e713370b73b72ee2fb07f5bccbcb4e1";
+const CORRECT_PASSWORD_HASH = "e668df0edef93f7a1197ce4b2464e564a5fbe86a6a76d096aad87d5b90ea6a3c";
 
 // Simple SHA-256 hash function
 async function hashPassword(password) {
