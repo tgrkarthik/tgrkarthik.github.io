@@ -50,8 +50,8 @@
 
         /* Logo */
         .portfolio-logo {
-            width: 80px;
-            height: 80px;
+            width: 160px;
+            height: 160px;
             object-fit: contain;
             transition: opacity 0.3s ease;
         }
@@ -105,6 +105,82 @@
             line-height: 1.5;
         }
 
+        /* Section headers within page-content */
+        .portfolio-section {
+            margin-bottom: 1rem;
+            max-width: 900px;
+        }
+
+        /* Collapsible header button */
+        .portfolio-section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            padding: 1rem 0;
+            border-bottom: 2px solid #e0e0e0;
+            user-select: none;
+        }
+        .portfolio-section-header:hover .portfolio-section-title {
+            color: #000000;
+        }
+        .portfolio-section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333333;
+            transition: color 0.2s ease;
+        }
+        .portfolio-section-subtitle {
+            font-size: 13px;
+            color: #999999;
+            margin-top: 0.2rem;
+            font-weight: 400;
+        }
+        .portfolio-section-toggle {
+            font-size: 22px;
+            color: #999999;
+            font-weight: 300;
+            line-height: 1;
+            transition: transform 0.3s ease, color 0.2s ease;
+            width: 28px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+        .portfolio-section.open .portfolio-section-toggle {
+            transform: rotate(45deg);
+            color: #333333;
+        }
+
+        /* Collapsible grid wrapper */
+        .portfolio-section-body {
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height 0.45s ease, padding 0.3s ease;
+            padding-top: 0;
+        }
+        .portfolio-section.open .portfolio-section-body {
+            max-height: 2000px;
+            padding-top: 1.5rem;
+        }
+
+        /* Placeholder tile */
+        .portfolio-tile.placeholder {
+            border-style: dashed;
+            opacity: 0.45;
+            cursor: default;
+            pointer-events: none;
+        }
+        .portfolio-placeholder-icon {
+            font-size: 32px;
+            color: #cccccc;
+            margin-bottom: 0.5rem;
+        }
+        .portfolio-placeholder-name {
+            font-size: 13px;
+            color: #bbbbbb;
+            font-style: italic;
+        }
+
         /* Mobile description — shown below tile on mobile */
         .portfolio-desc-mobile {
             display: none;
@@ -116,8 +192,8 @@
                 gap: 1rem;
             }
             .portfolio-logo {
-                width: 60px;
-                height: 60px;
+                width: 120px;
+                height: 120px;
             }
             .portfolio-name {
                 font-size: 13px;
@@ -142,8 +218,8 @@
                 gap: 0.75rem;
             }
             .portfolio-logo {
-                width: 50px;
-                height: 50px;
+                width: 100px;
+                height: 100px;
             }
             .portfolio-name {
                 font-size: 12px;
@@ -184,120 +260,316 @@
             <div id="page-content" style="display: none;">
 
             <div class="portfolio-intro">
-                <p>A selection of companies I've invested in or studied closely over the years, spanning consumer tech, fintech, healthcare, logistics, and e-commerce across multiple geographies.</p>
+                <p>A selection of companies I've invested in across my career — through IFC, Octahedron Capital, and personal investments — spanning consumer tech, fintech, healthcare, logistics, and e-commerce across multiple geographies.</p>
             </div>
 
-            <div class="portfolio-grid">
-
-                <div class="portfolio-item">
-                    <a href="https://www.lenskart.com" target="_blank" class="portfolio-tile">
-                        <img src="https://logo.clearbit.com/lenskart.com" alt="Lenskart" class="portfolio-logo">
-                        <div class="portfolio-name">Lenskart</div>
-                        <div class="portfolio-overlay">
-                            <div class="portfolio-overlay-name">Lenskart</div>
-                            <div class="portfolio-overlay-desc">Asia's largest eyewear company, vertically integrated from manufacturing to retail across India and Southeast Asia.</div>
-                        </div>
-                    </a>
-                    <div class="portfolio-desc-mobile">Asia's largest eyewear company, vertically integrated from manufacturing to retail.</div>
+            <!-- ===== SECTION 1: IFC ===== -->
+            <div class="portfolio-section" id="section-ifc">
+                <div class="portfolio-section-header" onclick="toggleSection('section-ifc')">
+                    <div>
+                        <div class="portfolio-section-title">Investments (IFC related, select) </div>
+                        <div class="portfolio-section-subtitle">International Finance Corporation — World Bank Group</div>
+                    </div>
+                    <div class="portfolio-section-toggle">+</div>
                 </div>
+                <div class="portfolio-section-body">
+                <div class="portfolio-grid">
 
-                <div class="portfolio-item">
-                    <a href="https://www.billiontoone.com" target="_blank" class="portfolio-tile">
-                        <img src="https://logo.clearbit.com/billiontoone.com" alt="BillionToOne" class="portfolio-logo">
-                        <div class="portfolio-name">BillionToOne</div>
-                        <div class="portfolio-overlay">
-                            <div class="portfolio-overlay-name">BillionToOne</div>
-                            <div class="portfolio-overlay-desc">Molecular diagnostics company pioneering non-invasive prenatal and oncology testing using single-molecule counting technology.</div>
-                        </div>
-                    </a>
-                    <div class="portfolio-desc-mobile">Molecular diagnostics — non-invasive prenatal and oncology testing.</div>
+                    <div class="portfolio-item">
+                        <a href="https://www.lenskart.com" target="_blank" class="portfolio-tile">
+                            <img src="../images/logos/lenskart.png" alt="Lenskart" class="portfolio-logo">
+                            <div class="portfolio-name">Lenskart</div>
+                            <div class="portfolio-overlay">
+                                <div class="portfolio-overlay-name">Lenskart</div>
+                                <div class="portfolio-overlay-desc">Asia's largest eyewear company, vertically integrated from manufacturing to retail across India and Southeast Asia.</div>
+                                <div class="portfolio-overlay-desc" style="margin-top: 0.75rem;">Invested in 2016 as Series D lead. IPO on NSE in 2025.</div>
+                            </div>
+                        </a>
+                        <div class="portfolio-desc-mobile">Asia's largest eyewear company, vertically integrated from manufacturing to retail.</div>
+                    </div>
+
+                    <div class="portfolio-item">
+                        <a href="https://www.amazon.ae" target="_blank" class="portfolio-tile">
+                            <img src="../images/logos/souq.png" alt="Souq.com" class="portfolio-logo">
+                            <div class="portfolio-name">Souq.com</div>
+                            <div class="portfolio-tag">Acquired by Amazon</div>
+                            <div class="portfolio-overlay">
+                                <div class="portfolio-overlay-name">Souq.com</div>
+                                <div class="portfolio-overlay-desc">The Middle East's leading e-commerce platform, acquired by Amazon in 2017 and rebranded as Amazon.ae.</div>
+                                <div class="portfolio-overlay-desc" style="margin-top: 0.75rem;"></div>
+                            </div>
+                        </a>
+                        <div class="portfolio-desc-mobile">Middle East e-commerce leader, acquired by Amazon in 2017.</div>
+                    </div>
+
+                    <div class="portfolio-item">
+                        <a href="https://www.hepsiburada.com" target="_blank" class="portfolio-tile">
+                            <img src="../images/logos/hepsiburada.png" alt="Hepsiburada" class="portfolio-logo">
+                            <div class="portfolio-name">Hepsiburada</div>
+                            <div class="portfolio-overlay">
+                                <div class="portfolio-overlay-name">Hepsiburada</div>
+                                <div class="portfolio-overlay-desc">Turkey's leading e-commerce platform and marketplace, publicly listed on NASDAQ.</div>
+                                <div class="portfolio-overlay-desc" style="margin-top: 0.75rem;"></div>
+                            </div>
+                        </a>
+                        <div class="portfolio-desc-mobile">Turkey's leading e-commerce platform, listed on NASDAQ.</div>
+                    </div>
+
+                    <div class="portfolio-item">
+                        <a href="https://nephroplus.com" target="_blank" class="portfolio-tile">
+                            <img src="../images/logos/nephroplus.png" alt="NephroPlus" class="portfolio-logo">
+                            <div class="portfolio-name">NephroPlus</div>
+                            <div class="portfolio-overlay">
+                                <div class="portfolio-overlay-name">NephroPlus</div>
+                                <div class="portfolio-overlay-desc">Asia's largest dialysis network, operating hundreds of centers across India and expanding internationally.</div>
+                                <div class="portfolio-overlay-desc" style="margin-top: 0.75rem;"></div>
+                            </div>
+                        </a>
+                        <div class="portfolio-desc-mobile">Asia's largest dialysis network, operating across India and beyond.</div>
+                    </div>
+
+                    <div class="portfolio-item">
+                        <a href="https://www.bigbasket.com" target="_blank" class="portfolio-tile">
+                            <img src="../images/logos/bigbasket.png" alt="BigBasket" class="portfolio-logo">
+                            <div class="portfolio-name">BigBasket</div>
+                            <div class="portfolio-overlay">
+                                <div class="portfolio-overlay-name">BigBasket</div>
+                                <div class="portfolio-overlay-desc">India's largest online grocery platform, now part of the Tata Group ecosystem.</div>
+                                <div class="portfolio-overlay-desc" style="margin-top: 0.75rem;"></div>
+                            </div>
+                        </a>
+                        <div class="portfolio-desc-mobile">India's largest online grocery platform, part of Tata Group.</div>
+                    </div>
+
+                    <div class="portfolio-item">
+                        <a href="https://www.shadowfax.in" target="_blank" class="portfolio-tile">
+                            <img src="../images/logos/shadowfax.png" alt="Shadowfax" class="portfolio-logo">
+                            <div class="portfolio-name">Shadowfax</div>
+                            <div class="portfolio-overlay">
+                                <div class="portfolio-overlay-name">Shadowfax Technologies</div>
+                                <div class="portfolio-overlay-desc">India's largest crowdsourced logistics platform, powering last-mile delivery for e-commerce and hyperlocal businesses.</div>
+                                <div class="portfolio-overlay-desc" style="margin-top: 0.75rem;"></div>
+                            </div>
+                        </a>
+                        <div class="portfolio-desc-mobile">India's largest crowdsourced logistics and last-mile delivery platform.</div>
+                    </div>
+
+                    <div class="portfolio-item">
+                        <a href="https://www.loggi.com" target="_blank" class="portfolio-tile">
+                            <img src="../images/logos/loggi.png" alt="Loggi" class="portfolio-logo">
+                            <div class="portfolio-name">Loggi</div>
+                            <div class="portfolio-overlay">
+                                <div class="portfolio-overlay-name">Loggi</div>
+                                <div class="portfolio-overlay-desc">Brazil's leading tech-driven logistics company, building end-to-end delivery infrastructure across Latin America.</div>
+                                <div class="portfolio-overlay-desc" style="margin-top: 0.75rem;"></div>
+                            </div>
+                        </a>
+                        <div class="portfolio-desc-mobile">Brazil's leading tech-driven logistics company.</div>
+                    </div>
+
                 </div>
+                </div><!-- /section-body -->
+            </div>
 
-                <div class="portfolio-item">
-                    <a href="https://www.amazon.ae" target="_blank" class="portfolio-tile">
-                        <img src="https://logo.clearbit.com/souq.com" alt="Souq.com" class="portfolio-logo">
-                        <div class="portfolio-name">Souq.com</div>
-                        <div class="portfolio-tag">Acquired by Amazon</div>
-                        <div class="portfolio-overlay">
-                            <div class="portfolio-overlay-name">Souq.com</div>
-                            <div class="portfolio-overlay-desc">The Middle East's leading e-commerce platform, acquired by Amazon in 2017 and rebranded as Amazon.ae.</div>
-                        </div>
-                    </a>
-                    <div class="portfolio-desc-mobile">Middle East e-commerce leader, acquired by Amazon in 2017.</div>
+            <!-- ===== SECTION 2: Personal ===== -->
+            <div class="portfolio-section" id="section-personal">
+                <div class="portfolio-section-header" onclick="toggleSection('section-personal')">
+                    <div>
+                        <div class="portfolio-section-title">Personal Investments (select)</div>
+                        <div class="portfolio-section-subtitle">Public equities, ETFs, and private holdings</div>
+                    </div>
+                    <div class="portfolio-section-toggle">+</div>
                 </div>
+                <div class="portfolio-section-body">
+                <div class="portfolio-grid">
 
-                <div class="portfolio-item">
-                    <a href="https://www.hepsiburada.com" target="_blank" class="portfolio-tile">
-                        <img src="https://logo.clearbit.com/hepsiburada.com" alt="Hepsiburada" class="portfolio-logo">
-                        <div class="portfolio-name">Hepsiburada</div>
-                        <div class="portfolio-overlay">
-                            <div class="portfolio-overlay-name">Hepsiburada</div>
-                            <div class="portfolio-overlay-desc">Turkey's leading e-commerce platform and marketplace, publicly listed on NASDAQ.</div>
-                        </div>
-                    </a>
-                    <div class="portfolio-desc-mobile">Turkey's leading e-commerce platform, listed on NASDAQ.</div>
+                    <div class="portfolio-item">
+                        <a href="https://www.billiontoone.com" target="_blank" class="portfolio-tile">
+                            <img src="../images/logos/billiontoone.png" alt="BillionToOne" class="portfolio-logo">
+                            <div class="portfolio-name">BillionToOne</div>
+                            <div class="portfolio-overlay">
+                                <div class="portfolio-overlay-name">BillionToOne</div>
+                                <div class="portfolio-overlay-desc">Molecular diagnostics company pioneering non-invasive prenatal and oncology testing using single-molecule counting technology.</div>
+                                <div class="portfolio-overlay-desc" style="margin-top: 0.75rem;"> Invested starting 2017 in Seed, and followed on in Series B, Series C and Series D rounds. Company went public in 2025. Introduced company to NeoTribe ventures, who eventually led their Series A</div>
+                            </div>
+                        </a>
+                        <div class="portfolio-desc-mobile">Molecular diagnostics — non-invasive prenatal and oncology testing.</div>
+                    </div>
+
+                    <div class="portfolio-item">
+                        <a href="https://abc.xyz" target="_blank" class="portfolio-tile">
+                            <img src="../images/logos/alphabet.png" alt="Alphabet" class="portfolio-logo">
+                            <div class="portfolio-name">Alphabet</div>
+                            <div class="portfolio-overlay">
+                                <div class="portfolio-overlay-name">Alphabet (GOOGL)</div>
+                                <div class="portfolio-overlay-desc">Parent company of Google, YouTube, and Waymo — one of the world's most dominant technology and advertising businesses.</div>
+                                <div class="portfolio-overlay-desc" style="margin-top: 0.75rem;"></div>
+                            </div>
+                        </a>
+                        <div class="portfolio-desc-mobile">Parent company of Google, YouTube, and Waymo.</div>
+                    </div>
+
+                    <div class="portfolio-item">
+                        <a href="https://investor.fb.com" target="_blank" class="portfolio-tile">
+                            <img src="../images/logos/meta.png" alt="Meta" class="portfolio-logo">
+                            <div class="portfolio-name">Meta</div>
+                            <div class="portfolio-overlay">
+                                <div class="portfolio-overlay-name">Meta Platforms (META)</div>
+                                <div class="portfolio-overlay-desc">Owner of Facebook, Instagram, and WhatsApp — the world's largest social media ecosystem with over 3 billion daily active users.</div>
+                                <div class="portfolio-overlay-desc" style="margin-top: 0.75rem;"></div>
+                            </div>
+                        </a>
+                        <div class="portfolio-desc-mobile">Owner of Facebook, Instagram, and WhatsApp.</div>
+                    </div>
+
+                    <div class="portfolio-item">
+                        <a href="https://www.rolls-roycemotorcars.com" target="_blank" class="portfolio-tile">
+                            <img src="../images/logos/rollsroyce.png" alt="Rolls-Royce" class="portfolio-logo">
+                            <div class="portfolio-name">Rolls-Royce</div>
+                            <div class="portfolio-overlay">
+                                <div class="portfolio-overlay-name">Rolls-Royce Holdings (RR.L)</div>
+                                <div class="portfolio-overlay-desc">British aerospace and defence engineering company, a world leader in power systems for civil aviation, defence, and power generation.</div>
+                                <div class="portfolio-overlay-desc" style="margin-top: 0.75rem;"></div>
+                            </div>
+                        </a>
+                        <div class="portfolio-desc-mobile">British aerospace and power systems engineering leader.</div>
+                    </div>
+
+                    <div class="portfolio-item">
+                        <a href="https://www.rubiconfounders.com" target="_blank" class="portfolio-tile">
+                            <img src="../images/logos/rubiconfounders.png" alt="Rubicon Founders" class="portfolio-logo">
+                            <div class="portfolio-name">Rubicon Founders</div>
+                            <div class="portfolio-overlay">
+                                <div class="portfolio-overlay-name">Rubicon Founders</div>
+                                <div class="portfolio-overlay-desc">Early-stage venture fund backing exceptional founders building category-defining companies.</div>
+                                <div class="portfolio-overlay-desc" style="margin-top: 0.75rem;"></div>
+                            </div>
+                        </a>
+                        <div class="portfolio-desc-mobile">Early-stage venture fund backing category-defining founders.</div>
+                    </div>
+
+                    <div class="portfolio-item">
+                        <a href="https://www.associatedvetpartners.com" target="_blank" class="portfolio-tile">
+                            <img src="../images/logos/AVP.png" alt="Associated Veterinary Partners" class="portfolio-logo">
+                            <div class="portfolio-name">Associated Veterinary Partners</div>
+                            <div class="portfolio-overlay">
+                                <div class="portfolio-overlay-name">Associated Veterinary Partners</div>
+                                <div class="portfolio-overlay-desc">A veterinary practice management group partnering with independent clinics to deliver high-quality animal care at scale.</div>
+                                <div class="portfolio-overlay-desc" style="margin-top: 0.75rem;"></div>
+                            </div>
+                        </a>
+                        <div class="portfolio-desc-mobile">Veterinary practice management group across independent clinics.</div>
+                    </div>
+
+                    <div class="portfolio-item">
+                        <a href="https://www.imaginepediatrics.org" target="_blank" class="portfolio-tile">
+                            <img src="../images/logos/imaginepediatrics.png" alt="Imagine Pediatrics" class="portfolio-logo">
+                            <div class="portfolio-name">Imagine Pediatrics</div>
+                            <div class="portfolio-overlay">
+                                <div class="portfolio-overlay-name">Imagine Pediatrics</div>
+                                <div class="portfolio-overlay-desc">Virtual-first pediatric care provider delivering 24/7 medical, behavioural, and social support to children with complex needs.</div>
+                                <div class="portfolio-overlay-desc" style="margin-top: 0.75rem;"></div>
+                            </div>
+                        </a>
+                        <div class="portfolio-desc-mobile">Virtual-first pediatric care for children with complex medical needs.</div>
+                    </div>
+
+                    <div class="portfolio-item">
+                        <a href="https://www.vaneck.com/us/en/investments/semiconductor-etf-smh/" target="_blank" class="portfolio-tile">
+                            <img src="../images/logos/SMH.png" alt="SMH ETF" class="portfolio-logo">
+                            <div class="portfolio-name">SMH ETF</div>
+                            <div class="portfolio-overlay">
+                                <div class="portfolio-overlay-name">VanEck Semiconductor ETF (SMH)</div>
+                                <div class="portfolio-overlay-desc">Tracks the world's largest semiconductor companies including NVIDIA, TSMC, and ASML — a concentrated bet on the chip supercycle.</div>
+                                <div class="portfolio-overlay-desc" style="margin-top: 0.75rem;"></div>
+                            </div>
+                        </a>
+                        <div class="portfolio-desc-mobile">VanEck ETF tracking the world's largest semiconductor companies.</div>
+                    </div>
+
+                    <div class="portfolio-item">
+                        <a href="https://www.amazon.com" target="_blank" class="portfolio-tile">
+                            <img src="../images/logos/amazon.png" alt="Amazon" class="portfolio-logo">
+                            <div class="portfolio-name">Amazon</div>
+                            <div class="portfolio-overlay">
+                                <div class="portfolio-overlay-name">Amazon (AMZN)</div>
+                                <div class="portfolio-overlay-desc">Global leader in e-commerce, cloud computing (AWS), and digital advertising — one of the most diversified technology businesses in the world.</div>
+                                <div class="portfolio-overlay-desc" style="margin-top: 0.75rem;"></div>
+                            </div>
+                        </a>
+                        <div class="portfolio-desc-mobile">Global leader in e-commerce, cloud computing, and digital advertising.</div>
+                    </div>
+
+                    <div class="portfolio-item">
+                        <a href="https://www.coactivescience.com" target="_blank" class="portfolio-tile">
+                            <div class="portfolio-placeholder-icon">🧠</div>
+                            <div class="portfolio-name">Coactive Science</div>
+                            <div class="portfolio-overlay">
+                                <div class="portfolio-overlay-name">Coactive Science</div>
+                                <div class="portfolio-overlay-desc">AI and cognitive science company building systems that augment human decision-making in high-stakes environments.</div>
+                                <div class="portfolio-overlay-desc" style="margin-top: 0.75rem;"></div>
+                            </div>
+                        </a>
+                        <div class="portfolio-desc-mobile">AI company augmenting human decision-making in high-stakes environments.</div>
+                    </div>
+
                 </div>
+                </div><!-- /section-body -->
+            </div>
 
-                <div class="portfolio-item">
-                    <a href="https://nephroplus.com" target="_blank" class="portfolio-tile">
-                        <img src="https://logo.clearbit.com/nephroplus.com" alt="NephroPlus" class="portfolio-logo">
-                        <div class="portfolio-name">NephroPlus</div>
-                        <div class="portfolio-overlay">
-                            <div class="portfolio-overlay-name">NephroPlus</div>
-                            <div class="portfolio-overlay-desc">Asia's largest dialysis network, operating hundreds of centers across India and expanding internationally.</div>
-                        </div>
-                    </a>
-                    <div class="portfolio-desc-mobile">Asia's largest dialysis network, operating across India and beyond.</div>
+            <!-- ===== SECTION 3: Octahedron ===== -->
+            <div class="portfolio-section" id="section-octahedron">
+                <div class="portfolio-section-header" onclick="toggleSection('section-octahedron')">
+                    <div>
+                        <div class="portfolio-section-title">Investments at Octahedron Capital and Others</div>
+                        <div class="portfolio-section-subtitle">Venture and growth investments</div>
+                    </div>
+                    <div class="portfolio-section-toggle">+</div>
                 </div>
+                <div class="portfolio-section-body">
+                <div class="portfolio-grid">
 
-                <div class="portfolio-item">
-                    <a href="https://groww.in" target="_blank" class="portfolio-tile">
-                        <img src="https://logo.clearbit.com/groww.in" alt="Groww" class="portfolio-logo">
-                        <div class="portfolio-name">Groww</div>
-                        <div class="portfolio-overlay">
-                            <div class="portfolio-overlay-name">Groww</div>
-                            <div class="portfolio-overlay-desc">India's largest investment platform by active users, offering stocks, mutual funds, and digital gold.</div>
-                        </div>
-                    </a>
-                    <div class="portfolio-desc-mobile">India's largest investment platform by active users.</div>
+                    <div class="portfolio-item">
+                        <a href="https://groww.in" target="_blank" class="portfolio-tile">
+                            <img src="../images/logos/groww.png" alt="Groww" class="portfolio-logo">
+                            <div class="portfolio-name">Groww</div>
+                            <div class="portfolio-overlay">
+                                <div class="portfolio-overlay-name">Groww</div>
+                                <div class="portfolio-overlay-desc">India's largest investment platform by active users, offering stocks, mutual funds, and digital gold.</div>
+                                <div class="portfolio-overlay-desc" style="margin-top: 0.75rem;"></div>
+                            </div>
+                        </a>
+                        <div class="portfolio-desc-mobile">India's largest investment platform by active users.</div>
+                    </div>
+
+                    <div class="portfolio-item">
+                        <a href="https://www.meesho.com" target="_blank" class="portfolio-tile">
+                            <div class="portfolio-placeholder-icon">🏷️</div>
+                            <div class="portfolio-name">Meesho</div>
+                            <div class="portfolio-overlay">
+                                <div class="portfolio-overlay-name">Meesho</div>
+                                <div class="portfolio-overlay-desc">India's largest social commerce platform, enabling millions of micro-entrepreneurs to sell online via WhatsApp and social networks.</div>
+                                <div class="portfolio-overlay-desc" style="margin-top: 0.75rem;"></div>
+                            </div>
+                        </a>
+                        <div class="portfolio-desc-mobile">India's largest social commerce platform.</div>
+                    </div>
+
+                    <div class="portfolio-item">
+                        <a href="https://www.urbancompany.com" target="_blank" class="portfolio-tile">
+                            <div class="portfolio-placeholder-icon">🔧</div>
+                            <div class="portfolio-name">Urban Company</div>
+                            <div class="portfolio-overlay">
+                                <div class="portfolio-overlay-name">Urban Company</div>
+                                <div class="portfolio-overlay-desc">India's leading home services marketplace, connecting consumers with vetted professionals for beauty, repairs, and more.</div>
+                                <div class="portfolio-overlay-desc" style="margin-top: 0.75rem;"></div>
+                            </div>
+                        </a>
+                        <div class="portfolio-desc-mobile">India's leading home services marketplace.</div>
+                    </div>
+
                 </div>
-
-                <div class="portfolio-item">
-                    <a href="https://www.bigbasket.com" target="_blank" class="portfolio-tile">
-                        <img src="https://logo.clearbit.com/bigbasket.com" alt="BigBasket" class="portfolio-logo">
-                        <div class="portfolio-name">BigBasket</div>
-                        <div class="portfolio-overlay">
-                            <div class="portfolio-overlay-name">BigBasket</div>
-                            <div class="portfolio-overlay-desc">India's largest online grocery platform, now part of the Tata Group ecosystem.</div>
-                        </div>
-                    </a>
-                    <div class="portfolio-desc-mobile">India's largest online grocery platform, part of Tata Group.</div>
-                </div>
-
-                <div class="portfolio-item">
-                    <a href="https://www.shadowfax.in" target="_blank" class="portfolio-tile">
-                        <img src="https://logo.clearbit.com/shadowfax.in" alt="Shadowfax" class="portfolio-logo">
-                        <div class="portfolio-name">Shadowfax</div>
-                        <div class="portfolio-overlay">
-                            <div class="portfolio-overlay-name">Shadowfax Technologies</div>
-                            <div class="portfolio-overlay-desc">India's largest crowdsourced logistics platform, powering last-mile delivery for e-commerce and hyperlocal businesses.</div>
-                        </div>
-                    </a>
-                    <div class="portfolio-desc-mobile">India's largest crowdsourced logistics and last-mile delivery platform.</div>
-                </div>
-
-                <div class="portfolio-item">
-                    <a href="https://www.loggi.com" target="_blank" class="portfolio-tile">
-                        <img src="https://logo.clearbit.com/loggi.com" alt="Loggi" class="portfolio-logo">
-                        <div class="portfolio-name">Loggi</div>
-                        <div class="portfolio-overlay">
-                            <div class="portfolio-overlay-name">Loggi</div>
-                            <div class="portfolio-overlay-desc">Brazil's leading tech-driven logistics company, building end-to-end delivery infrastructure across Latin America.</div>
-                        </div>
-                    </a>
-                    <div class="portfolio-desc-mobile">Brazil's leading tech-driven logistics company.</div>
-                </div>
-
+                </div><!-- /section-body -->
             </div>
 
             </div><!-- /page-content -->

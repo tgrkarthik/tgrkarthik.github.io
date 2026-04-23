@@ -75,6 +75,13 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+// ===== COLLAPSIBLE PORTFOLIO SECTIONS =====
+function toggleSection(id) {
+    const section = document.getElementById(id);
+    if (!section) return;
+    section.classList.toggle('open');
+}
+
 // ===== PASSWORD VISIBILITY TOGGLE =====
 function togglePasswordVisibility() {
     const input = document.getElementById('pagePassword');
