@@ -40,8 +40,157 @@
             margin-bottom: 1rem;
         }
 
-        @media (max-width: 768px) { .article-title { font-size: 24px; } .article-body p { font-size: 13px; } }
-        @media (max-width: 480px) { .article-title { font-size: 20px; } .article-body p { font-size: 12px; } .article-footer { padding: 1.25rem 1rem; } }
+        /* TLDR box */
+        .tldr-box {
+            border-left: 4px solid #8b4513;
+            background: #fdf6ec;
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 2rem;
+            border-radius: 0 4px 4px 0;
+        }
+        .tldr-box strong {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            color: #8b4513;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+        .tldr-box p {
+            font-size: 14px;
+            color: #555555;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        /* Sample reports collapsible */
+        .sample-reports-wrapper {
+            max-width: 1050px;
+            margin: 0 auto 2.5rem;
+            padding: 0 2rem;
+        }
+        .sample-reports-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+            padding: 1rem 1.25rem;
+            background: #f5f5f5;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            user-select: none;
+        }
+        .sample-reports-toggle:hover { background: #eeeeee; }
+        .sample-reports-toggle-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #000000;
+            flex: 1;
+        }
+        .sample-reports-toggle-sub {
+            font-size: 13px;
+            color: #888888;
+        }
+        .sample-reports-chevron {
+            font-size: 16px;
+            color: #666666;
+            transition: transform 0.25s ease;
+            line-height: 1;
+        }
+        .sample-reports-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease;
+        }
+        .sample-reports-body.open { max-height: 2000px; }
+        .sample-reports-inner {
+            padding: 1.5rem 0 0.5rem;
+        }
+        .reports-group-label {
+            font-size: 12px;
+            font-weight: 700;
+            color: #888888;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+            margin-top: 1.25rem;
+        }
+        .reports-group-label:first-child { margin-top: 0; }
+        .reports-group-note {
+            font-size: 13px;
+            color: #888888;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+        .reports-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 1.25rem;
+        }
+        .reports-grid-older {
+            grid-template-columns: repeat(4, 1fr);
+        }
+        .report-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            padding: 0.875rem 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+            background: #ffffff;
+            transition: border-color 0.2s ease;
+        }
+        .report-card:hover { border-color: #999999; }
+        .report-card-ticker {
+            font-size: 15px;
+            font-weight: 700;
+            color: #000000;
+            letter-spacing: 0.02em;
+        }
+        .report-card-name {
+            font-size: 12px;
+            color: #666666;
+            line-height: 1.35;
+        }
+        .report-card-meta {
+            font-size: 11px;
+            color: #aaaaaa;
+        }
+        .report-card-links {
+            margin-top: 0.6rem;
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+        }
+        .report-card-link {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 600;
+            color: #000000;
+            text-decoration: none;
+            border-bottom: 1px solid #000000;
+            width: fit-content;
+        }
+        .report-card-link:hover { opacity: 0.5; }
+        .report-card-link-pdf {
+            color: #8b4513;
+            border-bottom-color: #8b4513;
+        }
+
+        @media (max-width: 768px) {
+            .article-title { font-size: 24px; }
+            .article-body p { font-size: 13px; }
+            .reports-grid { grid-template-columns: repeat(2, 1fr); }
+            .reports-grid-older { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 480px) {
+            .article-title { font-size: 20px; }
+            .article-body p { font-size: 12px; }
+            .article-footer { padding: 1.25rem 1rem; }
+            .reports-grid { grid-template-columns: repeat(2, 1fr); }
+        }
     </style>
 </head>
 <body>
@@ -55,15 +204,127 @@
             <span>&bull;</span>
             <span>Investment Research &amp; Automation</span>
         </div>
+
+        <div class="tldr-box">
+            <strong>TL;DR</strong>
+            <p>A five-stage workflow that produces closed-book fundamental analysis &mdash; business model, financial history, management delivery, earnings sentiment, competitive ecosystem &mdash; sourced entirely from documents I provide, with no internet access during drafting. The unexpected benefit: when every report follows the same structure, the cognitive overhead of reading research drops sharply. You stop orienting to the format and start processing the substance. That wasn&rsquo;t the goal going in. It turned out to matter more than most things that were.</p>
+        </div>
+    </div>
+
+    <!-- Sample Reports collapsible -->
+    <div class="sample-reports-wrapper">
+        <div class="sample-reports-toggle" onclick="toggleSampleReports()">
+            <span class="sample-reports-chevron" id="reportsChevron">&#9654;</span>
+            <span class="sample-reports-toggle-title">Sample Reports</span>
+            <span class="sample-reports-toggle-sub">9 reports &mdash; click to expand</span>
+        </div>
+        <div class="sample-reports-body" id="sampleReportsBody">
+            <div class="sample-reports-inner">
+
+                <div class="reports-group-label">Current outputs</div>
+                <div class="reports-group-note">Produced by the latest workflow iteration &mdash; structured templates by business model type, deterministic audit gate, closed-book financial data.</div>
+                <div class="reports-grid">
+                    <div class="report-card">
+                        <div class="report-card-ticker">GROWW</div>
+                        <div class="report-card-name">Groww</div>
+                        <div class="report-card-meta">April 2026</div>
+                        <div class="report-card-links">
+                            <a href="Initiation Report Examples/GROWW_April2026.pdf" target="_blank" class="report-card-link report-card-link-pdf">PDF</a>
+                            <a href="Initiation Report Examples/GROWW_April2026.docx" download class="report-card-link">DOCX</a>
+                        </div>
+                    </div>
+                    <div class="report-card">
+                        <div class="report-card-ticker">MEESHO</div>
+                        <div class="report-card-name">Meesho</div>
+                        <div class="report-card-meta">April 2026</div>
+                        <div class="report-card-links">
+                            <a href="Initiation Report Examples/MEESHO_April2026.pdf" target="_blank" class="report-card-link report-card-link-pdf">PDF</a>
+                            <a href="Initiation Report Examples/MEESHO_April2026.docx" download class="report-card-link">DOCX</a>
+                        </div>
+                    </div>
+                    <div class="report-card">
+                        <div class="report-card-ticker">VEEV</div>
+                        <div class="report-card-name">Veeva Systems</div>
+                        <div class="report-card-meta">April 2026</div>
+                        <div class="report-card-links">
+                            <a href="Initiation Report Examples/VEEV_April2026.pdf" target="_blank" class="report-card-link report-card-link-pdf">PDF</a>
+                            <a href="Initiation Report Examples/VEEV_April2026.docx" download class="report-card-link">DOCX</a>
+                        </div>
+                    </div>
+                    <div class="report-card">
+                        <div class="report-card-ticker">MIAX</div>
+                        <div class="report-card-name">Miami International</div>
+                        <div class="report-card-meta">April 2026</div>
+                        <div class="report-card-links">
+                            <a href="Initiation Report Examples/MIAX_April2026.pdf" target="_blank" class="report-card-link report-card-link-pdf">PDF</a>
+                            <a href="Initiation Report Examples/MIAX_April2026.docx" download class="report-card-link">DOCX</a>
+                        </div>
+                    </div>
+                    <div class="report-card">
+                        <div class="report-card-ticker">SNOW</div>
+                        <div class="report-card-name">Snowflake</div>
+                        <div class="report-card-meta">March 2026</div>
+                        <div class="report-card-links">
+                            <a href="Initiation Report Examples/SNOW_March2026.pdf" target="_blank" class="report-card-link report-card-link-pdf">PDF</a>
+                            <a href="Initiation Report Examples/SNOW_March2026.docx" download class="report-card-link">DOCX</a>
+                        </div>
+                    </div>
+                    <div class="report-card">
+                        <div class="report-card-ticker">DHR</div>
+                        <div class="report-card-name">Danaher</div>
+                        <div class="report-card-meta">March 2026</div>
+                        <div class="report-card-links">
+                            <a href="Initiation Report Examples/DHR_March2026.pdf" target="_blank" class="report-card-link report-card-link-pdf">PDF</a>
+                            <a href="Initiation Report Examples/DHR_March2026.docx" download class="report-card-link">DOCX</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reports-group-label">Older outputs</div>
+                <div class="reports-group-note">Earlier workflow runs. Longer and less structured &mdash; useful for seeing where the gaps were and how they shaped the current version.</div>
+                <div class="reports-grid reports-grid-older">
+                    <div class="report-card">
+                        <div class="report-card-ticker">UNH</div>
+                        <div class="report-card-name">UnitedHealth</div>
+                        <div class="report-card-meta">March 2026</div>
+                        <div class="report-card-links">
+                            <a href="Initiation Report Examples/Older/2026-03-28_UNH.pdf" target="_blank" class="report-card-link report-card-link-pdf">PDF</a>
+                            <a href="Initiation Report Examples/Older/2026-03-28_UNH.docx" download class="report-card-link">DOCX</a>
+                        </div>
+                    </div>
+                    <div class="report-card">
+                        <div class="report-card-ticker">CSU</div>
+                        <div class="report-card-name">Constellation Software</div>
+                        <div class="report-card-meta">March 2026</div>
+                        <div class="report-card-links">
+                            <a href="Initiation Report Examples/Older/2026-03-29_ConstellationSoftware.pdf" target="_blank" class="report-card-link report-card-link-pdf">PDF</a>
+                            <a href="Initiation Report Examples/Older/2026-03-29_ConstellationSoftware.docx" download class="report-card-link">DOCX</a>
+                        </div>
+                    </div>
+                    <div class="report-card">
+                        <div class="report-card-ticker">ROP</div>
+                        <div class="report-card-name">Roper Technologies</div>
+                        <div class="report-card-meta">March 2026</div>
+                        <div class="report-card-links">
+                            <a href="Initiation Report Examples/Older/2026-03-30_ROPER.pdf" target="_blank" class="report-card-link report-card-link-pdf">PDF</a>
+                            <a href="Initiation Report Examples/Older/2026-03-30_ROPER.docx" download class="report-card-link">DOCX</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
 
     <article class="article-body">
 
-        <p>The question I kept asking was simpler than it sounds: can Claude produce a research report I would actually trust?</p>
+        <p>The question I kept asking was simpler than it sounds: can an LLM produce a research report I would actually trust?</p>
 
         <p>Not a summary. Not a chatbot pulling from whatever it finds on the internet. A structured document with a thesis, financial analysis, and a valuation &mdash; the kind of thing a sell-side analyst would put their name on. And with one constraint that shaped everything that followed: if a number appears in the report, I need to know exactly where it came from.</p>
 
-        <p>That constraint &mdash; call it data integrity &mdash; is the entire design of what follows.</p>
+        <p>That constraint &mdash; call it data integrity &mdash; is the entire design of what follows. Building toward it taught me something uncomfortable: <strong>when an LLM has no good answer, it will invent one.</strong> Not randomly &mdash; plausibly. It draws on everything it was trained on, which is the entirety of the internet, and produces a figure that looks right, is tagged correctly, and is wrong. Getting the workflow to label its own uncertainty honestly &mdash; to say "this came from training data, not from your documents" &mdash; was the hardest part of the build. It was also the most rewarding.</p>
+
+        <p>This is also an evolving project. The sample reports above show that arc directly: the older ones are longer and rougher, the newer ones tighter and more auditable. Each run exposed a gap I hadn&rsquo;t anticipated &mdash; a wrong P&amp;L template for a bank, a fabricated figure in a cloud software report, a transcript section left with placeholder tags. <strong>Every gap became a rule.</strong> The workflow is better for each of them, and it will keep improving.</p>
 
         <h2>Getting the Documents Right</h2>
 
@@ -77,11 +338,11 @@
 
         <h2>Closed-Book First</h2>
 
-        <p>Here is the decision that made the pipeline trustworthy: Claude does not have internet access during the financial analysis phase.</p>
+        <p><strong>Here is the decision that made the workflow trustworthy: Claude does not have internet access during the financial analysis phase.</strong></p>
 
         <p>Closed-book means the model works only from the documents I&rsquo;ve provided. No browsing. No retrieval from sources I haven&rsquo;t read. Every number in the draft report traces back to a specific filing I can open.</p>
 
-        <p>This is a deliberate constraint, not a limitation I&rsquo;m working around. Every hallucination I&rsquo;ve encountered in LLM-generated financial analysis has the same root cause: the model infers or fills in data it wasn&rsquo;t given. Closing the book removes that failure mode entirely.</p>
+        <p>This is a deliberate constraint, not a limitation I&rsquo;m working around. Every hallucination I&rsquo;ve encountered in LLM-generated financial analysis has the same root cause: the model infers or fills in data it wasn&rsquo;t given. <strong>Closing the book removes that failure mode entirely.</strong></p>
 
         <p>Some things genuinely need live data &mdash; the current stock price, the risk-free rate, market multiples for a peer comparison. Those get pulled separately, verified manually, and fed in at a specific stage. But the financial history, the segment analysis, the management commentary &mdash; all of that stays closed-book until the audit is complete.</p>
 
@@ -89,52 +350,63 @@
 
         <p>There&rsquo;s an old principle in software engineering: do one thing well. The Unix pipe philosophy. <code>cat file | grep keyword | sort | uniq</code>. The power isn&rsquo;t in any single command; it&rsquo;s in the composition &mdash; each stage does exactly one job, hands clean output to the next, and doesn&rsquo;t try to do more than it should.</p>
 
-        <p>When I started building this pipeline, I kept hitting the same wall. I couldn&rsquo;t instruct Claude on Stage 2 until I had understood Stage 1 completely. And Stage 1 kept breaking down until I was honest about what Stage 0 was actually producing.</p>
+        <p>When I started building this workflow, I kept hitting the same wall. I couldn&rsquo;t instruct Claude on Stage 2 until I had understood Stage 1 completely. And Stage 1 kept breaking down until I was honest about what Stage 0 was actually producing.</p>
 
-        <p><strong>Building the pipeline forced me to define the process. And defining the process forced me to understand what I actually valued in research.</strong></p>
+        <p><strong>Building a stepwise way to generate a report forced me to define the process. And defining the process forced me to understand what I actually valued in research.</strong></p>
 
-        <p>That turned out to be the most useful part of the exercise &mdash; not the pipeline itself, but the thinking it forced.</p>
+        <p>That turned out to be the most useful part of the exercise &mdash; not the workflow itself, but the thinking it forced.</p>
 
         <h2>The Five Stages</h2>
 
-        <p><strong>Stage 0: Document Preparation.</strong> The IR scraper runs first. For a company with a full document set, this means downloading several years of 10-Ks, quarterly filings, and earnings transcripts. Income statements, balance sheets, and cash flow statements are then extracted into structured CSVs. Claude never touches a raw PDF when constructing the financial tables. This is the work that makes Stage 1 possible.</p>
+        <p><strong>Stage 0: Document Preparation.</strong> Two paths depending on what&rsquo;s available. When a well-populated IR folder exists &mdash; scraped from the company&rsquo;s investor relations site &mdash; income statements, balance sheets, and cash flow statements are extracted into structured CSVs before Stage 1 begins. When that folder isn&rsquo;t available, a financial data connector (Quartr Pro, Capital IQ) provides the structured numbers instead. Either way, Claude never constructs financial tables from raw PDFs. This is the work that makes Stage 1 possible.</p>
 
-        <p><strong>Stage 1: Draft.</strong> Claude reads the structured financial data and the source documents and produces a first-pass research report. Closed-book throughout. The draft covers the business model, financial history, segment breakdown, and management commentary across recent quarters. No valuation at this stage &mdash; the numbers have to be right before the analysis begins.</p>
+        <p><strong>Step 0B: Business Model Classification.</strong> Before any drafting begins, the workflow classifies the company into one of seven types: technology/SaaS, bank, insurer, REIT, marketplace, holding company, or mining and oil &amp; gas. This isn&rsquo;t cosmetic. Each type uses a different P&amp;L template &mdash; <strong>the standard gross profit line is wrong by construction for a bank</strong> (ECL belongs above it) and meaningless for a REIT. Getting this classification right is what prevents Stage 1 from applying the wrong financial framework to the wrong business.</p>
 
-        <p><strong>Stage 2: Audit.</strong> A second pass over the draft, with one question: does this report rely on anything not in the source documents? Anything that can&rsquo;t be traced to a specific filing gets flagged or removed. This is the stage that enforces the no-hallucination contract. The framing matters: asking Claude to &ldquo;review the report for accuracy&rdquo; produces reassurances. Asking it to &ldquo;find every claim in this report not directly supported by the attached documents&rdquo; produces findings.</p>
+        <p><strong>Stage 1: Draft.</strong> Claude reads the structured financial data and the source documents and produces a first-pass research report. Closed-book throughout. The draft covers the business model, financial history, segment breakdown, and management commentary across recent quarters. No valuation at this stage &mdash; the numbers have to be right before the analysis begins. The business model type from Step 0B determines which P&amp;L template gets used.</p>
 
-        <p><strong>Stage 3: Valuation.</strong> The closed-book constraint lifts here. Stock price, risk-free rate, peer multiples &mdash; pulled explicitly, verified, fed in. Claude runs the valuation against the audited financial data from Stage 2. The model doesn&rsquo;t find these numbers itself; I provide them. DCF, comparable companies analysis, whatever the situation calls for.</p>
+        <p><strong>Stage 2: Audit.</strong> A second pass over the draft, with one question: does this report rely on anything not in the source documents? Anything that can&rsquo;t be traced to a specific filing gets flagged or removed. This is the stage that enforces the no-hallucination contract. The framing matters: <strong>asking Claude to &ldquo;review the report for accuracy&rdquo; produces reassurances. Asking it to &ldquo;find every claim in this report not directly supported by the attached documents&rdquo; produces findings.</strong> After the audit, a deterministic Python script runs a final gate check &mdash; no LLM, no judgment, just verifiable rules: no bare source placeholders, no unfilled financial cells, source tag syntax intact, balance sheet reconciles within tolerance.</p>
+
+        <p><strong>Stage 3: Valuation (on request).</strong> The closed-book constraint lifts here. Stock price, risk-free rate, peer multiples &mdash; pulled explicitly, verified, fed in. Claude runs the valuation against the audited financial data from Stage 2. The model doesn&rsquo;t find these numbers itself; I provide them. DCF, comparable companies analysis, whatever the situation calls for. This stage runs when I want it to &mdash; not every report needs a formal valuation.</p>
 
         <p><strong>Stage 4: Earnings Sentiment.</strong> The most recent earnings call transcript gets its own pass. Not to extract numbers &mdash; those are already in Stage 1 &mdash; but to read tone. What did management say about next quarter? What did they not say? How does the language compare to prior calls? Tone shifts in management commentary are often more informative than the numbers themselves.</p>
 
         <h2>What I Got Wrong</h2>
 
-        <p>My first version tried to do all five stages in one prompt. The output was unusable. The mistake was thinking Claude&rsquo;s capability was the constraint. It wasn&rsquo;t. My problem specification was the constraint.</p>
+        <p>My first version tried to do all five stages in one prompt. The output was unusable. <strong>The mistake was thinking Claude&rsquo;s capability was the constraint. It wasn&rsquo;t. My problem specification was the constraint.</strong></p>
 
-        <p>Stage 4 (synthesis) was the specific failure point early on. I was asking Claude to analyse without giving it a thesis to test against. What I got back were accurate summaries &mdash; which I could have produced myself by reading more carefully. What I needed were comparisons: to my prior view, to what management had said four months ago, to where the numbers had moved.</p>
+        <p>Stage 4 (earnings sentiment) was the specific failure point early on. I was asking Claude to analyse without giving it a thesis to test against. What I got back were accurate summaries &mdash; which I could have produced myself by reading more carefully. What I needed were comparisons: to my prior view, to what management had said four months ago, to where the numbers had moved.</p>
 
-        <p>The version I run today is the sixth iteration. The first five were learning.<a href="#fn2" class="footnote-ref"><sup>2</sup></a></p>
+        <p>The version I run today is the result of that learning. Each failure was specific.<a href="#fn2" class="footnote-ref"><sup>2</sup></a></p>
 
-        <h2>What the Pipeline Can&rsquo;t Do</h2>
+        <h2>The Chaos of Parallelisation</h2>
 
-        <p>It can&rsquo;t catch what you didn&rsquo;t ask for. If there&rsquo;s a regulatory risk buried in footnote twelve of a 10-K &mdash; and you didn&rsquo;t instruct the pipeline to look for regulatory language &mdash; it won&rsquo;t surface it. The pipeline is only as good as the questions it has been told to ask.</p>
+        <p>At one point I tried a different architecture: run multiple stages simultaneously, let sub-agents handle different sections in parallel, then merge the outputs. Faster in theory. Cleaner in theory.</p>
 
-        <p>It has no variant perception. It can tell you what the consensus says and what management says. It can&rsquo;t tell you whether either is reliable. That&rsquo;s still your job.</p>
+        <p>It fell apart immediately. <strong>Sub-agents don&rsquo;t share context with each other or with the conversation that spawned them.</strong> Each one starts fresh &mdash; no memory of the documents, no awareness of what the other agents were doing, no knowledge of the constraints I had built up over months. Without context, they did what LLMs do when they have no good answer: they filled in the gaps from training data. Plausibly. Quietly. With the right formatting and the right source tags.</p>
 
-        <p>And it doesn&rsquo;t know what you know. If you spent forty-five minutes on a call with the CFO last month and came away with a specific concern about working capital &mdash; that context lives in your head, not in the pipeline. The synthesis in Stage 1 is only as good as the investment thesis you bring to it.</p>
+        <p>The Snowflake run was the clearest example. The sub-agent produced a report that looked complete: all the right sections, all the right labels. Revenue and gross profit were correct &mdash; those came early in the API response. Then I checked operating income. <strong>The model had filled in a figure close to breakeven. The actual number was a $1.4 billion loss.</strong> Every data point past the first two fields had been fabricated. Tagged correctly. Wrong in every detail.</p>
+
+        <p>The merge step made it worse. When you take outputs from parallel agents and try to stitch them together, you are merging documents that were each written without knowing what the other contained. Gaps get papered over. Inconsistencies get smoothed out. The final document looks coherent because it has been edited to be coherent &mdash; not because the underlying numbers are right.</p>
+
+        <p>The fix was to abandon parallelisation entirely. Every stage now runs sequentially in a single conversation, with full context carried forward. It is slower. It is also the only architecture that actually enforces the closed-book contract end to end. I write about sub-agents and orchestration in more detail in a separate piece.</p>
 
         <h2>Where I&rsquo;ve Landed</h2>
 
-        <p>The report has sources I can check. The valuation uses inputs I put in myself. The numbers trace back to documents I&rsquo;ve read.</p>
+        <p>What the workflow currently produces &mdash; without a formal valuation &mdash; is a thorough closed-book fundamental analysis. The business model, what management says about where it&rsquo;s going, the headwinds and tailwinds, how consistently they have delivered against what they promised. Earnings sentiment. The competitive ecosystem: who the customers are, who the partners are, what the company is up against. All of that, sourced and auditable.</p>
 
-        <p>Seventeen browser tabs to four. That&rsquo;s the whole game &mdash; not automation, but accountability. The pipeline makes it easier to be rigorous.<a href="#fn3" class="footnote-ref"><sup>3</sup></a></p>
+        <p>Valuation sits at the edge of that. When I want it, I open the book, feed in the live inputs myself, and run it. Not every report needs it at the same time as the fundamental analysis.</p>
+
+        <p>Progress on this has been five steps forward, three steps back, four steps forward, three steps back. That&rsquo;s not a complaint &mdash; each retreat taught something the advance couldn&rsquo;t. But the most useful thing I didn&rsquo;t anticipate going in has nothing to do with the workflow at all. <strong>It is what happens to my own reading when every report looks the same.</strong></p>
+
+        <p>Sell-side research varies enormously in structure. Different banks frame the same company differently; different analysts lead with different things. A lot of the cognitive load in reading a research report is just orienting yourself to the format before you can get to the substance. When every report I produce follows the same structure &mdash; same sections, same ordering, same way of presenting the financials &mdash; that overhead disappears. <strong>I find I can move through companies significantly faster, because I&rsquo;m processing the data, not the form.</strong> Pattern matching is doing work I used to spend attention on.</p>
+
+        <p>That was an emergent benefit. I&rsquo;m still figuring out what to do with it.</p>
 
     </article>
 
     <div class="footnotes">
         <p id="fn1"><sup>1</sup> The single biggest time sink was building reliable scraping for each company&rsquo;s IR site. Some sites block automated access entirely. I maintain a list of sites with known issues and fallback strategies for each &mdash; that list is how the scraper got to eighteen companies.</p>
-        <p id="fn2"><sup>2</sup> Each iteration taught something specific. The third iteration was when I separated the audit into its own stage. The fourth was when I realised the synthesis needed a thesis to test against, not just data to summarise. The fifth was when I split Stage 0 out as a prerequisite rather than folding it into Stage 1.</p>
-        <p id="fn3"><sup>3</sup> Down from seventeen. Four is not zero. I&rsquo;ve accepted that.</p>
+        <p id="fn2"><sup>2</sup> Each iteration taught something specific. The third was when I separated the audit into its own stage. The fourth was when I realised the synthesis needed a thesis to test against. The fifth split Stage 0 out as a prerequisite. The sixth added business model classification after a bank P&amp;L was mapped to a tech template and produced phantom gross profit figures. The seventh came after a fabrication incident with Snowflake that produced a plausible-looking but numerically wrong report &mdash; which led to the rule that all stages run in one conversation, no subprocess, no delegation.</p>
     </div>
 
     <div class="article-footer">
@@ -148,5 +420,13 @@
     <footer id="shared-footer"></footer>
 
     <script src="../components/nav-footer.js"></script>
+    <script>
+        function toggleSampleReports() {
+            var body = document.getElementById('sampleReportsBody');
+            var chevron = document.getElementById('reportsChevron');
+            body.classList.toggle('open');
+            chevron.style.transform = body.classList.contains('open') ? 'rotate(90deg)' : 'rotate(0deg)';
+        }
+    </script>
 </body>
 </html>
