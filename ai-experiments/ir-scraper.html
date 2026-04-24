@@ -19,6 +19,112 @@
         .back-link { display: inline-block; margin-bottom: 2rem; font-size: 14px; color: #666666; }
         .back-link:hover { color: #000000; }
 
+        /* Screenshot blocks */
+        .screenshot-block {
+            margin: 2.5rem 0;
+        }
+        .screenshot-pair {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .screenshot-single {
+            margin-bottom: 1rem;
+        }
+        .screenshot-triple {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .screenshot-img {
+            width: 100%;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            display: block;
+        }
+        .screenshot-caption {
+            font-size: 13px;
+            color: #999999;
+            font-style: italic;
+            text-align: center;
+            margin-top: 0.75rem;
+            line-height: 1.5;
+        }
+        .screenshot-label {
+            font-size: 12px;
+            color: #bbbbbb;
+            text-align: center;
+            margin-top: 0.4rem;
+        }
+        @media (max-width: 768px) {
+            .screenshot-pair, .screenshot-triple { grid-template-columns: 1fr; }
+        }
+
+        /* Lightbox */
+        .screenshot-img {
+            cursor: zoom-in;
+        }
+        .lightbox-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.88);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .lightbox-overlay.active {
+            display: flex;
+        }
+        .lightbox-img {
+            max-width: 92vw;
+            max-height: 90vh;
+            border-radius: 4px;
+            object-fit: contain;
+            box-shadow: 0 8px 48px rgba(0,0,0,0.6);
+        }
+        .lightbox-close {
+            position: fixed;
+            top: 1.25rem;
+            right: 1.5rem;
+            color: #ffffff;
+            font-size: 32px;
+            font-weight: 300;
+            cursor: pointer;
+            line-height: 1;
+            opacity: 0.8;
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        .lightbox-close:hover { opacity: 1; }
+
+        /* TLDR box */
+        .article-tldr {
+            background: #fdf6ec;
+            border-left: 3px solid #8b4513;
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 2rem;
+            border-radius: 0 4px 4px 0;
+        }
+        .article-tldr-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #8b4513;
+            margin-bottom: 0.5rem;
+        }
+        .article-tldr p {
+            font-size: 15px;
+            color: #555555;
+            line-height: 1.7;
+            margin: 0;
+        }
+
         /* Footnote references inline */
         .footnote-ref {
             font-size: 12px;
@@ -54,6 +160,12 @@
     </style>
 </head>
 <body>
+    <!-- Lightbox overlay -->
+    <div class="lightbox-overlay" id="lightboxOverlay" onclick="closeLightbox()">
+        <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+        <img class="lightbox-img" id="lightboxImg" src="" alt="">
+    </div>
+
     <nav id="shared-nav"></nav>
 
     <div class="article-header">
@@ -67,6 +179,11 @@
     </div>
 
     <article class="article-body">
+
+        <div class="article-tldr">
+            <div class="article-tldr-label">TL;DR</div>
+            <p>I built a single scraper that works on any public company's investor relations website — no site-specific code, no manual downloads. It classifies IR sites into eight platform types, handles four major anti-bot systems, and uses a dual-mode architecture (lightweight HTTP session + full Playwright browser fallback) to pull documents reliably at scale. On top of the scraper, I built a GUI where you type in a company name and get back an organized library of filings — sorted into folders by type, named by quarter — ready to feed into an LLM for research. This post covers how the scraper works, what made it hard to build, and what the output actually looks like.</p>
+        </div>
 
         <p>As LLMs got more powerful in 2025, I began to realize that databases which organize and offer easy access to financial data became a bottleneck in my research process. Most of these database tools (like Koyfin, screenr.in etc) had been slow to introduce AI and LLMs on top of their existing data. Even if they do, you aren&rsquo;t sure of the auditability of the data. Most approaches that databases follow are as simple as a Ctrl-F equivalent, grep function. Platforms like Alphasense, Quartr Pro follow more sophisticated approaches, like allowing Claude Sonnet or ChatGPT search functionality atop company public data.</p>
 
@@ -89,6 +206,20 @@
         <p> <strong> Instead of writing Amazon specific code and Veeva-specific code and HDFC-specific code, the first problem to solve was: how many types of investor relations websites actually exist? The answer, after testing enough of them, is eight </strong> . WordPress. Q4 web platform. Drupal. GCS-Web. React/Next.js SPAs. Angular. Vue. And everything else. I&rsquo;m sure newer edge cases might surface more, but eight it is for now.</p>
 
         <p>Platform detection runs before any scraping begins. It reads the raw HTML for fingerprints &mdash; wp-content or wp-json for WordPress, __NEXT_DATA__ for Next.js, q4cdn.com in URL patterns. Ninety percent of the time, detection completes in under two seconds.</p>
+
+        <div class="screenshot-block">
+            <div class="screenshot-pair">
+                <div>
+                    <img src="Scraper/Scraper1.png" alt="IR Document Scraper GUI — Groww run" class="screenshot-img" onclick="openLightbox(this)">
+                    <div class="screenshot-label">Groww run — 187 files, 51.3 MB</div>
+                </div>
+                <div>
+                    <img src="Scraper/Scraper2.png" alt="IR Document Scraper GUI — Palantir run" class="screenshot-img" onclick="openLightbox(this)">
+                    <div class="screenshot-label">Palantir run — 1,771 files, 188.5 MB</div>
+                </div>
+            </div>
+            <p class="screenshot-caption">The GUI I built on top of the scraper. You type in an IR website URL and an optional ticker, pick a date to fetch filings from, and hit Run. The app handles everything else — platform detection, bot evasion, parallel downloads — and streams live terminal output to the right panel as it works. The left screenshot shows a Groww run pulling from both the IR website and BSE India simultaneously. The right shows Palantir, pulling 1,771 documents from investors.palantir.com in parallel with SEC EDGAR, completing in under nine minutes.</p>
+        </div>
 
         <p>A Q4 site has predictable URL patterns and loads its documents via JavaScript. A React SPA has document URLs embedded in compiled bundle files or triggered by API calls that you can intercept. A WordPress site is almost trivially easy &mdash; everything is in the HTML. The platform fingerprint collapses an open-ended problem into one of eight known patterns.</p>
 
@@ -116,9 +247,27 @@
 
         <p>Each company I tested taught me ( well, it actually taught or directed Claude) something that made the next one easier. The Palantir session taught me about section-button deduplication and EDGAR junk filtering. The Blackbuck session taught me about React SPAs that trigger downloads on page load rather than on click. The 3DS session taught me about Akamai&rsquo;s headed-mode requirement. The taxonomy compounds. Each new case either fits an existing branch or forces a new one.</p>
 
-        <p>The scraper now is robust enough for most of my use cases. <strong> Once the scraper was working efficiently, I also had Claude build me a code to run on the downloaded files to organize them in a folder structure that&rsquo;s more readable (folders things like quarterly reports, annual reports, Excel files, etc.). </strong> </p>
+        <p>The scraper now is robust enough for most of my use cases. <strong>Once the scraper was working efficiently, I also had Claude build a post-processing step that organizes downloaded files into a clean folder structure — sorting everything into categories like Annual Reports, Quarterly Results, Governance, KPI Data, and so on.</strong> The output looks like a proper research library rather than a flat dump of files.</p>
 
-        <p> <strong> I also had Claude Code build a GUI, (that was the image above in the post) </strong> where I can conveniently put in the name of a company and it does a lookup. It tells me on which exchange it&rsquo;s listed, picks up the ticker, investor relations webpage and then downloads. I&rsquo;ve been fairly happy with the output and this scraper is now my source of truth for downloading source documents and running LLMs to produce research reports with great accuracy, traceability without losing context and hallucinating.</p>
+        <div class="screenshot-block">
+            <div class="screenshot-triple">
+                <div>
+                    <img src="Scraper/Groww1.png" alt="Groww — organized folder structure" class="screenshot-img" onclick="openLightbox(this)">
+                    <div class="screenshot-label">Groww — top-level folder structure</div>
+                </div>
+                <div>
+                    <img src="Scraper/Groww2.png" alt="Groww — quarterly results folder" class="screenshot-img" onclick="openLightbox(this)">
+                    <div class="screenshot-label">Groww — inside Quarterly Results</div>
+                </div>
+                <div>
+                    <img src="Scraper/Palantir1.png" alt="Palantir — organized filings" class="screenshot-img" onclick="openLightbox(this)">
+                    <div class="screenshot-label">Palantir — organized filings by quarter</div>
+                </div>
+            </div>
+            <p class="screenshot-caption">What the output actually looks like. The first two screenshots are from the Groww run — the scraper sorted 187 files into eight labelled folders. Open "Quarterly Results" and you find earnings call transcripts, financial results PDFs, and shareholder letters named by fiscal quarter, ready to feed into an LLM. The third screenshot is from the Palantir run — 94 organized documents, each named descriptively by quarter and filing type, spanning from 2020 through 2025. No UUIDs, no generic "PDF" labels, no duplicates.</p>
+        </div>
+
+        <p>The GUI shown earlier makes this accessible without touching the command line. Type in a company name and it does a lookup — identifies the exchange, picks up the ticker, finds the IR webpage, and kicks off the download. The organized folder lands on disk ready to use. This scraper is now my source of truth for pulling source documents and running LLMs to produce research reports with accuracy, traceability, and without hallucination.</p>
 
     </article>
 
@@ -138,5 +287,24 @@
     <footer id="shared-footer"></footer>
 
     <script src="../components/nav-footer.js"></script>
+    <script>
+        function openLightbox(img) {
+            document.getElementById('lightboxImg').src = img.src;
+            document.getElementById('lightboxImg').alt = img.alt;
+            document.getElementById('lightboxOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeLightbox() {
+            document.getElementById('lightboxOverlay').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeLightbox();
+        });
+        // Prevent clicks on the image itself from closing the overlay
+        document.getElementById('lightboxImg').addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    </script>
 </body>
 </html>
