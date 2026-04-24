@@ -154,6 +154,67 @@
             margin-bottom: 1.25rem;
         }
 
+        /* ===== Article pill strip ===== */
+        .article-strip {
+            background: #ffffff;
+            border-bottom: 1px solid #e0e0e0;
+            position: sticky;
+            top: 60px;
+            z-index: 90;
+        }
+        .article-strip-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            padding-top: 0.625rem;
+            padding-bottom: 0.625rem;
+        }
+        .article-strip-inner::-webkit-scrollbar { display: none; }
+        .article-strip-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: #aaaaaa;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            white-space: nowrap;
+            align-self: center;
+            margin-right: 0.25rem;
+            flex-shrink: 0;
+        }
+        .article-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.35rem 0.75rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            color: #333333;
+            text-decoration: none;
+            white-space: nowrap;
+            flex-shrink: 0;
+            transition: background 0.15s ease, border-color 0.15s ease;
+        }
+        .article-pill:hover {
+            background: #f5f5f5;
+            border-color: #999999;
+        }
+        .article-pill-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #cccccc;
+            flex-shrink: 0;
+        }
+        .article-pill[data-type="external"] .article-pill-dot { background: #bbbbbb; }
+        .article-pill[data-type="internal"] .article-pill-dot { background: #000000; }
+
         /* ===== Mobile: stack columns ===== */
         @media (max-width: 768px) {
             .ai-layout {
@@ -179,6 +240,34 @@
 </head>
 <body>
     <nav id="shared-nav"></nav>
+
+    <!-- Article discovery strip -->
+    <div class="article-strip">
+        <div class="article-strip-inner">
+            <span class="article-strip-label">Articles</span>
+            <a href="ai-experiments/ir-scraper.html" class="article-pill" data-type="internal">
+                <span class="article-pill-dot"></span>IR Scraper
+            </a>
+            <a href="ai-experiments/research-pipeline.html" class="article-pill" data-type="internal">
+                <span class="article-pill-dot"></span>Company Deep Dive
+            </a>
+            <a href="ai-experiments/music-transcription.html" class="article-pill" data-type="internal">
+                <span class="article-pill-dot"></span>Music Transcription
+            </a>
+            <a href="ai-experiments/llm-assembly-problem.html" class="article-pill" data-type="internal">
+                <span class="article-pill-dot"></span>Sub-Agent Orchestration
+            </a>
+            <a href="https://tgrkarthik.substack.com/p/how-bad-are-the-hallucinations-chatgpt" target="_blank" class="article-pill" data-type="external">
+                <span class="article-pill-dot"></span>Hallucinations
+            </a>
+            <a href="https://tgrkarthik.substack.com/p/two-words-for-2024" target="_blank" class="article-pill" data-type="external">
+                <span class="article-pill-dot"></span>Two Words for 2024
+            </a>
+            <a href="https://medium.com/@karthiktiruvarur/dilly-dall-e-ing-63bc4bbc886" target="_blank" class="article-pill" data-type="external">
+                <span class="article-pill-dot"></span>Dilly-DALL-E-ing
+            </a>
+        </div>
+    </div>
 
     <section class="section">
         <div class="container">
@@ -238,7 +327,7 @@
 
                     <a href="ai-experiments/research-pipeline.html" class="sidebar-item">
                         <div class="sidebar-item-title">Building a Company Deep Dive (Initiation Style) Report</div>
-                        <p class="sidebar-item-desc">A five-stage pipeline that turns seventeen browser tabs into four. The Unix pipe philosophy applied to investment research.</p>
+                        <p class="sidebar-item-desc">A five-stage workflow for closed-book fundamental analysis — sourced entirely from documents I provide, audited deterministically, no hallucinated numbers.</p>
                     </a>
 
                     <a href="ai-experiments/music-transcription.html" class="sidebar-item">
