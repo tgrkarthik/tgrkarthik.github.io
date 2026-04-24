@@ -5,10 +5,78 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Karthik Tiruvarur</title>
         <link rel="stylesheet" href="styles.css">
+    <style>
+        .nav-strip {
+            background: #ffffff;
+            border-bottom: 1px solid #e0e0e0;
+            position: sticky;
+            top: 60px;
+            z-index: 90;
+        }
+        .nav-strip-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0.625rem 2rem;
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .nav-strip-inner::-webkit-scrollbar { display: none; }
+        .nav-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.35rem 0.75rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            color: #333333;
+            text-decoration: none;
+            white-space: nowrap;
+            flex-shrink: 0;
+            transition: background 0.15s ease, border-color 0.15s ease;
+        }
+        .nav-pill:hover {
+            background: #f5f5f5;
+            border-color: #999999;
+        }
+        .nav-pill-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #000000;
+            flex-shrink: 0;
+        }
+    </style>
     </head>
     <body>
         <!-- Shared Navigation -->
         <nav id="shared-nav"></nav>
+
+        <!-- Section discovery strip -->
+        <div class="nav-strip">
+            <div class="nav-strip-inner">
+                <a href="ai-experiments.html" class="nav-pill">
+                    <span class="nav-pill-dot"></span>AI Experiments
+                </a>
+                <a href="pages/writing.html" class="nav-pill">
+                    <span class="nav-pill-dot"></span>Writing
+                </a>
+                <a href="pages/food-for-thought.html" class="nav-pill">
+                    <span class="nav-pill-dot"></span>Food for Thought
+                </a>
+                <a href="pages/portfolio.html" class="nav-pill">
+                    <span class="nav-pill-dot"></span>Portfolio
+                </a>
+                <a href="pages/documents.html" class="nav-pill">
+                    <span class="nav-pill-dot"></span>Vault
+                </a>
+            </div>
+        </div>
+
         <!-- Hero Section -->
         <section id="home" class="hero">
             <div class="container">
@@ -83,4 +151,4 @@
         <footer id="shared-footer"></footer>
         <script src="components/nav-footer.js"></script>
     </body>
-</ht
+</html>
