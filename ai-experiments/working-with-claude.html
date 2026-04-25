@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en" data-depth="1">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Working with Claude — A Toolkit After Two Months - Karthik Tiruvarur</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .article-header { max-width: 1050px; margin: 3rem auto 2rem; padding: 0 2rem; }
+        .article-title { font-size: 36px; font-weight: 600; margin-bottom: 1rem; line-height: 1.2; }
+        .article-meta { display: flex; gap: 1rem; align-items: center; font-size: 14px; color: #666666; margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid #e0e0e0; }
+        .article-body { max-width: 1050px; margin: 0 auto; padding: 0 2rem; line-height: 1.8; }
+        .article-body p { margin-bottom: 1.5rem; font-size: 16px; color: #666666; }
+        .article-body h2 { font-size: 24px; margin-top: 3rem; margin-bottom: 1.5rem; color: #000000; }
+        .article-body h3 { font-size: 18px; margin-top: 2rem; margin-bottom: 1rem; color: #000000; }
+        .article-body strong { font-weight: 600; color: #000000; }
+        .article-body em { font-style: italic; }
+        .article-body code { background: #f5f5f5; padding: 1px 6px; border-radius: 3px; font-size: 13px; color: #000000; }
+        .article-footer { max-width: 1050px; margin: 3rem auto 0; padding: 2rem 2rem; background: #f5f5f5; text-align: center; }
+        .back-link { display: inline-block; margin-bottom: 2rem; font-size: 14px; color: #666666; }
+        .back-link:hover { color: #000000; }
+
+        /* TLDR box */
+        .article-tldr {
+            background: #fdf6ec;
+            border-left: 3px solid #8b4513;
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 2rem;
+            border-radius: 0 4px 4px 0;
+        }
+        .article-tldr-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #8b4513;
+            margin-bottom: 0.5rem;
+        }
+        .article-tldr p {
+            font-size: 15px;
+            color: #555555;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        /* Doc quote (for Anthropic's own words) */
+        .doc-quote {
+            border-left: 3px solid #cccccc;
+            padding: 0.5rem 1.25rem;
+            margin: 1.5rem 0;
+            color: #555555;
+            font-style: italic;
+            font-size: 15px;
+        }
+        .doc-quote-attr {
+            display: block;
+            font-style: normal;
+            font-size: 12px;
+            color: #999999;
+            margin-top: 0.5rem;
+        }
+
+        /* Skill table */
+        .skills-grid {
+            margin: 1.5rem 0;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.75rem;
+        }
+        .skill-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 0.75rem 1rem;
+            background: #ffffff;
+        }
+        .skill-card-name {
+            font-size: 13px;
+            font-weight: 700;
+            color: #000000;
+            font-family: -apple-system, BlinkMacSystemFont, monospace;
+            letter-spacing: 0.01em;
+        }
+        .skill-card-desc {
+            font-size: 13px;
+            color: #666666;
+            line-height: 1.55;
+            margin-top: 0.2rem;
+        }
+
+        /* Footnotes */
+        .footnote-ref {
+            font-size: 12px;
+            vertical-align: super;
+            line-height: 0;
+            color: #000000;
+            border-bottom: 1px dotted #666666;
+            padding: 0 2px;
+        }
+        .footnotes {
+            max-width: 1050px;
+            margin: 2rem auto;
+            padding: 1.5rem 2rem;
+            border-top: 1px solid #e0e0e0;
+        }
+        .footnotes p {
+            font-size: 13px;
+            color: #666666;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) { .article-title { font-size: 24px; } .article-body p { font-size: 15px; } }
+        @media (max-width: 480px) { .article-title { font-size: 20px; } .article-body p { font-size: 14px; } .article-footer { padding: 1.25rem 1rem; } }
+    </style>
+</head>
+<body>
+
+    <nav id="shared-nav"></nav>
+
+    <div class="article-header">
+        <a href="../ai-experiments.html" class="back-link">&larr; Back to AI Experiments</a>
+        <h1 class="article-title">Working with Claude — A Toolkit After Two Months</h1>
+        <div class="article-meta">
+            <span>April 2026</span>
+            <span>&bull;</span>
+            <span>Practice &amp; Process</span>
+        </div>
+    </div>
+
+    <article class="article-body">
+
+        <div class="article-tldr">
+            <div class="article-tldr-label">TL;DR</div>
+            <p>Two months in, the gap between people who get a lot out of Claude (Cowork) and people who don&rsquo;t isn&rsquo;t just about prompts or designing workflows &mdash; me thinks it is about giving Claude the things it would have remembered, if it could. Some of the things I've incorporated are a working folder it never leaves, a CLAUDE.md file it reads at the start of every session, skills that encode the work I do repeatedly, and a voice DNA file so the writing comes out like mine. Below is the toolkit I&rsquo;ve ended up with, and the one I didn&rsquo;t see coming: building all of this taught me how I think more than it taught Claude how to help me.</p>
+        </div>
+
+        <p><strong>Claude is a colleague who forgets everything overnight.</strong> Brilliant, fast, broadly skilled. Reads what you put in front of it. Writes a draft, reviews a filing, explains a concept, runs a script. Then closes the laptop, and tomorrow morning has no memory that you exist.</p>
+
+        <p>The first month I worked with Claude (Cowork , note: I've subsequently been spending time with Claude Code as well, where some of these issues are a bit redundant, but play on...), I kept at times being highly disappointed, frustrated and almost raging all alongside having the my mind routinely blown by what Claude actually produced. Jagged intelligence - jagged experience. Outputs that started strong drifted as projects went on. <strong>Each new conversation needed a re-introduction to the same problem. The fixes I asked for in one session would quietly come back undone in the next.</strong></p>
+
+        <p>Then I realised the problem wasn&rsquo;t Claude. The problem was that <strong>I had no system for remembering things on Claude&rsquo;s behalf.</strong> A human colleague would have notes, calendar, a workspace (and of course, a brain that remembers what was explained in the past, hopefully ;)) Claude had none of that, and I was filling none of it in.  </p>
+
+        <p>The second month was about building the system. A folder. A memory file. A growing set of skills. A voice file so the writing sounds like me. A failure log so the same mistake doesn&rsquo;t happen twice. Each piece small. Together, the difference between asking Claude things and working with it.</p>
+
+        <p>What I didn&rsquo;t expect was the side effect.</p>
+
+        <p>Writing all of this down, in the form a stateless colleague could read at any time, forced me to make explicit a lot of things I&rsquo;d been holding loosely in my head. What I value in a research report. How I think a good email opens. Which thinkers I reach for when I write. Which mistakes I keep making. <strong>I was building infrastructure for Claude, but the artefact I ended up with was a clearer picture of how I actually work.</strong></p>
+
+        <p>Below is the toolkit, in three layers. Setup, memory, discipline.</p>
+
+        <h2>Layer 1: Setup &mdash; where Claude works</h2>
+
+        <h3>1. The working folder</h3>
+
+        <p>The single most useful thing I did in week one was point Claude at one folder on my machine and say: <strong>this is where you work.</strong> Everything I generate, edit, scrape, or save lives somewhere under <code>C:\Users\tgrka\CLAUDE GLOBAL FOLDER\</code>. Subfolders for skills, scrapers, reports, drafts. Nothing strays.</p>
+
+        <p><strong>The reason this matters is mundane and surprisingly load-bearing.</strong> When Claude can read and write inside one folder consistently, files persist across sessions, scripts find their inputs, and the same path I gave it last week still resolves today. When Claude is wandering across the filesystem on a per-task basis, things go missing or land in places I never look at again. A research report ends up in <code>Downloads</code>. A draft skill lands in <code>Documents</code>. A scraper writes its output to a temp directory and the next session can&rsquo;t find it.</p>
+
+        <p>Pick the folder. Don&rsquo;t move it.</p>
+
+        <h3>2. Pick the right model for the job</h3>
+
+        <p>Claude isn&rsquo;t one model; it&rsquo;s a family. Sonnet for most things. Opus when the work needs more reasoning depth or nuance &mdash; investment analysis, voice writing, anything I&rsquo;d describe as judgment-heavy. Haiku for fast, cheap, narrow tasks. Knowing which one I want before I start is a small habit and it changes the texture of the output more than people realise. <strong>Asking Sonnet to do Opus work produces something that looks fine and is subtly wrong; asking Opus to do Sonnet work is just slow and expensive.</strong></p>
+
+        <p>I now ask the model selection question before anything non-trivial. Sonnet 4.6 or Opus 4.6? <strong>Two seconds of decision, hours of difference downstream.</strong></p>
+
+        <h2>Layer 2: Memory &mdash; what Claude knows about you</h2>
+
+        <h3>3. CLAUDE.md and persistent memory</h3>
+
+        <p><strong>The single most important file in my Claude setup is one called <code>CLAUDE.md</code>.</strong> It lives at <code>C:\Users\tgrka\.claude\CLAUDE.md</code>, and Claude Code reads it automatically at the start of every session. Inside it: who I am, what I do, my hard rules (never fabricate financial data, never use sub-agents for analysis, always ask which model), the paths I work in, the projects I have running, and a changelog of every meaningful behavioural decision I&rsquo;ve made about how Claude should work for me.</p>
+
+        <p>Today the file is around 140 lines. It started at twelve. <strong>Each time something went wrong &mdash; or something worked and I wanted to keep it &mdash; a line gets added.</strong> The fabrication incident with Snowflake&rsquo;s financials became Hard Rule 9: never spawn sub-agents. The misinterpretation of my "auto mode" instruction became Hard Rule 10: distinguish tool-internal errors from real permission prompts. The Pinegrow rationale for CSS variables, abandoned when I moved off Pinegrow, got rewritten in place.</p>
+
+        <p>This is the closest thing Claude has to persistent memory. <strong>It is also, more honestly, my own running document of what I&rsquo;ve learned about working with an AI.</strong> The file outlives any individual conversation, and I am the only person who edits it.</p>
+
+        <h3>4. Skills</h3>
+
+        <p>A skill is the next layer of memory. CLAUDE.md is what Claude knows about me in general; skills are what Claude knows about specific kinds of work I do.</p>
+
+        <p>From Anthropic&rsquo;s engineering team, here&rsquo;s the simplest description:</p>
+
+        <div class="doc-quote">
+            <p>&ldquo;A skill is a directory that contains a SKILL.md file.&rdquo;</p>
+            <span class="doc-quote-attr">&mdash; Anthropic engineering, "Equipping agents for the real world with Agent Skills"</span>
+        </div>
+
+        <p>The directory holds instructions, optional scripts, and reference material. The SKILL.md file describes what the skill does and when Claude should use it. Anthropic describes them as folders Claude can discover and load on demand for specific tasks.<a href="#fn1" class="footnote-ref"><sup>1</sup></a> Skills work the same way across Claude.ai, Claude Code, and the API.</p>
+
+        <p>What this means in practice: <strong>I can take a piece of work I do repeatedly &mdash; reading a 10-K, drafting an investment memo, writing a blog post in my voice &mdash; and turn the way I do it into a folder Claude reads.</strong> Next time I trigger that work, the folder loads automatically and Claude follows the instructions without me re-explaining.</p>
+
+        <p>Over two months I&rsquo;ve built about a dozen skills. They fall into three categories.</p>
+
+        <p><strong>Investment-process skills.</strong> The work I do as a portfolio manager, codified.</p>
+
+        <div class="skills-grid">
+            <div class="skill-card">
+                <div class="skill-card-name">SellSideInitiation</div>
+                <div class="skill-card-desc">A five-phase pipeline that produces a closed-book fundamental analysis of a public company &mdash; business model, financial history, management delivery, earnings sentiment, competitive ecosystem &mdash; sourced entirely from documents I provide. Output is a 25-page Word document. Triggered by one phrase. The skill encodes which financial template applies to which business model type, what counts as a fabricated figure, and how the seven verification gates run.</div>
+            </div>
+            <div class="skill-card">
+                <div class="skill-card-name">investment-moats</div>
+                <div class="skill-card-desc">Four frameworks for analysing competitive advantage &mdash; Helmer&rsquo;s 7 Powers, Greenwald&rsquo;s Earnings Power Value, Buffett-Munger mental models, and Porter&rsquo;s Five Forces &mdash; written in the same schema. Triggers when I ask about a company&rsquo;s moat or strategic position. Combines all four into a structured analysis.</div>
+            </div>
+            <div class="skill-card">
+                <div class="skill-card-name">Earnings Sentiment</div>
+                <div class="skill-card-desc">Sixteen quarters of earnings call transcripts, read for tone shifts. Top-five positives, top-five concerns. Reading transcripts at this scale is something Claude is genuinely better at than I am.</div>
+            </div>
+            <div class="skill-card">
+                <div class="skill-card-name">Initiation Merge</div>
+                <div class="skill-card-desc">A deterministic Python script that assembles outputs from the four pipeline stages into one report. Not an LLM &mdash; pure code, regex, and assertion checks. The merge step is where LLM creativity becomes a bug.</div>
+            </div>
+        </div>
+
+        <p><strong>Voice and identity skills.</strong> Skills that capture me, not the work.</p>
+
+        <div class="skills-grid">
+            <div class="skill-card">
+                <div class="skill-card-name">voice-dna</div>
+                <div class="skill-card-desc">My writing voice across four formats (webpage, email, document, Substack) and a 1&ndash;10 professionalism dial. Banned phrases, banned structures, sentence rhythm targets, bold-emphasis density bands. Paired with a deterministic Python linter (voice_gate.py) that fails on the worst LLM tells.</div>
+            </div>
+            <div class="skill-card">
+                <div class="skill-card-name">user-profile</div>
+                <div class="skill-card-desc">My identity, role, expertise, default file paths, and formatting preferences. Loaded at the start of every task so outputs are tailored to me without re-asking.</div>
+            </div>
+        </div>
+
+        <p><strong>Engineering / dev tooling skills.</strong> The narrowest category, useful when I&rsquo;m building.</p>
+
+        <div class="skills-grid">
+            <div class="skill-card">
+                <div class="skill-card-name">Karthik_Coding / gstack</div>
+                <div class="skill-card-desc">Fast headless browser for QA testing my own website &mdash; navigate, interact, screenshot, verify state, diff before-and-after. Hundred milliseconds per command. Used when I want Claude to dogfood a change before I commit it.</div>
+            </div>
+            <div class="skill-card">
+                <div class="skill-card-name">ir-scraper</div>
+                <div class="skill-card-desc">The project skill for the IR scraper described elsewhere on this page. Encodes the eight platform types, the four anti-bot strategies, and the company-specific profiles I&rsquo;ve built up.</div>
+            </div>
+        </div>
+
+        <p><strong>The skills compound. Each new skill I write makes the next session shorter, because I&rsquo;m no longer re-explaining the work.</strong></p>
+
+        <h3>5. Voice DNA</h3>
+
+        <p>The voice-dna skill deserves its own line. It started as a way to get Claude to write blog posts that sounded less like a press release and more like me. It became something more useful than that.</p>
+
+        <p>The skill is built on close reading of sixteen of my actual writing samples spanning seven years &mdash; Substack essays, Medium pieces, IFC investment memos, board papers, technical posts. Three registers, four formats, a dial for how professional the output should be. <strong>It&rsquo;s the most opinionated file in my whole setup, and the one with the strongest deterministic enforcement.</strong></p>
+
+        <p>The enforcement matters. A skill is a prompt, and prompts are suggestions. <a href="ai-experiments/llm-assembly-problem.html">Earlier this month I wrote about how LLMs are bad at the mechanical parts of work</a>; the same logic applies to writing. Some rules are non-negotiable &mdash; certain rhetorical patterns I always strip out, certain layouts I won&rsquo;t use (no pull-quote boxes containing one-line maxims), certain closings I won&rsquo;t accept (the kind that announces the takeaway) &mdash; and the only honest way to enforce non-negotiable rules is with code that fails the build. So I built voice_gate.py: regex over the output, two tiers, hard violations block delivery. The skill is the spec; the gate is the gate.</p>
+
+        <h2>Layer 3: Discipline &mdash; how Claude does its work</h2>
+
+        <h3>6. The session recap</h3>
+
+        <p>Towards the end of any non-trivial session, I ask Claude one question: what should we write down so the next session can pick this up? <strong>The answer almost always contains things I would have forgotten by next morning.</strong></p>
+
+        <p>The recap goes into CLAUDE.md if it&rsquo;s a behavioural rule, into a project-specific notes file if it&rsquo;s about the work, or into the skill itself if it&rsquo;s about how I want a particular kind of task done. The act of recapping is what makes the next session start from a higher baseline rather than from scratch.</p>
+
+        <h3>7. Failure logs</h3>
+
+        <p>Each major skill of mine has a file called <code>FAILURE_LOG.md</code> sitting next to its SKILL.md. When something breaks &mdash; a fabricated figure, a misformatted table, a section that came back empty &mdash; the failure goes into the log with date, root cause, and what was changed to prevent it. The SellSideInitiation skill&rsquo;s log is twenty-four entries long and growing.</p>
+
+        <p><strong>This is the difference between a skill that improves and a skill that gets broken in the same way every other Wednesday.</strong> Without a log, every fix is local: this one report, this one company, this one bug. With the log, every fix is structural: a rule added to the skill, a check added to the verification gate, a sentence in CLAUDE.md.</p>
+
+        <h3>8. Verification before delivery, not after</h3>
+
+        <p>One habit changed more than anything else over these two months is that Claude should not deliver any non-trivial output without running an automated verification step over it. Not a vibe check. A script that exits non-zero when something is wrong.</p>
+
+        <p>For financial reports, that&rsquo;s <code>final_gate.py</code>: cross-checks every cited number, fails on bare placeholder tags, verifies the balance sheet reconciles. For voice writing, it&rsquo;s <code>voice_gate.py</code>: regex over the prose, hard-fails on the worst LLM tells. For documents merged from multiple stages, it&rsquo;s the merge script&rsquo;s assertion checks: heading structure must match, broken bold count must be zero. Each gate is a hundred lines or less. Each takes two seconds to run. <strong>Each catches things a careful human read would miss.</strong></p>
+
+        <h3>9. Don&rsquo;t use sub-agents for analytical work</h3>
+
+        <p>This one was learned the hard way. For a while I was using sub-agents to parallelise long pipelines &mdash; the merge step, the audit step, the data-extraction step. The architecture looked clean. Each sub-agent was given a clear, narrow brief.</p>
+
+        <p>What I didn&rsquo;t see, until I checked the numbers carefully, was that <strong>sub-agents lose context</strong>. They can&rsquo;t see CLAUDE.md, the conversation history, the skills. They&rsquo;re launched fresh each time. And when they don&rsquo;t have what they need, they fill in plausibly from training data &mdash; and the orchestrator stitches the plausible-but-wrong outputs together with no way to tell.</p>
+
+        <p>The Snowflake run was the wake-up call. A hundred out of one hundred and twenty-two financial data points in one Section came back fabricated by a sub-agent that had been given a perfectly clear instruction. Revenue and gross profit were right because they were the first two fields in the API response. Everything after that was hallucinated, with the right tags attached. The report read fine. It was wrong in every detail.</p>
+
+        <p>So now: <strong>no sub-agents for analytical work.</strong> Everything runs sequentially in one conversation, with full context carried forward. Slower. The only architecture I&rsquo;ve found that actually delivers what it claims.</p>
+
+        <h2>What I didn&rsquo;t expect</h2>
+
+        <p>I started this thinking I was teaching Claude how to do my work. Two months in, the surprise is that <strong>Claude is teaching me how I do my work.</strong></p>
+
+        <p>Writing voice-dna meant articulating what makes my writing mine, in a way I&rsquo;d never had to make explicit. Writing SellSideInitiation meant naming, in order, every analytical step I run on a company &mdash; including the steps I do unconsciously. Writing the failure log meant being honest about every mistake I&rsquo;d been making and quietly not codifying. The artefacts that exist as instructions for a stateless colleague turned out to be the clearest description I&rsquo;ve ever had of how I work.</p>
+
+        <p>That wasn&rsquo;t the goal. It might be the most useful side effect.</p>
+
+        <p> <strong> The toolkit isn&rsquo;t finished. New skills get added, existing ones get rewritten when something breaks, the failure logs keep growing. What I&rsquo;ll know a year from now is different from what I know now. But the shape is set: a working folder, a memory file, skills for the work I repeat, voice DNA for the writing, recaps and failure logs for the things that broke, verification before anything goes out the door, and one conversation per task. </strong> </p>
+
+
+    </article>
+
+    <div class="footnotes">
+        <p id="fn1"><sup>1</sup> Anthropic&rsquo;s engineering write-up describes Agent Skills as &ldquo;organized folders of instructions, scripts, and resources that agents can discover and load dynamically.&rdquo; The official documentation is at <a href="https://docs.claude.com/en/docs/agents-and-tools/agent-skills/overview" target="_blank">docs.claude.com</a>; the engineering deep-dive is at <a href="https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills" target="_blank">anthropic.com/engineering</a>.</p>
+    </div>
+
+    <div class="article-footer">
+        <p style="margin-bottom: 1.5rem;">More on building with AI:</p>
+        <div class="social-links" style="justify-content: center;">
+            <a href="../ai-experiments.html" class="btn btn-primary">Back to Experiments</a>
+            <a href="https://tgrkarthik.substack.com/" target="_blank" class="btn btn-secondary">Subscribe</a>
+        </div>
+    </div>
+
+    <footer id="shared-footer"></footer>
+
+    <script src="../components/nav-footer.js"></script>
+</body>
+</html>

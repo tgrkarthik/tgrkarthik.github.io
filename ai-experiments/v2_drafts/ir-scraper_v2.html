@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en" data-depth="1">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building a Scraper That Works on Any IR Website - Karthik Tiruvarur</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <style>
+        .article-header { max-width: 1050px; margin: 3rem auto 2rem; padding: 0 2rem; }
+        .article-title { font-size: 36px; font-weight: 600; margin-bottom: 1rem; line-height: 1.2; }
+        .article-meta { display: flex; gap: 1rem; align-items: center; font-size: 14px; color: #666666; margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid #e0e0e0; }
+        .article-body { max-width: 1050px; margin: 0 auto; padding: 0 2rem; line-height: 1.8; }
+        .article-body p { margin-bottom: 1.5rem; font-size: 16px; color: #666666; }
+        .article-body h2 { font-size: 24px; margin-top: 2.5rem; margin-bottom: 1.5rem; color: #000000; }
+        .article-body h3 { font-size: 18px; margin-top: 2rem; margin-bottom: 1rem; color: #000000; }
+        .article-body strong { font-weight: 600; color: #000000; }
+        .article-body em { font-style: italic; }
+        .article-footer { max-width: 1050px; margin: 3rem auto 0; padding: 2rem 2rem; background: #f5f5f5; text-align: center; }
+        .back-link { display: inline-block; margin-bottom: 2rem; font-size: 14px; color: #666666; }
+        .back-link:hover { color: #000000; }
+
+        /* Screenshot blocks */
+        .screenshot-block {
+            margin: 2.5rem 0;
+        }
+        .screenshot-pair {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .screenshot-single {
+            margin-bottom: 1rem;
+        }
+        .screenshot-triple {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .screenshot-img {
+            width: 100%;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            display: block;
+        }
+        .screenshot-caption {
+            font-size: 13px;
+            color: #999999;
+            font-style: italic;
+            text-align: center;
+            margin-top: 0.75rem;
+            line-height: 1.5;
+        }
+        .screenshot-label {
+            font-size: 12px;
+            color: #bbbbbb;
+            text-align: center;
+            margin-top: 0.4rem;
+        }
+        @media (max-width: 768px) {
+            .screenshot-pair, .screenshot-triple { grid-template-columns: 1fr; }
+        }
+
+        /* Lightbox */
+        .screenshot-img {
+            cursor: zoom-in;
+        }
+        .lightbox-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.88);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .lightbox-overlay.active {
+            display: flex;
+        }
+        .lightbox-img {
+            max-width: 92vw;
+            max-height: 90vh;
+            border-radius: 4px;
+            object-fit: contain;
+            box-shadow: 0 8px 48px rgba(0,0,0,0.6);
+        }
+        .lightbox-close {
+            position: fixed;
+            top: 1.25rem;
+            right: 1.5rem;
+            color: #ffffff;
+            font-size: 32px;
+            font-weight: 300;
+            cursor: pointer;
+            line-height: 1;
+            opacity: 0.8;
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        .lightbox-close:hover { opacity: 1; }
+
+        /* TLDR box */
+        .article-tldr {
+            background: #fdf6ec;
+            border-left: 3px solid #8b4513;
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 2rem;
+            border-radius: 0 4px 4px 0;
+        }
+        .article-tldr-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #8b4513;
+            margin-bottom: 0.5rem;
+        }
+        .article-tldr p {
+            font-size: 15px;
+            color: #555555;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        /* Footnote references inline */
+        .footnote-ref {
+            font-size: 12px;
+            vertical-align: super;
+            line-height: 0;
+            color: #000000;
+            border-bottom: 1px dotted #666666;
+            padding: 0 2px;
+        }
+        .footnote-ref:hover { opacity: 0.7; }
+
+        /* Footnotes section */
+        .footnotes {
+            max-width: 1050px;
+            margin: 2rem auto;
+            padding: 1.5rem 2rem;
+            border-top: 1px solid #e0e0e0;
+        }
+        .footnotes p {
+            font-size: 13px;
+            color: #666666;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        .footnotes a {
+            color: #666666;
+            border-bottom: 1px dotted #e0e0e0;
+        }
+        .footnotes a:hover { color: #000000; }
+
+        @media (max-width: 768px) { .article-title { font-size: 24px; } .article-body p { font-size: 13px; } }
+        @media (max-width: 480px) { .article-title { font-size: 20px; } .article-body p { font-size: 12px; } .article-footer { padding: 1.25rem 1rem; } }
+    </style>
+</head>
+<body>
+    <!-- Lightbox overlay -->
+    <div class="lightbox-overlay" id="lightboxOverlay" onclick="closeLightbox()">
+        <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+        <img class="lightbox-img" id="lightboxImg" src="" alt="">
+    </div>
+
+    <nav id="shared-nav"></nav>
+
+    <div class="article-header">
+        <a href="../../ai-experiments.html" class="back-link">&larr; Back to AI Experiments</a>
+        <h1 class="article-title">A Scraper for Investor Relations Websites</h1>
+        <div class="article-meta">
+            <span>April 2026</span>
+            <span>&bull;</span>
+            <span>Infrastructure &amp; Web Scraping</span>
+        </div>
+    </div>
+
+    <article class="article-body">
+
+        <div class="article-tldr">
+            <div class="article-tldr-label">TL;DR</div>
+            <p>I built a single scraper that works on any public company's investor relations website — no site-specific code, no manual downloads. It classifies IR sites into eight platform types, handles four major anti-bot systems, and uses a dual-mode architecture (lightweight HTTP session + full Playwright browser fallback) to pull documents reliably at scale. On top of the scraper, I built a GUI where you type in a company name and get back an organized library of filings — sorted into folders by type, named by quarter — ready to feed into an LLM for research. This post covers how the scraper works, what made it hard to build, and what the output actually looks like.</p>
+        </div>
+
+        <p>As LLMs got more powerful in 2025, I began to realize that databases which organize and offer easy access to financial data became a bottleneck in my research process. Most of these database tools (like Koyfin, screenr.in etc) had been slow to introduce AI and LLMs on top of their existing data. Even if they do, you aren&rsquo;t sure of the auditability of the data. Most approaches that databases follow are as simple as a Ctrl-F equivalent, grep function. Platforms like Alphasense, Quartr Pro follow more sophisticated approaches, like allowing Claude Sonnet or ChatGPT search functionality atop company public data.</p>
+
+        <p>Investor relations&rsquo; websites for publicly listed companies are the most comprehensive source of ground truth for corporate filings, public disclosures, financials, shareholder letters, etc. that a company puts out. <strong><em>So I had this idea of writing a scraper that goes directly to an investor relations website and downloads all documents put up there.</em></strong></p>
+
+        <p>I wanted to see if and how I could bypass databases that save these documents in their formats and eventually charge significant dollars behind paywalls to access them.</p>
+
+        <p><strong><em>I started with a simple question:</em></strong> Can I build a scraper that scrapes the investor relations websites of the companies I study and builds me a database I could then use to unleash the power of Gemini or Claude?</p>
+
+        <p>&hellip; and <strong> one of the annoying things I discovered in the process  was how different investor relations websites for every company are. </strong> </p>
+
+        <p>This was one of the first products that I started building using LLMs, as early as September 2025. First attempt was with Gemini. The scraper somewhat worked but I started running into a lot of edge cases and problems with companies that had different web layouts, as you will reading through this post.</p>
+
+        <p>I realized that while every public company has an investor relations website, most of them are not designed for a retail investor&rsquo;s ease of access. They also are designed to resist automated access. Most IR sites deploy the same arsenal: Cloudflare WAF, Akamai Bot Manager, PerimeterX, rate limiting, cookie consent walls, region gates. They do this to block scrapers. Which is precisely what I needed to build.</p>
+
+        <p>The question I started with: can a single scraper work on any company&rsquo;s investor relations website without needing site-specific code? I track about 75 companies and have about 25 in my portfolio. I did not want 20+ scrapers.</p>
+
+        <p>I wanted one.</p>
+
+        <p>I revisited building the scraper again earlier this year in January, once I started using Claude Cowork and Claude Code. After a few iterations, one of the insights Claude had was to figure out a classification for different websites before figuring out how the scraper should be written; a taxonomy of sorts.</p>
+
+        <p> <strong> Instead of writing Amazon specific code and Veeva-specific code and HDFC-specific code, the first problem to solve was: how many types of investor relations websites actually exist? The answer, after testing enough of them, is eight </strong> . WordPress. Q4 web platform. Drupal. GCS-Web. React/Next.js SPAs. Angular. Vue. And everything else. I&rsquo;m sure newer edge cases might surface more, but eight it is for now.</p>
+
+        <p>Platform detection runs before any scraping begins. It reads the raw HTML for fingerprints &mdash; wp-content or wp-json for WordPress, __NEXT_DATA__ for Next.js, q4cdn.com in URL patterns. Ninety percent of the time, detection completes in under two seconds.</p>
+
+        <div class="screenshot-block">
+            <div class="screenshot-pair">
+                <div>
+                    <img src="../Scraper/Scraper1.png" alt="IR Document Scraper GUI — Groww run" class="screenshot-img" onclick="openLightbox(this)">
+                    <div class="screenshot-label">Groww run — 187 files, 51.3 MB</div>
+                </div>
+                <div>
+                    <img src="../Scraper/Scraper2.png" alt="IR Document Scraper GUI — Palantir run" class="screenshot-img" onclick="openLightbox(this)">
+                    <div class="screenshot-label">Palantir run — 1,771 files, 188.5 MB</div>
+                </div>
+            </div>
+            <p class="screenshot-caption">The GUI I built on top of the scraper. You type in an IR website URL and an optional ticker, pick a date to fetch filings from, and hit Run. The app handles everything else — platform detection, bot evasion, parallel downloads — and streams live terminal output to the right panel as it works. The left screenshot shows a Groww run pulling from both the IR website and BSE India simultaneously. The right shows Palantir, pulling 1,771 documents from investors.palantir.com in parallel with SEC EDGAR, completing in under nine minutes.</p>
+        </div>
+
+        <p>A Q4 site has predictable URL patterns and loads its documents via JavaScript. A React SPA has document URLs embedded in compiled bundle files or triggered by API calls that you can intercept. A WordPress site is almost trivially easy &mdash; everything is in the HTML. The platform fingerprint collapses an open-ended problem into one of eight known patterns.</p>
+
+        <h2>The Bot Problem</h2>
+
+        <p>The final 20% of edge cases are more persistent and nagging! Some IR sites deploy serious anti-bot infrastructure. When you hit Akamai&rsquo;s Bot Manager or Cloudflare&rsquo;s challenge page, a naive scraper returns a 403 and stops. That&rsquo;s not good enough.</p>
+
+        <p> <strong> Claude's solution was to combine lightweight requests </strong> session &mdash; no JavaScript rendering, minimal headers, fast and silent. It passes through most sites without triggering any defences, <strong> with on the other end is a full Playwright Chromium browser </strong> : real TLS fingerprint, full cookie handling, JavaScript execution, complete DOM rendering. Heavy, slow, but almost indistinguishable from a human.</p>
+
+        <p>Most documents get downloaded at the fast end. Documents that fail &mdash; 403s, CloudFront CDN blocks, authentication walls &mdash; go to the Playwright fallback automatically. You get the speed of a lightweight session for the easy cases and the power of a full browser for the hard ones. The wins compound: PB Fintech returned 720 documents with 99.8% download success. HDFC Bank returned 445 with 99.5%. Sea, a Q4 platform site, completed at 100%.</p>
+
+        <p>The scraper also handles four distinct WAF vendors &mdash; Akamai, Cloudflare, PerimeterX, DataDome &mdash; and escalates through a four-step browser strategy: Chromium headless &rarr; Chromium with HTTP/1.1 &rarr; system Chrome headless &rarr; system Chrome headed. When a French engineering company (Dassault Syst&egrave;mes, 3DS) required a headed browser to pass Akamai&rsquo;s challenge, that information was saved to the company&rsquo;s profile. The next run starts headed.</p>
+
+        <h2>An accidental learning in working on this scraper was realizing that discovery of website structure is actually harder than downloading</h2>
+
+        <p>Downloading is a solved problem once you have the URL. Discovery &mdash; finding all the URLs in the first place &mdash; is not. Every IR site organises its content differently. Some use anchor tags pointing directly to PDFs. Some load document URLs through API calls triggered by clicking &ldquo;Annual Reports.&rdquo; Some paginate their document listings across fifteen pages of ten results each. Some hide everything behind a year selector &mdash; you click &ldquo;2024,&rdquo; the page refreshes, you click &ldquo;2023,&rdquo; and so on back to the beginning. IndiaMART had one section and needed entirely different discovery logic than PDD Holdings, which runs on GCS-Web and required its own platform handler.</p>
+
+        <p>The discovery engine runs four phases: static HTML extraction, dynamic content expansion (clicking year selectors, expanding accordions, following &ldquo;Load More&rdquo; buttons), JavaScript bundle scanning for document URLs embedded in compiled React code, and fallbacks (sitemaps, common IR path patterns, CDN enumeration).<a href="#fn1" class="footnote-ref"><sup>1</sup></a></p>
+
+        <p> <strong> The Palantir run revealed a subtler problem: after discovery, 1,638 of 1,728 documents were not real documents </strong> .<a href="#fn2" class="footnote-ref"><sup>2</sup></a> They were EDGAR filing viewer artifacts &mdash; phantom PDF links each with a UUID in the URL, each labelled exactly &ldquo;PDF&rdquo; or &ldquo;XBRL.&rdquo; The classifier now filters any link where the text is a bare file-type label and the URL contains a UUID pattern. Real document links have descriptive text.</p>
+
+        <h2>What I&rsquo;ve Learned</h2>
+
+        <p>The generic approach outperformed the specific one, but only after you've done enough classification work to understand what generic actually covers. Eight platform types isn&rsquo;t a universal solution. It&rsquo;s eight specific handlers that are each somewhat more general than the company-specific code they replaced.</p>
+
+        <p>Each company I tested taught me ( well, it actually taught or directed Claude) something that made the next one easier. The Palantir session taught me about section-button deduplication and EDGAR junk filtering. The Blackbuck session taught me about React SPAs that trigger downloads on page load rather than on click. The 3DS session taught me about Akamai&rsquo;s headed-mode requirement. The taxonomy compounds. Each new case either fits an existing branch or forces a new one.</p>
+
+        <p>The scraper now holds up across most of my use cases. <strong>Once the scraper was working efficiently, I also had Claude build a post-processing step that organizes downloaded files into a clean folder structure — sorting everything into categories like Annual Reports, Quarterly Results, Governance, KPI Data, and so on.</strong> The output looks like a proper research library rather than a flat dump of files.</p>
+
+        <div class="screenshot-block">
+            <div class="screenshot-triple">
+                <div>
+                    <img src="../Scraper/Groww1.png" alt="Groww — organized folder structure" class="screenshot-img" onclick="openLightbox(this)">
+                    <div class="screenshot-label">Groww — top-level folder structure</div>
+                </div>
+                <div>
+                    <img src="../Scraper/Groww2.png" alt="Groww — quarterly results folder" class="screenshot-img" onclick="openLightbox(this)">
+                    <div class="screenshot-label">Groww — inside Quarterly Results</div>
+                </div>
+                <div>
+                    <img src="../Scraper/Palantir1.png" alt="Palantir — organized filings" class="screenshot-img" onclick="openLightbox(this)">
+                    <div class="screenshot-label">Palantir — organized filings by quarter</div>
+                </div>
+            </div>
+            <p class="screenshot-caption">What the output actually looks like. The first two screenshots are from the Groww run — the scraper sorted 187 files into eight labelled folders. Open "Quarterly Results" and you find earnings call transcripts, financial results PDFs, and shareholder letters named by fiscal quarter, ready to feed into an LLM. The third screenshot is from the Palantir run — 94 organized documents, each named descriptively by quarter and filing type, spanning from 2020 through 2025. No UUIDs, no generic "PDF" labels, no duplicates.</p>
+        </div>
+
+        <p>The GUI shown earlier makes this accessible without touching the command line. Type in a company name and it does a lookup — identifies the exchange, picks up the ticker, finds the IR webpage, and kicks off the download. The organized folder lands on disk ready to use. This scraper is now my source of truth for pulling source documents and running LLMs to produce research reports with accuracy, traceability, and without hallucination.</p>
+
+    </article>
+
+    <div class="footnotes">
+        <p id="fn1"><sup>1</sup> The Palantir run was the most instructive test. Before the section-button deduplication fix, the scraper was re-expanding the same three navigation buttons on every page visit &mdash; Financials, Governance, Resources &mdash; spending fifteen minutes doing nothing useful. The fix was one boolean flag. Small code, large behavioural change.</p>
+        <p id="fn2"><sup>2</sup> 1,638 of 1,728 Palantir documents were EDGAR filing viewer artifacts &mdash; phantom PDF links, each with a UUID in the URL, each labelled &ldquo;PDF&rdquo; or &ldquo;XBRL&rdquo;. The classifier now filters these. The actual document count was 90. That gap &mdash; between what a site appears to contain and what it actually contains &mdash; is something only post-processing reveals.</p>
+    </div>
+
+    <div class="article-footer">
+        <p style="margin-bottom: 1.5rem;">Want more stories about building with AI?</p>
+        <div class="social-links" style="justify-content: center;">
+            <a href="../../ai-experiments.html" class="btn btn-primary">Back to Experiments</a>
+            <a href="https://tgrkarthik.substack.com/" target="_blank" class="btn btn-secondary">Subscribe</a>
+        </div>
+    </div>
+
+    <footer id="shared-footer"></footer>
+
+    <script src="../../components/nav-footer.js"></script>
+    <script>
+        function openLightbox(img) {
+            document.getElementById('lightboxImg').src = img.src;
+            document.getElementById('lightboxImg').alt = img.alt;
+            document.getElementById('lightboxOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeLightbox() {
+            document.getElementById('lightboxOverlay').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeLightbox();
+        });
+        // Prevent clicks on the image itself from closing the overlay
+        document.getElementById('lightboxImg').addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    </script>
+</body>
+</html>

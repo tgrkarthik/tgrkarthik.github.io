@@ -154,8 +154,9 @@
             margin-bottom: 1.25rem;
         }
 
-        /* ===== Article pill strip ===== */
+        /* ===== Article pill strip (mobile only) ===== */
         .article-strip {
+            display: none;
             background: #ffffff;
             border-bottom: 1px solid #e0e0e0;
             position: sticky;
@@ -217,6 +218,7 @@
 
         /* ===== Mobile: stack columns ===== */
         @media (max-width: 768px) {
+            .article-strip { display: block; }
             .ai-layout {
                 flex-direction: column;
                 gap: 2rem;
@@ -319,6 +321,11 @@
                 <!-- RIGHT COLUMN: Article list -->
                 <div class="ai-sidebar">
                     <div class="sidebar-heading">Experiments</div>
+
+                    <a href="ai-experiments/working-with-claude.html" class="sidebar-item">
+                        <div class="sidebar-item-title">Working with Claude &mdash; A Toolkit After Two Months</div>
+                        <p class="sidebar-item-desc">The toolkit I&rsquo;ve ended up with: a working folder, a CLAUDE.md memory file, skills for the work I repeat, voice DNA for the writing. The surprise wasn&rsquo;t what it taught Claude &mdash; it was what it taught me about how I think.</p>
+                    </a>
 
                     <a href="ai-experiments/ir-scraper.html" class="sidebar-item">
                         <div class="sidebar-item-title">Building a Scraper That Works on Any IR Website</div>
