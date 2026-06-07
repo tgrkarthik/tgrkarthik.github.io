@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en" data-depth="1">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Writing Skills for Claude — Some of my learnings that help me build better skills and workflows over time - Karthik Tiruvarur</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .article-header { max-width: 1050px; margin: 3rem auto 2rem; padding: 0 2rem; }
+        .article-title { font-size: 36px; font-weight: 600; margin-bottom: 1rem; line-height: 1.2; }
+        .article-meta { display: flex; gap: 1rem; align-items: center; font-size: 14px; color: #666666; margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid #e0e0e0; }
+        .article-body { max-width: 1050px; margin: 0 auto; padding: 0 2rem; line-height: 1.8; }
+        .article-body p { margin-bottom: 1.5rem; font-size: 16px; color: #666666; }
+        .article-body h2 { font-size: 24px; margin-top: 3rem; margin-bottom: 1.5rem; color: #000000; }
+        .article-body h3 { font-size: 18px; margin-top: 2rem; margin-bottom: 1rem; color: #000000; }
+        .article-body strong { font-weight: 600; color: #000000; }
+        .article-body em { font-style: italic; }
+        .article-body code { background: #f5f5f5; padding: 1px 6px; border-radius: 3px; font-size: 13px; color: #000000; }
+        .article-footer { max-width: 1050px; margin: 3rem auto 0; padding: 2rem 2rem; background: #f5f5f5; text-align: center; }
+        .back-link { display: inline-block; margin-bottom: 2rem; font-size: 14px; color: #666666; }
+        .back-link:hover { color: #000000; }
+
+        /* TLDR box */
+        .article-tldr {
+            background: #fdf6ec;
+            border-left: 3px solid #8b4513;
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 2rem;
+            border-radius: 0 4px 4px 0;
+        }
+        .article-tldr-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #8b4513;
+            margin-bottom: 0.5rem;
+        }
+        .article-tldr p {
+            font-size: 15px;
+            color: #555555;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        /* Timeline — reflowing dated blocks */
+        .timeline {
+            margin: 2rem 0;
+        }
+        .timeline-entry {
+            padding: 0.25rem 0 1.25rem 1.5rem;
+            border-left: 2px solid #e0e0e0;
+            position: relative;
+        }
+        .timeline-entry:last-child {
+            padding-bottom: 0.25rem;
+        }
+        .timeline-entry::before {
+            content: "";
+            position: absolute;
+            left: -6px;
+            top: 6px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #8b4513;
+        }
+        .timeline-date {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            color: #8b4513;
+            margin-bottom: 0.35rem;
+        }
+        .timeline-entry p {
+            font-size: 15px;
+            color: #666666;
+            line-height: 1.7;
+            margin: 0;
+        }
+        .timeline-skill {
+            font-weight: 600;
+            color: #000000;
+        }
+
+        /* Pattern recap grid */
+        .pattern-grid {
+            margin: 1.5rem 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+        }
+        .pattern-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 0.8rem 1rem;
+            background: #ffffff;
+        }
+        .pattern-card-num {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            color: #8b4513;
+        }
+        .pattern-card-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #000000;
+            line-height: 1.3;
+            margin-top: 0.1rem;
+        }
+        .pattern-card-desc {
+            font-size: 13px;
+            color: #666666;
+            line-height: 1.55;
+            margin-top: 0.3rem;
+        }
+        @media (max-width: 768px) {
+            .pattern-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Footnotes */
+        .footnote-ref {
+            font-size: 12px;
+            vertical-align: super;
+            line-height: 0;
+            color: #000000;
+            border-bottom: 1px dotted #666666;
+            padding: 0 2px;
+        }
+        .footnotes {
+            max-width: 1050px;
+            margin: 2rem auto;
+            padding: 1.5rem 2rem;
+            border-top: 1px solid #e0e0e0;
+        }
+        .footnotes p {
+            font-size: 13px;
+            color: #666666;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) { .article-title { font-size: 24px; } .article-body p { font-size: 15px; } }
+        @media (max-width: 480px) { .article-title { font-size: 20px; } .article-body p { font-size: 14px; } .article-footer { padding: 1.25rem 1rem; } }
+    </style>
+</head>
+<body>
+
+    <nav id="shared-nav"></nav>
+
+    <div class="article-header">
+        <a href="../ai-experiments.html" class="back-link">&larr; Back to AI Experiments</a>
+        <h1 class="article-title"> Learnings that helped me build better skills and workflows over time </h1>
+        <div class="article-meta">
+            <span>June 2026</span>
+            <span>&bull;</span>
+            <span>Skills &amp; Architecture</span>
+        </div>
+    </div>
+
+    <article class="article-body">
+
+        <div class="article-tldr">
+            <div class="article-tldr-label">TL;DR</div>
+            <p>Over three months I went from never having written several skills, to writing over a dozen, primarily for my professional work in finance, but also some routine day to day automation workflows. Each skills typically does something distinct, and the interesting evolution was that I kept relying on the model less and building more deterministic scaffolding around it. This is the field guide to what held up: provenance tags on every fact, a closed list of sources nothing may be cited outside of, web search as a switch rather than a default, failure logs read before every run, and gates written in plain Python that block delivery when something&rsquo;s wrong.</p>
+        </div>
+
+        <p>I&rsquo;ve written about a dozen skills for Claude since March.The mental model I landed on is that <strong>Claude is a fast, fallible analyst.</strong> Quick, broadly capable, reads anything you put in front of it, and will hand you a confident wrong answer wearing the same face it uses for a right one. <strong>Almost everything I&rsquo;ve built since is a mechanism for catching that wrong answer before it ships.</strong> This is a companion to <a href="working-with-claude.html">the toolkit piece I wrote earlier</a>; that one is the what, this one is the how and the why.</p>
+
+        <p>Here&rsquo;s the shape of it, oldest to newest.</p>
+
+        <div class="timeline">
+            <div class="timeline-entry">
+                <div class="timeline-date">March</div>
+                <p><span class="timeline-skill">Business-Understanding.</span> Reads a company&rsquo;s filings (10-Ks, S-1s, annual reports across the US, India and Europe) and pulls out what it does, how it earns, who its customers and rivals are. It taught me document triage: rank the filings before reading, and start with the Business Description section, because that one section gives you <strong>70% of what you need</strong>.</p>
+            </div>
+            <div class="timeline-entry">
+                <div class="timeline-date">April</div>
+                <p><span class="timeline-skill">Initiation Merge.</span> A pure-Python script, no model involved, that stitches separate report stages into one document. The first step I deliberately took away from the model &mdash; because assembling text turned out to be a code problem, and model improvisation at the join is a defect, not a flourish.</p>
+            </div>
+            <div class="timeline-entry">
+                <div class="timeline-date">April</div>
+                <p><span class="timeline-skill">Earnings Sentiment, and the first pipeline skills.</span> Earnings Sentiment reads up to <strong>16 quarters</strong> of earnings-call transcripts and pulls the recurring positives and concerns from management and analysts. This is where I started tagging every claim with where it came from, and where I split &ldquo;closed-book&rdquo; and &ldquo;open-book&rdquo; into separate skills.</p>
+            </div>
+            <div class="timeline-entry">
+                <div class="timeline-date">April</div>
+                <p><span class="timeline-skill">SellSideInitiation.</span> The flagship. One trigger phrase runs a five-phase pipeline that turns documents I supply into a <strong>25-page closed-book research report</strong>. Eight hard rules, a six-tier source hierarchy, gates that block delivery. The most defended thing I&rsquo;ve built.</p>
+            </div>
+            <div class="timeline-entry">
+                <div class="timeline-date">April</div>
+                <p><span class="timeline-skill">investment-moats.</span> Competitive-advantage analysis through four named frameworks &mdash; Helmer&rsquo;s 7 Powers, Greenwald&rsquo;s Earnings Power Value, Buffett-Munger, Porter. It proved the structure wasn&rsquo;t tied to reports; the same discipline carried straight over to a framework skill.</p>
+            </div>
+            <div class="timeline-entry">
+                <div class="timeline-date">April</div>
+                <p><span class="timeline-skill">voice-dna.</span> How I write, across four formats and a professionalism dial, built from <strong>16 of my own writing samples over seven years</strong>. It pointed the gate idea at prose instead of numbers.</p>
+            </div>
+            <div class="timeline-entry">
+                <div class="timeline-date">May</div>
+                <p><span class="timeline-skill">user-profile.</span> My standing instructions (identity, file paths, formatting standards, code conventions), loaded at the start of every task so nothing gets re-asked.</p>
+            </div>
+            <div class="timeline-entry">
+                <div class="timeline-date">May &ndash; June</div>
+                <p><span class="timeline-skill">The personal-workflow trio.</span> Lighter skills for my own notes: YouTube summaries into Obsidian, investor-call transcripts into filed and backlinked notes, years of conversation notes rolled into a cross-referenced workbook. Same discipline, lighter weight, faster model.</p>
+            </div>
+        </div>
+
+        <p>The arc, in five moves: a single-purpose framework, then a guardrail-heavy pipeline, then enforcement moved into code, then identity and voice, then repeatable personal workflows. <strong>What changes across it isn&rsquo;t the subject. It&rsquo;s how much of the work I trust the model to do unsupervised, which steadily shrinks, against how much deterministic scaffolding I build around it, which steadily grows.</strong></p>
+
+        <h2>Closed-book by default</h2>
+
+        <p>The first thing I got wrong was treating the model&rsquo;s own knowledge as a resource. It isn&rsquo;t. A model knows a great deal about most public companies from training, and that knowledge is invisible, unverifiable, and often a year or two stale. So the rule across every analytical skill became blunt: <strong>training data is not a source.</strong> If I can&rsquo;t point to a specific document I retrieved for a claim, the claim either gets tagged as unverified or doesn&rsquo;t get made.</p>
+
+        <p>Making that real took three mechanisms. The first is <strong>provenance as a type</strong>. Every number in a report carries a tag from a fixed, six-symbol vocabulary saying where it came from: the data feed, a filing in the project folder, an official exchange filing, a transcript, a live web lookup, or &mdash; honestly &mdash; not retrieved. The tags are ranked, so the skill knows to drop to a weaker source only when the stronger one is empty. And because the vocabulary is closed, a script downstream can check that nothing slipped through untagged.</p>
+
+        <p>The second is <strong>an explicit, finite list of sources</strong>. Each report builds a log of every document it actually retrieved, and that log <em>is</em> the world. Nothing may be cited outside it, even if the model happens to know the contents. This is the sharpest idea I found in three months, because &ldquo;don&rsquo;t hallucinate&rdquo; is not an instruction a model can follow &mdash; it has no internal flag separating a retrieved fact from a confidently recalled one. &ldquo;Don&rsquo;t cite anything outside this list&rdquo; is a set-membership test, and a hundred lines of Python can enforce it.</p>
+
+        <p>The third is treating <strong>web search as a switch, not a default</strong>. In the report pipeline it&rsquo;s off for the first three phases and turns on in exactly two named places: one step to fetch live market data, every cell tagged accordingly, and the valuation phase for prices and comparables. Everywhere else, off. Once the model can reach the open web mid-analysis, the whole provenance system leaks, because a number can enter whose source is just &ldquo;something I found.&rdquo;</p>
+
+        <p>The reframe underneath all three is the one that took longest to accept emotionally: <strong>a report with honest gaps is correct output, and a report with a confident wrong number is broken</strong> &mdash; even if the number happens to be right, because the process that produced it can&rsquo;t tell the difference. An empty cell labelled &ldquo;not retrieved&rdquo; is a success. The model is so good at producing the plausible thing, and the plausible thing is usually close. Close is the whole problem.</p>
+
+        <h2>The Snowflake run</h2>
+
+        <p>For a while I parallelised the long pipelines with sub-agents &mdash; a merge agent, an audit agent, a data-extraction agent. Clean architecture, narrow briefs. Then I checked the numbers on one run carefully.</p>
+
+        <p>One section had come back with <strong>100 of its 122 financial data points fabricated</strong>, by a sub-agent that had been given a perfectly clear instruction. Revenue and gross profit were right, because they were the first two fields in the API response. Everything after that was invented, with the correct source tags attached. The report read fine. It was wrong in nearly every detail.</p>
+
+        <p>The cause is architectural, not a bug. A sub-agent launches fresh. It can&rsquo;t see my instructions file, the failure log, or the conversation. So when it hits a gap it has nothing to fall back on except training data, and it fills the gap plausibly. The orchestrator then stitches plausible-but-wrong fragments together with no way to see the seams, because each fragment is internally well-formed. <strong>So the rule now is absolute: no sub-agents for analytical work.</strong> Everything runs in one conversation with full context carried forward. It&rsquo;s slower. <strong>It&rsquo;s the only architecture I&rsquo;ve found that delivers what it claims.</strong></p>
+
+        <h2>The failure log</h2>
+
+        <p>Every serious skill has a file called <code>FAILURE_LOG.md</code> sitting next to it. It&rsquo;s append-only. Each entry records what broke, the run that triggered it, and the rule that now prevents it. <strong>Reading it is step one of every run</strong>, before any retrieval or writing.</p>
+
+        <p>It works because it closes the loop between &ldquo;something broke&rdquo; and &ldquo;the skill changed.&rdquo; Without a log, every fix is local &mdash; this report, this company, this bug &mdash; and the same mistake comes back the following week in slightly different clothes. With a log, every fix is structural: a rule in the skill, a check in a gate, a line in the instructions file. New failures get written down <strong>in the same session</strong> they happen, never deferred, because by next time the context is gone. Trace almost any rule I have back far enough and you find a logged failure at the root of it. The Snowflake run is one. A run where a bank&rsquo;s accounts got read with a software template, producing phantom debt that didn&rsquo;t exist, is another. The log is the thing the skills actually grew out of.</p>
+
+        <h2>The skill is the spec; the gate is the gate</h2>
+
+        <p>A skill file is a prompt, and a prompt is a suggestion. The model follows it most of the time and quietly ignores it some of the time, and you don&rsquo;t get told which run is which. For the rules that genuinely can&rsquo;t bend, the only honest enforcement is code that fails the build.</p>
+
+        <p>So the rules I refuse to ship without are each backed by a small Python program that runs over the output and exits with an error when something&rsquo;s wrong. One runs regex over prose and hard-fails on the worst machine-writing tells. One runs five checks over a finished report: no leftover placeholder tags, no unretrieved numbers in historical columns, citations that actually resolve, a balance sheet that reconciles to the dollar. One diffs the written numbers against the raw data feed to catch exactly the Snowflake failure. <strong>Each gate is a hundred lines or less, runs in seconds, and uses no model at all.</strong> That last part is the point: <strong>you can&rsquo;t ask the thing that makes the mistake to also be the thing that reliably catches it.</strong> The catcher has to be dumber, deterministic, and incorruptible.</p>
+
+        <p>This is the same line drawn over and over. The model does judgment &mdash; reading, weighing, classifying, composing. Deterministic code does assembly, transformation, and checking. If a task has one correct output given its input, it belongs in code; if it needs reading and weighing, it belongs to the model, and its output then goes straight to code for assembly and verification. Most of my failures came from putting the model on the wrong side of that line: asking it to do bookkeeping and watching it improvise.</p>
+
+        <h2>The smaller habits that compounded</h2>
+
+        <p>A few lighter patterns earned their place. <strong>Classify the input before you process it.</strong> The report pipeline decides whether a company is a software business, a bank, an insurer, a REIT, a marketplace, a miner, or a holding company <em>before</em> it touches the financials, because each needs a different template and the wrong one corrupts everything quietly. That step exists because a bank once got read as a software company and the output looked clean while being conceptually wrong.</p>
+
+        <p><strong>Tell the model where it may and may not exercise judgment.</strong> In my note-taking skills the body of a note is copied verbatim &mdash; no summarising, no improving &mdash; and the only authored parts are the title and a few lines of metadata. The model&rsquo;s instinct is to add value everywhere, and &ldquo;value&rdquo; often means paraphrase, which is destructive when the whole point is fidelity to the source.</p>
+
+        <p><strong>Write the skill against the tool, not the vendor.</strong> The data source appears throughout as a single named parameter with a note that today it&rsquo;s one provider and tomorrow it might be another. Connectors change; a skill with the vendor&rsquo;s name welded into forty instructions becomes a rewrite, while a parameterised one is a one-line change. <strong>Pick the model deliberately</strong> &mdash; the faster one for mechanical work, the stronger one for judgment &mdash; and <strong>ask your questions in one batch up front</strong>, never one a time, and never a question whose answer is already sitting in what I just told it.</p>
+
+        <h2>The whole kit, on one page</h2>
+
+        <p>Strip the finance out and twelve patterns are left. Each one survives the domain: substitute your own work for mine and it still holds. Here they are in one place, for the reader who wants the checklist rather than the story.</p>
+
+        <div class="pattern-grid">
+            <div class="pattern-card">
+                <div class="pattern-card-num">01</div>
+                <div class="pattern-card-name">Provenance as a type</div>
+                <div class="pattern-card-desc">Tag every fact with where it came from, from a fixed, ranked, machine-checkable vocabulary. Design the tags before the output.</div>
+            </div>
+            <div class="pattern-card">
+                <div class="pattern-card-num">02</div>
+                <div class="pattern-card-name">An explicit closed boundary</div>
+                <div class="pattern-card-desc">Build one finite list of retrieved sources. Nothing may be cited outside it, even what the model thinks it knows.</div>
+            </div>
+            <div class="pattern-card">
+                <div class="pattern-card-num">03</div>
+                <div class="pattern-card-name">Web search as a switch</div>
+                <div class="pattern-card-desc">Off by default. Turned on only at named steps, for named fields, with its own source tag. Never ambient.</div>
+            </div>
+            <div class="pattern-card">
+                <div class="pattern-card-num">04</div>
+                <div class="pattern-card-name">Training data is not a source</div>
+                <div class="pattern-card-desc">If you can&rsquo;t point to a retrieved document for a claim, it gets tagged unverified or isn&rsquo;t made. Honest gaps are correct output.</div>
+            </div>
+            <div class="pattern-card">
+                <div class="pattern-card-num">05</div>
+                <div class="pattern-card-name">No sub-agents for judgment</div>
+                <div class="pattern-card-desc">Fresh agents lose context and fill the gaps from training. Run analytical work in one conversation, full context carried forward.</div>
+            </div>
+            <div class="pattern-card">
+                <div class="pattern-card-num">06</div>
+                <div class="pattern-card-name">Failure logs, read first</div>
+                <div class="pattern-card-desc">An append-only record of what broke and the rule that now prevents it. Reading it is step one of every run; codify failures the same session.</div>
+            </div>
+            <div class="pattern-card">
+                <div class="pattern-card-num">07</div>
+                <div class="pattern-card-name">The spec and the gate</div>
+                <div class="pattern-card-desc">A prompt is a suggestion. Non-negotiable rules get enforced by small Python programs that fail the build, not by careful wording.</div>
+            </div>
+            <div class="pattern-card">
+                <div class="pattern-card-num">08</div>
+                <div class="pattern-card-name">The determinism boundary</div>
+                <div class="pattern-card-desc">The model does judgment. Deterministic code does assembly, transformation, and checking. One correct output given the input means it belongs in code.</div>
+            </div>
+            <div class="pattern-card">
+                <div class="pattern-card-num">09</div>
+                <div class="pattern-card-name">Parameterise the tools</div>
+                <div class="pattern-card-desc">Write against a named source parameter, not a vendor. Connectors change; a skill with the vendor welded in becomes a rewrite.</div>
+            </div>
+            <div class="pattern-card">
+                <div class="pattern-card-num">10</div>
+                <div class="pattern-card-name">Branch on input type early</div>
+                <div class="pattern-card-desc">Classify the input before processing it. The wrong template produces a clean, professional, completely wrong artifact.</div>
+            </div>
+            <div class="pattern-card">
+                <div class="pattern-card-num">11</div>
+                <div class="pattern-card-name">Verbatim zones vs authored zones</div>
+                <div class="pattern-card-desc">Tell the model exactly where to copy faithfully and where to compose freely. It edits by instinct, which is destructive in a copy zone.</div>
+            </div>
+            <div class="pattern-card">
+                <div class="pattern-card-num">12</div>
+                <div class="pattern-card-name">Model and question discipline</div>
+                <div class="pattern-card-desc">Pick the model deliberately, faster for mechanical work and stronger for judgment. Batch questions up front; never ask what you were already told.</div>
+            </div>
+        </div>
+
+        <h2>Where this leaves me</h2>
+
+        <p>The failure logs keep growing. The one next to the report pipeline is past two dozen entries, and each is a mistake the model made once and a line that now makes sure it can&rsquo;t make it the same way twice. Every skill I write now opens the same way: read the log, confirm the parameters, decide what the model is and isn&rsquo;t allowed to touch, and only then start.</p>
+
+        <p>It&rsquo;s slower than just asking. It is also the only version I&rsquo;d put my name on a report from. I don&rsquo;t know what the next skill will break, or which rule it&rsquo;ll add to the pile. I know it&rsquo;ll start by reading the log.</p>
+
+    </article>
+
+    <div class="article-footer">
+        <p style="margin-bottom: 1.5rem;">More on building with AI:</p>
+        <div class="social-links" style="justify-content: center;">
+            <a href="../ai-experiments.html" class="btn btn-primary">Back to Experiments</a>
+            <a href="https://tgrkarthik.substack.com/" target="_blank" class="btn btn-secondary">Subscribe</a>
+        </div>
+    </div>
+
+    <footer id="shared-footer"></footer>
+
+    <script src="../components/nav-footer.js"></script>
+</body>
+</html>
