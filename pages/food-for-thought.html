@@ -191,19 +191,22 @@
             padding: 0.5rem 0;
         }
 
-        /* Desktop hover: bullets hidden by default, reveal on hover */
+        /* Desktop hover: bullets hidden by default, reveal after 2s hover */
         @media (min-width: 601px) {
             .fft-card-takeaways {
                 max-height: 0;
                 overflow: hidden;
                 opacity: 0;
                 margin-top: 0;
-                transition: max-height 0.35s ease, opacity 0.2s ease, margin-top 0.25s ease;
+                /* collapse instantly on mouse-out — no delay */
+                transition: max-height 0.4s ease-out 0s, opacity 0.2s ease 0s, margin-top 0.25s ease 0s;
             }
             .fft-card:hover .fft-card-takeaways {
-                max-height: 300px;
+                max-height: 1000px;
                 opacity: 1;
                 margin-top: 0.4rem;
+                /* wait 2s before expanding */
+                transition: max-height 0.4s ease-out 2s, opacity 0.2s ease 2s, margin-top 0.25s ease 2s;
             }
         }
 
@@ -254,7 +257,7 @@
             <!-- ===== INVESTING ===== -->
             <div class="fft-category">
                 <button class="fft-category-toggle" onclick="this.parentElement.classList.toggle('open')">
-                    <span><h3 class="fft-category-title">Investing<span class="fft-category-count">15 videos</span></h3></span>
+                    <span><h3 class="fft-category-title">Investing<span class="fft-category-count">12 videos</span></h3></span>
                     <svg class="fft-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
                 </button>
                 <div class="fft-category-content"><div class="fft-category-inner">
@@ -265,7 +268,7 @@
                     </div>
                     <div class="fft-card-body">
                         <div class="fft-card-meta">
-                            <span class="fft-card-type">Video</span>
+                            <span class="fft-card-type">Dec 2025</span>
                         </div>
                         <div class="fft-card-title">Finding The 1% of Stocks That Matter | Henry Ellenbogen</div>
                         <ul class="fft-card-takeaways">
@@ -286,7 +289,7 @@
                     </div>
                     <div class="fft-card-body">
                         <div class="fft-card-meta">
-                            <span class="fft-card-type">Video</span>
+                            <span class="fft-card-type">Feb 2026</span>
                         </div>
                         <div class="fft-card-title">Dan Sundheim of D1 Capital on the Art of Public Market Investing</div>
                         <ul class="fft-card-takeaways">
@@ -307,7 +310,7 @@
                     </div>
                     <div class="fft-card-body">
                         <div class="fft-card-meta">
-                            <span class="fft-card-type">Video</span>
+                            <span class="fft-card-type">Feb 2026</span>
                         </div>
                         <div class="fft-card-title">The Benchmark Partnership</div>
                         <ul class="fft-card-takeaways">
@@ -321,34 +324,15 @@
                     </div>
                 </a>
 
-                <a href="https://www.youtube.com/watch?v=Ha97Gmez8n8" target="_blank" class="fft-card">
-                    <div class="fft-card-image">
-                        <img src="https://img.youtube.com/vi/Ha97Gmez8n8/mqdefault.jpg" alt="Rajeev Thakkar on Bear Markets">
-                    </div>
-                    <div class="fft-card-body">
-                        <div class="fft-card-meta">
-                            <span class="fft-card-type">Video</span>
-                        </div>
-                        <div class="fft-card-title">Rajeev Thakkar &mdash; Investing During Bear Markets, Cash Strategy &amp; PPFAS</div>
-                        <ul class="fft-card-takeaways">
-                            <li>1/ PPFAS holds 22% cash, sacrificing short-term returns while waiting for better market valuations</li>
-                            <li>2/ Buying a stock at 200x earnings yields a half-percent return + profits must skyrocket 15x just to match a fixed deposit</li>
-                            <li>3/ Every domestic private airline from the 1990s went bankrupt except modern survivors + physical industry growth does not guarantee investor profits</li>
-                            <li>4/ &ldquo;Equanimity not genius leads to success&rdquo; is written at the PPFAS office entrance + emotional control over intellectual capability</li>
-                        </ul>
-                        <div class="fft-card-source">YouTube &middot; Money Mindset</div>
-                    </div>
-                </a>
-
                 <a href="https://www.youtube.com/watch?v=f0NXCedYCqM" target="_blank" class="fft-card">
                     <div class="fft-card-image">
                         <img src="https://img.youtube.com/vi/f0NXCedYCqM/mqdefault.jpg" alt="Paul Black WCM">
                     </div>
                     <div class="fft-card-body">
                         <div class="fft-card-meta">
-                            <span class="fft-card-type">Video</span>
+                            <span class="fft-card-type">May 2025</span>
                         </div>
-                        <div class="fft-card-title">Inside WCMQ &mdash; Beating the Index for 17 Years | Paul Black</div>
+                        <div class="fft-card-title">Inside WCMQ: Beating the Index for 17 Years | Paul Black</div>
                         <ul class="fft-card-takeaways">
                             <li>1/ Generating alpha requires shifting focus from businesses with wide moats to businesses where the moat is actively expanding</li>
                             <li>2/ Corporate culture is the primary driver of competitive advantage + and it can&rsquo;t be captured in a spreadsheet, creating a persistent pricing inefficiency</li>
@@ -366,9 +350,9 @@
                     </div>
                     <div class="fft-card-body">
                         <div class="fft-card-meta">
-                            <span class="fft-card-type">Video</span>
+                            <span class="fft-card-type">Jan 2026</span>
                         </div>
-                        <div class="fft-card-title">Human + AI Beats Both Alone &mdash; Alix Pasquet III</div>
+                        <div class="fft-card-title">Human + AI Beats Both Alone: Alix Pasquet III</div>
                         <ul class="fft-card-takeaways">
                             <li>1/ Modern analysts overly rely on digital optimization tools, losing the deep &ldquo;analog&rdquo; skills forged under resource constraints</li>
                             <li>2/ AI accelerates consensus thinking, but critically dulls the human capacity to independently read between the lines</li>
@@ -386,9 +370,9 @@
                     </div>
                     <div class="fft-card-body">
                         <div class="fft-card-meta">
-                            <span class="fft-card-type">Video</span>
+                            <span class="fft-card-type">Apr 2026</span>
                         </div>
-                        <div class="fft-card-title">Rajeev Thakkar &mdash; Markets, Private Banks, IT Services &amp; 19% Cash</div>
+                        <div class="fft-card-title">Rajeev Thakkar: Markets, Private Banks, IT Services &amp; 19% Cash</div>
                         <ul class="fft-card-takeaways">
                             <li>1/ PPFAS is sitting on ~19% cash + not deploying aggressively but continuously screening; private banks, IT services, and city gas distribution named as pockets of value</li>
                             <li>2/ IT services carry attractive valuations despite the AI-disruption narrative + Infosys and HCL Technologies were added to the portfolio</li>
@@ -406,9 +390,9 @@
                     </div>
                     <div class="fft-card-body">
                         <div class="fft-card-meta">
-                            <span class="fft-card-type">Video</span>
+                            <span class="fft-card-type">Apr 2026</span>
                         </div>
-                        <div class="fft-card-title">Not Once in 18,900 Tries &mdash; Michael Mauboussin on AI Growth</div>
+                        <div class="fft-card-title">Not Once in 18,900 Tries: Michael Mauboussin on AI Growth</div>
                         <ul class="fft-card-takeaways">
                             <li>1/ Historical base rates force investors to step outside their bottoms-up models and check if their assumptions are statistically plausible</li>
                             <li>2/ OpenAI forecasts 108% compound annual growth over 5 years + a feat literally never achieved by any company in 18,900 historical instances</li>
@@ -420,35 +404,15 @@
                     </div>
                 </a>
 
-                <a href="https://www.youtube.com/watch?v=K8Ix8TYI8mI" target="_blank" class="fft-card">
-                    <div class="fft-card-image">
-                        <img src="https://img.youtube.com/vi/K8Ix8TYI8mI/mqdefault.jpg" alt="Doomberg Energy vs Everything">
-                    </div>
-                    <div class="fft-card-body">
-                        <div class="fft-card-meta">
-                            <span class="fft-card-type">Video</span>
-                        </div>
-                        <div class="fft-card-title">Energy vs Everything &mdash; Doomberg</div>
-                        <ul class="fft-card-takeaways">
-                            <li>1/ The luxuries of modern life have completely dislocated the user from the producer + society believes energy comes from the switch on the wall</li>
-                            <li>2/ All fiat currencies evolve to zero, including the dollar; earn in fiat, save in hard real assets</li>
-                            <li>3/ Gold is structurally fixed + the price trend from $40 to $5,000 per ounce maps the progressive weakening of paper fiat</li>
-                            <li>4/ Five-nines grid reliability requires baseload + dispatchable + flexible mix + renewables alone cannot deliver it</li>
-                            <li>5/ Civilization is permanently organizing around infinite compute + tech companies will demand immense energy and sweep aside prior environmental regulations</li>
-                        </ul>
-                        <div class="fft-card-source">YouTube &middot; Peter Boghossian</div>
-                    </div>
-                </a>
-
                 <a href="https://www.youtube.com/watch?v=wEEZPpx8qow" target="_blank" class="fft-card">
                     <div class="fft-card-image">
                         <img src="https://img.youtube.com/vi/wEEZPpx8qow/mqdefault.jpg" alt="Krishna Rao Anthropic Compute">
                     </div>
                     <div class="fft-card-body">
                         <div class="fft-card-meta">
-                            <span class="fft-card-type">Video</span>
+                            <span class="fft-card-type">May 2026</span>
                         </div>
-                        <div class="fft-card-title">Inside Anthropic&rsquo;s $100 Billion AI Compute Commitment &mdash; Krishna Rao</div>
+                        <div class="fft-card-title">Inside Anthropic&rsquo;s $100 Billion AI Compute Commitment: Krishna Rao</div>
                         <ul class="fft-card-takeaways">
                             <li>1/ Compute is the lifeblood + too much leads to business failure; too little drops a lab below the frontier and leaves it unable to serve customers</li>
                             <li>2/ Anthropic uses three chip platforms (Tranium, TPUs, Nvidia) fungibly, routing workloads dynamically as availability and economics shift</li>
@@ -466,9 +430,9 @@
                     </div>
                     <div class="fft-card-body">
                         <div class="fft-card-meta">
-                            <span class="fft-card-type">Video</span>
+                            <span class="fft-card-type">May 2026</span>
                         </div>
-                        <div class="fft-card-title">Inside the Mind of a Tech Investor &mdash; Gavin Baker</div>
+                        <div class="fft-card-title">Inside the Mind of a Tech Investor: Gavin Baker</div>
                         <ul class="fft-card-takeaways">
                             <li>1/ Deep engagement as a consumer is the supreme starting point for finding investment ideas + if you like the product, you&rsquo;ll love the stock</li>
                             <li>2/ High leverage is the primary warning flag in tech and telecom + price wars can break out and destroy a levered name overnight</li>
@@ -486,9 +450,9 @@
                     </div>
                     <div class="fft-card-body">
                         <div class="fft-card-meta">
-                            <span class="fft-card-type">Video</span>
+                            <span class="fft-card-type">Jun 2026</span>
                         </div>
-                        <div class="fft-card-title">The India Opportunity Is Far Bigger Than Most Investors Realize &mdash; Kuntal Shah</div>
+                        <div class="fft-card-title">The India Opportunity Is Far Bigger Than Most Investors Realize: Kuntal Shah</div>
                         <ul class="fft-card-takeaways">
                             <li>1/ India represents just 3% of global equity market capitalization + leaving 97% of global profit pools completely untapped by domestic investors</li>
                             <li>2/ India&rsquo;s per capita GDP of $2,500 represents an early infant stage of long-term wealth compounding</li>
@@ -505,9 +469,9 @@
                     </div>
                     <div class="fft-card-body">
                         <div class="fft-card-meta">
-                            <span class="fft-card-type">Video</span>
+                            <span class="fft-card-type">Jun 2026</span>
                         </div>
-                        <div class="fft-card-title">Contrarian Quality at GQG Partners &mdash; Rajiv Jain</div>
+                        <div class="fft-card-title">Contrarian Quality at GQG Partners: Rajiv Jain</div>
                         <ul class="fft-card-takeaways">
                             <li>1/ Investment quality is defined as high immutable barriers to entry + preferring irreplaceable physical assets like deep-water oil fields over high-multiple tech</li>
                             <li>2/ Semiconductor industries face declining quality because Chinese manufacturing expansions will eventually overproduce and destroy global corporate returns</li>
@@ -525,9 +489,9 @@
                     </div>
                     <div class="fft-card-body">
                         <div class="fft-card-meta">
-                            <span class="fft-card-type">Video</span>
+                            <span class="fft-card-type">Jun 2026</span>
                         </div>
-                        <div class="fft-card-title">Why the AI Boom Is Just Getting Started &mdash; Alex Sacerdote</div>
+                        <div class="fft-card-title">Why the AI Boom Is Just Getting Started: Alex Sacerdote</div>
                         <ul class="fft-card-takeaways">
                             <li>1/ The foundation model layer has consolidated into a tight three-horse oligopoly: OpenAI, Anthropic, and Google&rsquo;s Gemini</li>
                             <li>2/ Coding tools triggered a massive enterprise shift in 2025, enabling developers to spend $100 daily on tokens</li>
@@ -536,25 +500,6 @@
                             <li>5/ The hardware stack is being decommoditized because advanced AI workloads are pushing servers to the absolute physical limits of liquid cooling</li>
                         </ul>
                         <div class="fft-card-source">Invest Like the Best &middot; Patrick O&rsquo;Shaughnessy</div>
-                    </div>
-                </a>
-
-                <a href="https://www.youtube.com/watch?v=11qoxsoeM3s" target="_blank" class="fft-card">
-                    <div class="fft-card-image">
-                        <img src="https://img.youtube.com/vi/11qoxsoeM3s/mqdefault.jpg" alt="Becky Quick on Buffett">
-                    </div>
-                    <div class="fft-card-body">
-                        <div class="fft-card-meta">
-                            <span class="fft-card-type">Video</span>
-                        </div>
-                        <div class="fft-card-title">I&rsquo;ve Interviewed Buffett More Than Anyone &mdash; Here&rsquo;s What I Learnt | Becky Quick</div>
-                        <ul class="fft-card-takeaways">
-                            <li>1/ Both Charlie Munger and Warren Buffett advised never betting against Elon Musk + doing so is an incredibly risky proposition</li>
-                            <li>2/ The current AI infrastructure buildout resembles the late 1990s dot-com boom + hardware spending could face sudden consolidation</li>
-                            <li>3/ Buffett and Munger achieve success by remaining completely patient and mastering the discipline of doing nothing during market irrationality</li>
-                            <li>4/ Buffett was tracking distracted driver statistics through insurance filings long before smartphones were mainstream + the mark of a disciplined mathematician</li>
-                        </ul>
-                        <div class="fft-card-source">YouTube &middot; CNBC</div>
                     </div>
                 </a>
 
@@ -575,9 +520,9 @@
                     </div>
                     <div class="fft-card-body">
                         <div class="fft-card-meta">
-                            <span class="fft-card-type">Video</span>
+                            <span class="fft-card-type">Nov 2025</span>
                         </div>
-                        <div class="fft-card-title">Ilya Sutskever &mdash; From the Age of Scaling to the Age of Research</div>
+                        <div class="fft-card-title">Ilya Sutskever: From the Age of Scaling to the Age of Research</div>
                         <ul class="fft-card-takeaways">
                             <li>The era where scaling (adding compute and data) was the primary driver of progress is concluding as pre-training data becomes finite; breakthroughs now depend on novel algorithmic ideas</li>
                             <li>AI models ace difficult benchmarks but fail basic real-world logic (e.g., oscillating between bugs in code), highlighting a deficit in reliable generalization vs. humans</li>
@@ -594,7 +539,7 @@
                     </div>
                     <div class="fft-card-body">
                         <div class="fft-card-meta">
-                            <span class="fft-card-type">Video</span>
+                            <span class="fft-card-type">Jun 2025</span>
                         </div>
                         <div class="fft-card-title">Sir Demis Hassabis on The Future of Knowledge</div>
                         <ul class="fft-card-takeaways">
@@ -614,7 +559,7 @@
                     </div>
                     <div class="fft-card-body">
                         <div class="fft-card-meta">
-                            <span class="fft-card-type">Video</span>
+                            <span class="fft-card-type">Jul 2025</span>
                         </div>
                         <div class="fft-card-title">Fei-Fei Li: Spatial Intelligence is the Next Frontier in AI</div>
                         <ul class="fft-card-takeaways">
@@ -634,7 +579,7 @@
                     </div>
                     <div class="fft-card-body">
                         <div class="fft-card-meta">
-                            <span class="fft-card-type">Video</span>
+                            <span class="fft-card-type">Jan 2026</span>
                         </div>
                         <div class="fft-card-title">Why Context Graphs Are the Missing Layer for AI</div>
                         <ul class="fft-card-takeaways">
@@ -654,9 +599,9 @@
                     </div>
                     <div class="fft-card-body">
                         <div class="fft-card-meta">
-                            <span class="fft-card-type">Video</span>
+                            <span class="fft-card-type">Apr 2026</span>
                         </div>
-                        <div class="fft-card-title">The History and Future of AI at Google &mdash; Sundar Pichai</div>
+                        <div class="fft-card-title">The History and Future of AI at Google: Sundar Pichai</div>
                         <ul class="fft-card-takeaways">
                             <li>1/ Transformers weren&rsquo;t invented in a research vacuum + they were driven by practical product needs to scale global translation on TPUs</li>
                             <li>2/ Search will evolve into an &ldquo;agent manager,&rdquo; shifting from text retrieval to autonomous long-running task execution</li>
@@ -674,9 +619,9 @@
                     </div>
                     <div class="fft-card-body">
                         <div class="fft-card-meta">
-                            <span class="fft-card-type">Video</span>
+                            <span class="fft-card-type">Apr 2026</span>
                         </div>
-                        <div class="fft-card-title">The Supply and Demand of AI Tokens &mdash; Dylan Patel</div>
+                        <div class="fft-card-title">The Supply and Demand of AI Tokens: Dylan Patel</div>
                         <ul class="fft-card-takeaways">
                             <li>1/ Ideas and implementation are now incredibly cheap + only the absolute best can stand out above the AI slop</li>
                             <li>2/ Advanced frontier model capabilities will increasingly be gatekept for elite customers capable of spending billions on dedicated clusters</li>
@@ -693,9 +638,9 @@
                     </div>
                     <div class="fft-card-body">
                         <div class="fft-card-meta">
-                            <span class="fft-card-type">Video</span>
+                            <span class="fft-card-type">Dec 2025</span>
                         </div>
-                        <div class="fft-card-title">The Future of Intelligence &mdash; Demis Hassabis</div>
+                        <div class="fft-card-title">The Future of Intelligence: Demis Hassabis</div>
                         <ul class="fft-card-takeaways">
                             <li>1/ The center of AI gravity has shifted from static language models to agentic AI systems capable of setting and achieving long-term goals</li>
                             <li>2/ A critical hurdle to AGI is overcoming &ldquo;jagged intelligence&rdquo; + AI that performs PhD-level math but fails basic high school logic</li>
@@ -713,9 +658,9 @@
                     </div>
                     <div class="fft-card-body">
                         <div class="fft-card-meta">
-                            <span class="fft-card-type">Video</span>
+                            <span class="fft-card-type">Apr 2026</span>
                         </div>
-                        <div class="fft-card-title">Three Quarters of the Way to AGI &mdash; Demis Hassabis</div>
+                        <div class="fft-card-title">Three Quarters of the Way to AGI: Demis Hassabis</div>
                         <ul class="fft-card-takeaways">
                             <li>1/ AlphaFold&rsquo;s success proves AI can solve &ldquo;root node&rdquo; problems to unlock massive downstream scientific breakthroughs</li>
                             <li>2/ AGI development is approximately 75% complete + DeepMind maintains its original predicted timeline of 2030</li>
@@ -732,9 +677,9 @@
                     </div>
                     <div class="fft-card-body">
                         <div class="fft-card-meta">
-                            <span class="fft-card-type">Video</span>
+                            <span class="fft-card-type">Jun 2026</span>
                         </div>
-                        <div class="fft-card-title">How AI Agents Will Transform the Workplace &mdash; Sridhar Ramaswami (Snowflake)</div>
+                        <div class="fft-card-title">How AI Agents Will Transform the Workplace: Sridhar Ramaswami (Snowflake)</div>
                         <ul class="fft-card-takeaways">
                             <li>1/ Snowflake&rsquo;s consumption-based model charges enterprise clients only for the precise computational queries they run + aligning economic value with actual usage</li>
                             <li>2/ Advanced coding agents are the primary competitive threat to traditional software + the new front door to computing</li>
@@ -751,7 +696,7 @@
                     </div>
                     <div class="fft-card-body">
                         <div class="fft-card-meta">
-                            <span class="fft-card-type">Video</span>
+                            <span class="fft-card-type">Feb 2026</span>
                         </div>
                         <div class="fft-card-title">Ben Thompson (Stratechery) on AI Ads, the End of SaaS, and the Future of Media</div>
                         <ul class="fft-card-takeaways">
@@ -770,9 +715,9 @@
                     </div>
                     <div class="fft-card-body">
                         <div class="fft-card-meta">
-                            <span class="fft-card-type">Video</span>
+                            <span class="fft-card-type">Jan 2026</span>
                         </div>
-                        <div class="fft-card-title">Demis Hassabis &amp; Dario Amodei &mdash; The Day After AGI (Davos 2026)</div>
+                        <div class="fft-card-title">Demis Hassabis &amp; Dario Amodei: The Day After AGI (Davos 2026)</div>
                         <ul class="fft-card-takeaways">
                             <li>AI may fully automate software engineering within 6&ndash;12 months + models could handle the entirety of what SWEs do end-to-end</li>
                             <li>Once AI can write code and conduct AI research, it will dramatically accelerate next-generation models + closing the loop triggers exponential progress</li>
@@ -789,9 +734,9 @@
                     </div>
                     <div class="fft-card-body">
                         <div class="fft-card-meta">
-                            <span class="fft-card-type">Video</span>
+                            <span class="fft-card-type">Jan 2026</span>
                         </div>
-                        <div class="fft-card-title">Gokul Rajaram &mdash; Lessons from Investing in 700 Companies</div>
+                        <div class="fft-card-title">Gokul Rajaram: Lessons from Investing in 700 Companies</div>
                         <ul class="fft-card-takeaways">
                             <li>Human judgment is the most future-proof skill + with AI generating massive output, humans must determine what actually matters</li>
                             <li>AI startups must own a scarce asset or control point to survive + proprietary data, financial movement, or hardware</li>
@@ -808,9 +753,9 @@
                     </div>
                     <div class="fft-card-body">
                         <div class="fft-card-meta">
-                            <span class="fft-card-type">Video</span>
+                            <span class="fft-card-type">Sep 2024</span>
                         </div>
-                        <div class="fft-card-title">Venky Ganesan (Menlo Ventures) &mdash; Inside Silicon Valley&rsquo;s AI Gold Rush</div>
+                        <div class="fft-card-title">Venky Ganesan (Menlo Ventures): Inside Silicon Valley&rsquo;s AI Gold Rush</div>
                         <ul class="fft-card-takeaways">
                             <li>AI is the biggest platform shift of our lifetime + bigger than the internet, and the value will eventually move to the application layer</li>
                             <li>Infrastructure is overvalued, applications are undervalued + too much capital going to AI infra, leaving apps as the opportunity</li>
@@ -827,9 +772,9 @@
                     </div>
                     <div class="fft-card-body">
                         <div class="fft-card-meta">
-                            <span class="fft-card-type">Video</span>
+                            <span class="fft-card-type">Jan 2026</span>
                         </div>
-                        <div class="fft-card-title">Bret Taylor &mdash; Is AI Killing Software?</div>
+                        <div class="fft-card-title">Bret Taylor: Is AI Killing Software?</div>
                         <ul class="fft-card-takeaways">
                             <li>&ldquo;Vibe coding&rdquo; will become the standard expectation + the idea that your software is something you can change yourself will be something we expect</li>
                             <li>Software form factors will shift from browsers and forms to autonomous agents operating against databases</li>
@@ -846,9 +791,9 @@
                     </div>
                     <div class="fft-card-body">
                         <div class="fft-card-meta">
-                            <span class="fft-card-type">Video</span>
+                            <span class="fft-card-type">Oct 2024</span>
                         </div>
-                        <div class="fft-card-title">Sridhar Ramaswamy (Snowflake) &mdash; Data&rsquo;s Role in the AI Era</div>
+                        <div class="fft-card-title">Sridhar Ramaswamy (Snowflake): Data&rsquo;s Role in the AI Era</div>
                         <ul class="fft-card-takeaways">
                             <li>Enterprise AI demands a single source of truth + built on security, auditability, and trust; customer data is never used to train external models</li>
                             <li>AI delivers extreme accelerations + software engineering projects that took four weeks now take forty minutes (100x speedup)</li>
@@ -865,7 +810,7 @@
             <!-- ===== MACRO ===== -->
             <div class="fft-category">
                 <button class="fft-category-toggle" onclick="this.parentElement.classList.toggle('open')">
-                    <span><h3 class="fft-category-title">Macro<span class="fft-category-count">4 videos</span></h3></span>
+                    <span><h3 class="fft-category-title">Macro<span class="fft-category-count">5 videos</span></h3></span>
                     <svg class="fft-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
                 </button>
                 <div class="fft-category-content"><div class="fft-category-inner">
@@ -876,9 +821,9 @@
                     </div>
                     <div class="fft-card-body">
                         <div class="fft-card-meta">
-                            <span class="fft-card-type">Video</span>
+                            <span class="fft-card-type">Mar 2026</span>
                         </div>
-                        <div class="fft-card-title">A War of Attrition &mdash; Missiles, Oil, and Global Power | The Loonie Hour</div>
+                        <div class="fft-card-title">A War of Attrition: Missiles, Oil, and Global Power | The Loonie Hour</div>
                         <ul class="fft-card-takeaways">
                             <li>Oil and gas are the new foundation of US military strength</li>
                             <li>The current Middle East conflict is a war of attrition and depletion of US military inventories + the US is dangerously short on air defense missiles</li>
@@ -895,7 +840,7 @@
                     </div>
                     <div class="fft-card-body">
                         <div class="fft-card-meta">
-                            <span class="fft-card-type">Video</span>
+                            <span class="fft-card-type">Jan 2026</span>
                         </div>
                         <div class="fft-card-title">Future Forward: What India&rsquo;s Economy Looks Like in 2026 | Open Dialogue</div>
                         <ul class="fft-card-takeaways">
@@ -913,7 +858,7 @@
                     </div>
                     <div class="fft-card-body">
                         <div class="fft-card-meta">
-                            <span class="fft-card-type">Video</span>
+                            <span class="fft-card-type">Dec 2025</span>
                         </div>
                         <div class="fft-card-title">Russell Napier on The Solid Ground, Anatomy of a Bear</div>
                         <ul class="fft-card-takeaways">
@@ -932,7 +877,7 @@
                     </div>
                     <div class="fft-card-body">
                         <div class="fft-card-meta">
-                            <span class="fft-card-type">Video</span>
+                            <span class="fft-card-type">Mar 2026</span>
                         </div>
                         <div class="fft-card-title">WW3, Energy, Markets &amp; Politics with Doomberg</div>
                         <ul class="fft-card-takeaways">
@@ -942,6 +887,26 @@
                             <li>Redeploying US defenses (Patriot and THAAD) from South Korea to the Middle East leaves Asian allies vulnerable to aggressive moves by North Korea and China</li>
                         </ul>
                         <div class="fft-card-source">YouTube &middot; Doomberg</div>
+                    </div>
+                </a>
+
+                <a href="https://www.youtube.com/watch?v=K8Ix8TYI8mI" target="_blank" class="fft-card">
+                    <div class="fft-card-image">
+                        <img src="https://img.youtube.com/vi/K8Ix8TYI8mI/mqdefault.jpg" alt="Doomberg Energy vs Everything">
+                    </div>
+                    <div class="fft-card-body">
+                        <div class="fft-card-meta">
+                            <span class="fft-card-type">May 2026</span>
+                        </div>
+                        <div class="fft-card-title">Energy vs Everything: Doomberg</div>
+                        <ul class="fft-card-takeaways">
+                            <li>1/ The luxuries of modern life have completely dislocated the user from the producer + society believes energy comes from the switch on the wall</li>
+                            <li>2/ All fiat currencies evolve to zero, including the dollar; earn in fiat, save in hard real assets</li>
+                            <li>3/ Gold is structurally fixed + the price trend from $40 to $5,000 per ounce maps the progressive weakening of paper fiat</li>
+                            <li>4/ Five-nines grid reliability requires baseload + dispatchable + flexible mix + renewables alone cannot deliver it</li>
+                            <li>5/ Civilization is permanently organizing around infinite compute + tech companies will demand immense energy and sweep aside prior environmental regulations</li>
+                        </ul>
+                        <div class="fft-card-source">YouTube &middot; Peter Boghossian</div>
                     </div>
                 </a>
 
@@ -962,20 +927,22 @@
             <!-- ===== GENERAL ===== -->
             <div class="fft-category">
                 <button class="fft-category-toggle" onclick="this.parentElement.classList.toggle('open')">
-                    <span><h3 class="fft-category-title">General<span class="fft-category-count">coming soon</span></h3></span>
+                    <span><h3 class="fft-category-title">General<span class="fft-category-count">1 video</span></h3></span>
                     <svg class="fft-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
                 </button>
                 <div class="fft-category-content"><div class="fft-category-inner">
-                <p class="fft-coming-soon">Content coming soon.</p>
-                </div></div>
-            </div>
 
-        </div>
-    </section>
-
-    <!-- Shared Footer -->
-    <footer id="shared-footer"></footer>
-
-    <script src="../components/nav-footer.js"></script>
-</body>
-</html>
+                <a href="https://www.youtube.com/watch?v=11qoxsoeM3s" target="_blank" class="fft-card">
+                    <div class="fft-card-image">
+                        <img src="https://img.youtube.com/vi/11qoxsoeM3s/mqdefault.jpg" alt="Becky Quick on Buffett">
+                    </div>
+                    <div class="fft-card-body">
+                        <div class="fft-card-meta">
+                            <span class="fft-card-type">Jun 2026</span>
+                        </div>
+                        <div class="fft-card-title">I&rsquo;ve Interviewed Buffett More Than Anyone: Here&rsquo;s What I Learnt | Becky Quick</div>
+                        <ul class="fft-card-takeaways">
+                            <li>1/ Both Charlie Munger and Warren Buffett advised never betting against Elon Musk + doing so is an incredibly risky proposition</li>
+                            <li>2/ The current AI infrastructure buildout resembles the late 1990s dot-com boom + hardware spending could face sudden consolidation</li>
+                            <li>3/ Buffett and Munger achieve success by remaining completely patient and mastering the discipline of doing nothing during market irrationality</li>
+         
