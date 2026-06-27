@@ -217,25 +217,83 @@
             }
         }
 
-        /* Mobile: 1 column, cap bullets at 3 */
+        /* Mobile: 2-column thumbnail grid + tap-to-expand */
+
+        /* YouTube link: hidden on desktop (card click goes there directly) */
+        .fft-yt-link {
+            display: none;
+        }
+
         @media (max-width: 600px) {
+            /* ── 2-column grid ── */
             .fft-category-inner {
-                grid-template-columns: 1fr;
-                gap: 1rem;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.625rem;
             }
+
+            /* ── Compact card in grid: thumbnail + title only ── */
             .fft-card-image {
-                height: 190px;
+                height: auto;
+                aspect-ratio: 16 / 9;
+            }
+            .fft-card-body {
+                padding: 0.5rem 0.625rem 0.625rem;
+            }
+            .fft-card-meta {
+                font-size: 10px;
+                margin-bottom: 0.15rem;
             }
             .fft-card-title {
-                font-size: 14px;
+                font-size: 11px;
+                line-height: 1.3;
+                margin-bottom: 0;
             }
             .fft-card-takeaways {
-                font-size: 12px;
+                display: none;
+                font-size: 12.5px;
                 line-height: 1.5;
             }
-            /* Show only first 3 bullets on mobile — no hover to reveal on touch */
-            .fft-card-takeaways li:nth-child(n+4) {
+            .fft-card-source {
                 display: none;
+            }
+
+            /* ── Expanded card: full width, bullets visible ── */
+            .fft-card.mob-expanded {
+                grid-column: 1 / -1;
+                border-color: #333333;
+            }
+            .fft-card.mob-expanded .fft-card-image {
+                aspect-ratio: 16 / 9;
+            }
+            .fft-card.mob-expanded .fft-card-body {
+                padding: 0.875rem 1rem;
+            }
+            .fft-card.mob-expanded .fft-card-meta {
+                font-size: 12px;
+                margin-bottom: 0.35rem;
+            }
+            .fft-card.mob-expanded .fft-card-title {
+                font-size: 15px;
+                line-height: 1.35;
+                margin-bottom: 0.5rem;
+            }
+            .fft-card.mob-expanded .fft-card-takeaways {
+                display: block;
+            }
+            .fft-card.mob-expanded .fft-card-source {
+                display: block;
+            }
+            /* YouTube link only visible when expanded */
+            .fft-card.mob-expanded .fft-yt-link {
+                display: inline-block;
+                margin-top: 0.875rem;
+                padding: 0.35rem 0.75rem;
+                border: 1px solid #1a73e8;
+                border-radius: 4px;
+                color: #1a73e8;
+                font-size: 13px;
+                font-weight: 500;
+                text-decoration: none;
             }
         }
     </style>
@@ -994,6 +1052,52 @@
                 categories.forEach(function (cat) { obs.observe(cat); });
             }
         })();
+    </script>
+
+    <script>
+    /* ── Mobile: tap-to-expand cards ── */
+    (function () {
+        /* Build YouTube links for all cards and insert into DOM (hidden on desktop via CSS) */
+        document.querySelectorAll('.fft-card').forEach(function (card) {
+            var ytUrl = card.getAttribute('href');
+            if (!ytUrl) return;
+            var link = document.createElement('a');
+            link.className = 'fft-yt-link';
+            link.href = ytUrl;
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            link.textContent = 'Watch on YouTube ↗';
+            /* Stop propagation so this click doesn't reach the card expand handler */
+            link.addEventListener('click', function (e) { e.stopPropagation(); });
+            var body = card.querySelector('.fft-card-body');
+            if (body) body.appendChild(link);
+        });
+
+        /* Only wire up expand behavior on mobile */
+        if (!window.matchMedia('(max-width: 600px)').matches) { return; }
+
+        document.querySelectorAll('.fft-card').forEach(function (card) {
+            card.addEventListener('click', function (e) {
+                e.preventDefault(); /* block card's own href navigation on mobile */
+                var wasExpanded = card.classList.contains('mob-expanded');
+                /* Collapse all cards in this grid */
+                var grid = card.closest('.fft-category-inner');
+                if (grid) {
+                    grid.querySelectorAll('.fft-card.mob-expanded').forEach(function (c) {
+                        c.classList.remove('mob-expanded');
+                    });
+                }
+                /* Expand this one if it wasn't already open */
+                if (!wasExpanded) {
+                    card.classList.add('mob-expanded');
+                    /* Scroll card into view after reflow */
+                    setTimeout(function () {
+                        card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    }, 60);
+                }
+            });
+        });
+    })();
     </script>
 </body>
 </html>

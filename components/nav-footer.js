@@ -59,6 +59,20 @@
         }
     }
 
+    // Inject mobile nav strip (hidden on desktop via CSS)
+    const strip = document.createElement('div');
+    strip.className = 'nav-strip';
+    strip.innerHTML = `
+        <div class="nav-strip-inner">
+            <a href="${prefix}index.html" class="nav-pill"><span class="nav-pill-dot"></span>Home</a>
+            <a href="${prefix}ai-experiments.html" class="nav-pill"><span class="nav-pill-dot"></span>AI Experiments</a>
+            <a href="${prefix}pages/food-for-thought.html" class="nav-pill"><span class="nav-pill-dot"></span>Reading/Watching List</a>
+            <a href="${prefix}pages/writing.html" class="nav-pill"><span class="nav-pill-dot"></span>Writing</a>
+            <a href="${prefix}pages/portfolio.html" class="nav-pill"><span class="nav-pill-dot"></span>Portfolio</a>
+            <a href="${prefix}pages/documents.html" class="nav-pill"><span class="nav-pill-dot"></span>Vault</a>
+        </div>`;
+    nav.parentNode.insertBefore(strip, nav.nextSibling);
+
     // Inject footer
     const footer = document.getElementById('shared-footer');
     if (footer) {
