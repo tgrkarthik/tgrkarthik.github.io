@@ -256,7 +256,7 @@
 
             <!-- ===== INVESTING ===== -->
             <div class="fft-category">
-                <button class="fft-category-toggle" onclick="this.parentElement.classList.toggle('open')">
+                <button class="fft-category-toggle">
                     <span><h3 class="fft-category-title">Investing<span class="fft-category-count">12 videos</span></h3></span>
                     <svg class="fft-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
                 </button>
@@ -508,7 +508,7 @@
 
             <!-- ===== TECHNOLOGY + AI ===== -->
             <div class="fft-category">
-                <button class="fft-category-toggle" onclick="this.parentElement.classList.toggle('open')">
+                <button class="fft-category-toggle">
                     <span><h3 class="fft-category-title">Technology + AI<span class="fft-category-count">15 videos</span></h3></span>
                     <svg class="fft-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
                 </button>
@@ -809,7 +809,7 @@
 
             <!-- ===== MACRO ===== -->
             <div class="fft-category">
-                <button class="fft-category-toggle" onclick="this.parentElement.classList.toggle('open')">
+                <button class="fft-category-toggle">
                     <span><h3 class="fft-category-title">Macro<span class="fft-category-count">5 videos</span></h3></span>
                     <svg class="fft-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
                 </button>
@@ -915,7 +915,7 @@
 
             <!-- ===== PRODUCTIVITY ===== -->
             <div class="fft-category">
-                <button class="fft-category-toggle" onclick="this.parentElement.classList.toggle('open')">
+                <button class="fft-category-toggle">
                     <span><h3 class="fft-category-title">Productivity<span class="fft-category-count">coming soon</span></h3></span>
                     <svg class="fft-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
                 </button>
@@ -926,7 +926,7 @@
 
             <!-- ===== GENERAL ===== -->
             <div class="fft-category">
-                <button class="fft-category-toggle" onclick="this.parentElement.classList.toggle('open')">
+                <button class="fft-category-toggle">
                     <span><h3 class="fft-category-title">General<span class="fft-category-count">1 video</span></h3></span>
                     <svg class="fft-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
                 </button>
@@ -945,4 +945,55 @@
                             <li>1/ Both Charlie Munger and Warren Buffett advised never betting against Elon Musk + doing so is an incredibly risky proposition</li>
                             <li>2/ The current AI infrastructure buildout resembles the late 1990s dot-com boom + hardware spending could face sudden consolidation</li>
                             <li>3/ Buffett and Munger achieve success by remaining completely patient and mastering the discipline of doing nothing during market irrationality</li>
-         
+                                     <li>4/ Buffett was tracking distracted driver statistics through insurance filings long before smartphones were mainstream &mdash; the mark of a disciplined, long-horizon thinker</li>
+                        </ul>
+                        <div class="fft-card-source">YouTube &middot; CNBC</div>
+                    </div>
+                </a>
+
+                </div></div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Shared Footer -->
+    <footer id="shared-footer"></footer>
+
+    <script src="../components/nav-footer.js"></script>
+    <script>
+        (function () {
+            var categories = Array.prototype.slice.call(
+                document.querySelectorAll('.fft-category')
+            );
+
+            /* ── Click: one section open at a time ── */
+            categories.forEach(function (cat) {
+                var toggle = cat.querySelector('.fft-category-toggle');
+                if (!toggle) return;
+                toggle.addEventListener('click', function () {
+                    var isOpen = cat.classList.contains('open');
+                    // Close every section
+                    categories.forEach(function (c) { c.classList.remove('open'); });
+                    // If this one was closed, open it
+                    if (!isOpen) { cat.classList.add('open'); }
+                });
+            });
+
+            /* ── Scroll: auto-close a section once it is fully above the viewport ── */
+            if ('IntersectionObserver' in window) {
+                var obs = new IntersectionObserver(function (entries) {
+                    entries.forEach(function (entry) {
+                        // Section has scrolled completely off the top
+                        if (!entry.isIntersecting && entry.boundingClientRect.bottom < 0) {
+                            entry.target.classList.remove('open');
+                        }
+                    });
+                }, { threshold: 0 });
+
+                categories.forEach(function (cat) { obs.observe(cat); });
+            }
+        })();
+    </script>
+</body>
+</html>
