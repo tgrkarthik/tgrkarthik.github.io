@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Building ClaudeSync: A Telegram Remote for My Claude Workflows - Karthik Tiruvarur</title>
+    <title> A Telegram Remote for My Claude Workflows - ClaudeSync_ToPhone - Karthik Tiruvarur</title>
     <link rel="stylesheet" href="../styles.css">
     <style>
         .article-header { max-width: 1050px; margin: 3rem auto 2rem; padding: 0 2rem; }
@@ -82,7 +82,7 @@
 
     <div class="article-header">
         <a href="../ai-experiments.html" class="back-link">&larr; Back to AI Experiments</a>
-        <h1 class="article-title">Building ClaudeSync: A Telegram Remote for My Claude Workflows</h1>
+        <h1 class="article-title">A Telegram Remote for My Claude Workflows : ClaudeSync_ToPhone </h1>
         <div class="article-meta">
             <span>June 2026</span>
             <span>&bull;</span>
@@ -94,16 +94,16 @@
 
         <div class="article-tldr">
             <div class="article-tldr-label">TL;DR</div>
-            <p>I wanted to be able to run my Claude workflows from my phone &mdash; trigger them, respond to mid-run questions, and get results &mdash; without being at my computer. The solution wasn&rsquo;t a complex orchestration platform or a WhatsApp integration. It was a 300-line Python file, a Telegram bot, and a realisation that my <code>SKILL.md</code> files work fine outside of Cowork.</p>
+            <p>I'm sure we've all experienced that feeling when we stepped away from our computer, expecting Claude to have diligently run the workflow, only to come back to the disappointment to see it was stuck waiting on your input, a simple question that could have answered when you were away. <strong> I set out to setup Claude to run my Claude workflows from my phone </strong> : trigger them, respond to mid-run questions, and get results  without being at my computer. The solution, which I initially thought would be wasn&rsquo;t a complex orchestration platform, OpenClaw,Heremes or a WhatsApp integrationt turned out to be a much simpler 300-line Python file, a Telegram bot, and a realisation that my <code>SKILL.md</code> files work fine outside of Cowork/Claude Code.</p>
         </div>
 
-        <p>I have about a dozen Claude workflows I use regularly. The IR Scraper downloads investor relations documents from any public company&rsquo;s website. The SellSide Initiation pipeline writes equity research reports in six stages across multiple Claude API calls. The <code>compile-wiki-node</code> skill synthesises everything in my Obsidian vault about a company into a single compiled document. The <code>summarize-investor-conversation</code> skill turns voice transcripts of my investor meetings into structured notes.</p>
+        <p>I have several workflows I use regularly. For example an IR (investor relations') Scraper that downloads investor relations documents from any public company&rsquo;s website. A SellSide Initiation pipeline writes equity research reports in six stages across multiple Claude API calls. A <code>compile-wiki-node</code> skill synthesises everything in my Obsidian vault about a company into a single compiled wiki style note. A <code>summarize-investor-conversation</code> skill turns voice transcripts of my investor meetings into structured notes with explicit desing to extract themes, company names etc. The conversation summarization logic here would be different say from other summarizing other calls where I am speakig about travels, music, food or something entirely different.   </p>
 
         <p>All of these run in Cowork or Claude Code. Fine when I&rsquo;m at my desk. <strong>Not fine when I&rsquo;m traveling, in a meeting, or on my phone &mdash; and a workflow has paused mid-run waiting for me to answer a question.</strong></p>
 
         <h2>The Wall</h2>
 
-        <p>The immediate instinct was to intercept Cowork&rsquo;s question prompts and forward them to my phone. This doesn&rsquo;t work.</p>
+        <p>The immediate instinct was to intercept Cowork&rsquo;s question prompts and forward them to my phone.</p>
 
         <p>When Claude pauses in Cowork and asks a question, it renders a UI widget in the desktop app. There&rsquo;s no webhook, no notification event, no hook that fires to an external service. Cowork&rsquo;s interruptions are UI events, not API events. Claude Code has a notification hook system, but it fires one-way &mdash; the reply path (phone back to Claude Code, to resume the paused workflow) has no bridge.</p>
 
@@ -119,13 +119,13 @@
 
         <h2>Why Not WhatsApp</h2>
 
-        <p>The first plan involved Twilio&rsquo;s WhatsApp Business API. This turned out to be more friction than the actual problem. WhatsApp Business API requires Meta Business Verification &mdash; a formal approval process that takes 1&ndash;3 days and sometimes longer. You also need a dedicated phone number not already registered as a personal WhatsApp account. There are per-message fees on top.</p>
+        <p>The first plan Claude proposed involved Twilio&rsquo;s WhatsApp Business API. This turned out to be more friction than the actual problem. WhatsApp Business API requires Meta Business Verification &mdash; a formal approval process that takes 1&ndash;3 days and sometimes longer. You also need a dedicated phone number not already registered as a personal WhatsApp account. There are per-message fees on top.</p>
 
         <p>Telegram sidesteps all of it. Open @BotFather on Telegram, send <code>/newbot</code>, give it a name, get a token. <strong>Five minutes. Free. Fully bidirectional.</strong> The Python library &mdash; <code>python-telegram-bot</code> &mdash; is mature and async-native. I didn&rsquo;t need to think about infrastructure.</p>
 
-        <h2>Building ClaudeSync</h2>
+        <h2>Building remote access through my mobile</h2>
 
-        <p>The core is an agentic loop. The bot receives a Telegram message, calls the Claude API, handles whatever Claude wants to do &mdash; use a tool, ask a question, finish &mdash; and sends the result back. It&rsquo;s async throughout: the bot keeps polling for new messages while Claude works in the background.</p>
+        <p>Claude helped design an agentic loop. The bot receives a Telegram message, calls the Claude API, handles whatever Claude wants to do &mdash; use a tool, ask a question, finish &mdash; and sends the result back. It&rsquo;s async throughout: the bot keeps polling for new messages while Claude works in the background.</p>
 
         <p>Claude has five tools available in every workflow. <strong><code>ask_human</code></strong> pauses the workflow and sends me a Telegram message with a question; I reply, it resumes. <strong><code>run_command</code></strong> executes a shell command or Python script on my Windows machine, streaming progress updates every 20 seconds. <code>read_file</code>, <code>write_file</code>, and <code>list_files</code> give full file system access &mdash; vault notes, <code>SKILL.md</code> files, transcripts, output folders.</p>
 
@@ -139,7 +139,7 @@
 
         <p>A research query came back first time, no friction. The reply arrived in Telegram inside ten seconds.</p>
 
-        <p>The bot itself took one afternoon from first line to a working <code>/start</code> response. The friction was mostly token management &mdash; one revoked Telegram token, one <code>.env</code> formatting issue where the variable names were missing. The code wasn&rsquo;t the hard part.</p>
+        <p>Setting up the bot itself took 15 minutes from first line to a working <code>/start</code> response</p>
 
         <h2>What I Got Wrong First</h2>
 
@@ -147,7 +147,7 @@
 
         <p>The useful pushback was: &ldquo;Why 5 days? Should be simpler.&rdquo; It was. The working core is 300 lines. Telegram handles polling natively. The skill registry is a dictionary. The agentic loop is a while loop. <strong>The complexity I was front-loading was real but unnecessary until the basic thing worked.</strong></p>
 
-        <p>A pattern I keep running into with Claude-assisted builds: the first draft of a plan tends to anticipate every edge case before the base case is proven. Better to have a working 20-line thing and add to it than to design the 200-line version that breaks in a different place.</p>
+
 
         <h2>What&rsquo;s Not Done Yet</h2>
 
