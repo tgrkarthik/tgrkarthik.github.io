@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" data-depth="1">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building ClaudeSync: A Telegram Remote for My Claude Workflows - Karthik Tiruvarur</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .article-header { max-width: 1050px; margin: 3rem auto 2rem; padding: 0 2rem; }
+        .article-title { font-size: 36px; font-weight: 600; margin-bottom: 1rem; line-height: 1.2; }
+        .article-meta { display: flex; gap: 1rem; align-items: center; font-size: 14px; color: #666666; margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid #e0e0e0; }
+        .article-body { max-width: 1050px; margin: 0 auto; padding: 0 2rem; line-height: 1.8; }
+        .article-body p { margin-bottom: 1.5rem; font-size: 16px; color: #666666; }
+        .article-body h2 { font-size: 24px; margin-top: 3rem; margin-bottom: 1.5rem; color: #000000; }
+        .article-body h3 { font-size: 18px; margin-top: 2rem; margin-bottom: 1rem; color: #000000; }
+        .article-body strong { font-weight: 600; color: #000000; }
+        .article-body em { font-style: italic; }
+        .article-body code { background: #f5f5f5; padding: 1px 6px; border-radius: 3px; font-size: 13px; color: #000000; }
+        .article-footer { max-width: 1050px; margin: 3rem auto 0; padding: 2rem 2rem; background: #f5f5f5; text-align: center; }
+        .back-link { display: inline-block; margin-bottom: 2rem; font-size: 14px; color: #666666; }
+        .back-link:hover { color: #000000; }
+
+        /* TLDR box */
+        .article-tldr {
+            background: #fdf6ec;
+            border-left: 3px solid #8b4513;
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 2rem;
+            border-radius: 0 4px 4px 0;
+        }
+        .article-tldr-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #8b4513;
+            margin-bottom: 0.5rem;
+        }
+        .article-tldr p {
+            font-size: 15px;
+            color: #555555;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        /* Footnote references inline */
+        .footnote-ref {
+            font-size: 12px;
+            vertical-align: super;
+            line-height: 0;
+            color: #000000;
+            border-bottom: 1px dotted #666666;
+            padding: 0 2px;
+        }
+        .footnote-ref:hover { opacity: 0.7; }
+
+        /* Footnotes section */
+        .footnotes {
+            max-width: 1050px;
+            margin: 2rem auto;
+            padding: 1.5rem 2rem;
+            border-top: 1px solid #e0e0e0;
+        }
+        .footnotes p {
+            font-size: 13px;
+            color: #666666;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        .footnotes a {
+            color: #666666;
+            border-bottom: 1px dotted #e0e0e0;
+        }
+        .footnotes a:hover { color: #000000; }
+
+        @media (max-width: 768px) { .article-title { font-size: 24px; } .article-body p { font-size: 13px; } }
+        @media (max-width: 480px) { .article-title { font-size: 20px; } .article-body p { font-size: 12px; } .article-footer { padding: 1.25rem 1rem; } }
+    </style>
+</head>
+<body>
+    <nav id="shared-nav"></nav>
+
+    <div class="article-header">
+        <a href="../ai-experiments.html" class="back-link">&larr; Back to AI Experiments</a>
+        <h1 class="article-title">Building ClaudeSync: A Telegram Remote for My Claude Workflows</h1>
+        <div class="article-meta">
+            <span>June 2026</span>
+            <span>&bull;</span>
+            <span>Automation &amp; Infrastructure</span>
+        </div>
+    </div>
+
+    <article class="article-body">
+
+        <div class="article-tldr">
+            <div class="article-tldr-label">TL;DR</div>
+            <p>I wanted to be able to run my Claude workflows from my phone &mdash; trigger them, respond to mid-run questions, and get results &mdash; without being at my computer. The solution wasn&rsquo;t a complex orchestration platform or a WhatsApp integration. It was a 300-line Python file, a Telegram bot, and a realisation that my <code>SKILL.md</code> files work fine outside of Cowork.</p>
+        </div>
+
+        <p>I have about a dozen Claude workflows I use regularly. The IR Scraper downloads investor relations documents from any public company&rsquo;s website. The SellSide Initiation pipeline writes equity research reports in six stages across multiple Claude API calls. The <code>compile-wiki-node</code> skill synthesises everything in my Obsidian vault about a company into a single compiled document. The <code>summarize-investor-conversation</code> skill turns voice transcripts of my investor meetings into structured notes.</p>
+
+        <p>All of these run in Cowork or Claude Code. Fine when I&rsquo;m at my desk. <strong>Not fine when I&rsquo;m traveling, in a meeting, or on my phone &mdash; and a workflow has paused mid-run waiting for me to answer a question.</strong></p>
+
+        <h2>The Wall</h2>
+
+        <p>The immediate instinct was to intercept Cowork&rsquo;s question prompts and forward them to my phone. This doesn&rsquo;t work.</p>
+
+        <p>When Claude pauses in Cowork and asks a question, it renders a UI widget in the desktop app. There&rsquo;s no webhook, no notification event, no hook that fires to an external service. Cowork&rsquo;s interruptions are UI events, not API events. Claude Code has a notification hook system, but it fires one-way &mdash; the reply path (phone back to Claude Code, to resume the paused workflow) has no bridge.</p>
+
+        <p>The wall isn&rsquo;t obvious until you look directly at it.</p>
+
+        <h2>The Reframe</h2>
+
+        <p>The thing I hadn&rsquo;t seen clearly: <strong>my <code>SKILL.md</code> files are prompts, and prompts are portable</strong>. Cowork is one runner &mdash; a desktop UI that reads a prompt and executes it. A Python script calling the Claude API directly is another runner. If you control the runner, you control the I/O channel.</p>
+
+        <p>Instead of trying to intercept Cowork, I could have Claude build a different runner entirely &mdash; one that uses Telegram as the terminal. The same <code>SKILL.md</code> content that tells Claude how to compile a wiki node or run a SellSide analysis works identically when passed as a system prompt to the Claude API from a Python script. The intelligence is in the file. The UI is interchangeable.</p>
+
+        <p>This reframe collapsed the problem. I didn&rsquo;t need to bridge Cowork to my phone. I needed a runner that natively used my phone as its I/O.</p>
+
+        <h2>Why Not WhatsApp</h2>
+
+        <p>The first plan involved Twilio&rsquo;s WhatsApp Business API. This turned out to be more friction than the actual problem. WhatsApp Business API requires Meta Business Verification &mdash; a formal approval process that takes 1&ndash;3 days and sometimes longer. You also need a dedicated phone number not already registered as a personal WhatsApp account. There are per-message fees on top.</p>
+
+        <p>Telegram sidesteps all of it. Open @BotFather on Telegram, send <code>/newbot</code>, give it a name, get a token. <strong>Five minutes. Free. Fully bidirectional.</strong> The Python library &mdash; <code>python-telegram-bot</code> &mdash; is mature and async-native. I didn&rsquo;t need to think about infrastructure.</p>
+
+        <h2>Building ClaudeSync</h2>
+
+        <p>The core is an agentic loop. The bot receives a Telegram message, calls the Claude API, handles whatever Claude wants to do &mdash; use a tool, ask a question, finish &mdash; and sends the result back. It&rsquo;s async throughout: the bot keeps polling for new messages while Claude works in the background.</p>
+
+        <p>Claude has five tools available in every workflow. <strong><code>ask_human</code></strong> pauses the workflow and sends me a Telegram message with a question; I reply, it resumes. <strong><code>run_command</code></strong> executes a shell command or Python script on my Windows machine, streaming progress updates every 20 seconds. <code>read_file</code>, <code>write_file</code>, and <code>list_files</code> give full file system access &mdash; vault notes, <code>SKILL.md</code> files, transcripts, output folders.</p>
+
+        <p>The bot also has a skill registry: a Python dictionary mapping skill names to their <code>SKILL.md</code> paths. When I send <code>/run compile-wiki-node</code>, the bot reads the <code>SKILL.md</code>, passes it as Claude&rsquo;s system prompt, and starts the workflow. <strong>Seven skills are registered</strong>: <code>compile-wiki-node</code>, <code>summarize-investor-conversation</code>, SellSide Initiation, <code>conversation-ideas-extract</code>, <code>capture-topic</code>, <code>voice-dna</code>, and the IR Scraper. The last one is different &mdash; instead of running as a Claude conversation, it executes <code>run.py</code> as a subprocess via <code>run_command</code> and streams the output back to Telegram.<a href="#fn1" class="footnote-ref"><sup>1</sup></a></p>
+
+        <h2>The Approval Gate in Practice</h2>
+
+        <p>The part I was most keen to test: Claude pausing mid-workflow and asking me a question on my phone, then resuming when I reply.</p>
+
+        <p>The first live test was <code>/scrape SNOW</code> &mdash; the IR Scraper for Snowflake. Claude sent three questions before running: document types, date range, output path. I replied to question 2 with &ldquo;5 years&rdquo; from my phone, and the bot sent back: &ldquo;&#9654;&#65039; Continuing&hellip;&rdquo; Claude resumed with my answer and kept going. The pause-reply-resume pattern worked exactly as intended.</p>
+
+        <p>A research query came back first time, no friction. The reply arrived in Telegram inside ten seconds.</p>
+
+        <p>The bot itself took one afternoon from first line to a working <code>/start</code> response. The friction was mostly token management &mdash; one revoked Telegram token, one <code>.env</code> formatting issue where the variable names were missing. The code wasn&rsquo;t the hard part.</p>
+
+        <h2>What I Got Wrong First</h2>
+
+        <p>My initial plan was a five-day outline covering Twilio, async job queues, iOS Shortcuts, approval gate state machines, and Railway deployment. All of it real &mdash; but all of it week-two thinking laid out as day-one requirements.</p>
+
+        <p>The useful pushback was: &ldquo;Why 5 days? Should be simpler.&rdquo; It was. The working core is 300 lines. Telegram handles polling natively. The skill registry is a dictionary. The agentic loop is a while loop. <strong>The complexity I was front-loading was real but unnecessary until the basic thing worked.</strong></p>
+
+        <p>A pattern I keep running into with Claude-assisted builds: the first draft of a plan tends to anticipate every edge case before the base case is proven. Better to have a working 20-line thing and add to it than to design the 200-line version that breaks in a different place.</p>
+
+        <h2>What&rsquo;s Not Done Yet</h2>
+
+        <p>The <code>/research</code> command uses Claude&rsquo;s training knowledge, not live search. That&rsquo;s the next tool to add &mdash; a <code>web_search</code> wrapper so research queries actually fetch rather than recall. The daily briefing command has the same gap.</p>
+
+        <p>The bot runs on my Windows machine, which means it only works when the machine is on. Getting <code>/briefing</code> to arrive at 7am regardless of whether I&rsquo;m at my desk requires a deploy to somewhere always-on &mdash; either a Cloudflare Tunnel keeping the machine reachable, or a cheap cloud instance at around $5/month on Railway.</p>
+
+        <p>SellSide Initiation via phone is the real test. Six stages, multiple model switches, Quartr API calls, document output. Running that end-to-end through Telegram &mdash; with approval gates at the right decision points &mdash; is the next experiment. ClaudeSync works now for research queries and simple skill invocations. Whether the approval gate holds up across a full SellSide run &mdash; that&rsquo;s what I don&rsquo;t know yet.</p>
+
+    </article>
+
+    <div class="footnotes">
+        <p id="fn1"><sup>1</sup> The two-tier skill registry &mdash; LLM skills that run as Claude conversations, script skills that run as subprocesses &mdash; turned out to be the right design split. LLM skills need the conversation loop to handle tool calls and multi-turn reasoning. Script skills like the IR Scraper have their own execution engine; Claude&rsquo;s role there is just parameter collection via <code>ask_human</code>, then handing off to the subprocess.</p>
+    </div>
+
+    <div class="article-footer">
+        <p style="margin-bottom: 1.5rem;">Want more stories about building with AI?</p>
+        <div class="social-links" style="justify-content: center;">
+            <a href="../ai-experiments.html" class="btn btn-primary">Back to Experiments</a>
+            <a href="https://tgrkarthik.substack.com/" target="_blank" class="btn btn-secondary">Subscribe</a>
+        </div>
+    </div>
+
+    <footer id="shared-footer"></footer>
+
+    <script src="../components/nav-footer.js"></script>
+</body>
+</html>
