@@ -7,25 +7,61 @@ REM ============================================================
 
 setlocal enabledelayedexpansion
 
-cd /d "%~dp0"
+REM Log file for debugging
+set logfile=%~dp0push-log.txt
 
-echo.
-echo === Current status ===
+echo. >> %logfile%
+echo ===== PUSH ATTEMPT at %date% %time% ===== >> %logfile%
+
+cd /d "%~dp0" || (
+    echo ERROR: Could not change directory to %~dp0 >> %logfile%
+    pause
+    exit /b 1
+)
+
+echo Current directory: %cd% >> %logfile%
+echo Current directory: %cd%
+
+echo. >> %logfile%
+echo === Git Status === >> %logfile%
+git status >> %logfile% 2>&1
 git status
-echo.
 
+echo.
 set /p msg="Enter commit message: "
 
+echo. >> %logfile%
+echo === Adding files === >> %logfile%
+git add -A >> %logfile% 2>&1
+
+echo === Committing === >> %logfile%
+git commit -m "%msg%" >> %logfile% 2>&1
+
+if errorlevel 1 (
+    echo WARNING: Commit may have failed. Check push-log.txt >> %logfile%
+    echo.
+    echo WARNING: Commit may have failed (possibly no changes to commit)
+    echo Check %logfile% for details
+    echo.
+)
+
+echo === Pushing to origin main === >> %logfile%
+git push origin main >> %logfile% 2>&1
+
+if errorlevel 1 (
+    echo ERROR: Push failed! Check push-log.txt >> %logfile%
+    echo.
+    echo ERROR: Push failed!
+    echo Details saved to: %logfile%
+    echo.
+    type %logfile%
+) else (
+    echo SUCCESS: Push completed! >> %logfile%
+    echo.
+    echo SUCCESS: Changes pushed to GitHub!
+    echo.
+)
+
 echo.
-echo === Staging changes ===
-git add -A
-
-echo === Committing ===
-git commit -m "%msg%"
-
-echo === Pushing to origin main ===
-git push origin main
-
-echo.
-echo === Done ===
+echo === Log saved to: push-log.txt ===
 pause
