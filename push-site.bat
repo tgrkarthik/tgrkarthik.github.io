@@ -14,9 +14,15 @@ echo.
 
 set /p msg="Enter commit message: "
 
+echo.
+echo === Staging changes ===
 git add -A
+
+echo === Committing ===
 git commit -m "%msg%"
-git push
+
+echo === Pushing to origin main ===
+git push origin main
 
 echo.
 echo === Done ===
