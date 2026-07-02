@@ -5,7 +5,9 @@ REM  One-click commit + push for Karthik's website repo
 REM  Repo: https://github.com/tgrkarthik/tgrkarthik.github.io
 REM ============================================================
 
-cd /d "C:\Users\tgrka\CLAUDE GLOBAL FOLDER\KARTHIK WEBSITE\tgrkarthik.github.io-main"
+setlocal enabledelayedexpansion
+
+cd /d "%~dp0"
 
 echo.
 echo === Current status ===
