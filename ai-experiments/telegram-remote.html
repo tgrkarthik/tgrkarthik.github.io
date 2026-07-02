@@ -121,7 +121,7 @@
 
         <p>The first plan Claude proposed involved Twilio&rsquo;s WhatsApp Business API. This turned out to be more friction than the actual problem. WhatsApp Business API requires Meta Business Verification:a formal approval process that takes 1&ndash;3 days and sometimes longer. You also need a dedicated phone number not already registered as a personal WhatsApp account. There are per-message fees on top.</p>
 
-        <p>Telegram sidesteps all of it. Open @BotFather on Telegram, send <code>/newbot</code>, give it a name, get a token. <strong>Five minutes. Free. Fully bidirectional.</strong> The Python library:<code>python-telegram-bot</code>:is mature and async-native. I didn&rsquo;t need to think about infrastructure.</p>
+        <p>Telegram sidesteps all of it. Open @BotFather on Telegram, send <code>/newbot</code>, give it a name, get a token. <strong>Five minutes. Free. Fully bidirectional.</strong> The Python library: <code>python-telegram-bot</code> is mature and async-native. I didn&rsquo;t need to think about infrastructure.</p>
 
         <h2>Building remote access through my mobile</h2>
 
@@ -135,7 +135,7 @@
 
         <p>The part I was most keen to test: Claude pausing mid-workflow and asking me a question on my phone, then resuming when I reply.</p>
 
-        <p>The first live test was <code>/scrape SNOW</code>:the IR Scraper for Snowflake. Claude sent three questions before running: document types, date range, output path. I replied to question 2 with &ldquo;5 years&rdquo; from my phone, and the bot sent back: &ldquo;&#9654;&#65039; Continuing&hellip;&rdquo; Claude resumed with my answer and kept going. The pause-reply-resume pattern worked exactly as intended.</p>
+        <p>The first live test was <code>/scrape SNOW</code>: the IR Scraper for Snowflake. Claude sent three questions before running: document types, date range, output path. I replied to question 2 with &ldquo;5 years&rdquo; from my phone, and the bot sent back: &ldquo;&#9654;&#65039; Continuing&hellip;&rdquo; Claude resumed with my answer and kept going. The pause-reply-resume pattern worked exactly as intended.</p>
 
         <p>A research query came back first time, no friction. The reply arrived in Telegram inside ten seconds.</p>
 

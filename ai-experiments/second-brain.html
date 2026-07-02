@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Building a Second Brain from Five Years of Notes - Karthik Tiruvarur</title>
+    <title>Building a Second Brain from years of note taking - Karthik Tiruvarur</title>
     <link rel="stylesheet" href="../styles.css">
     <style>
         .article-header { max-width: 1050px; margin: 3rem auto 2rem; padding: 0 2rem; }
@@ -79,6 +79,37 @@
             .pattern-grid { grid-template-columns: 1fr; }
         }
 
+        /* Insight highlight box */
+        .insight-box {
+            background: linear-gradient(135deg, rgba(253, 246, 236, 0.8), rgba(139, 69, 19, 0.08));
+            border-left: 5px solid #8b4513;
+            border-right: 1px solid #e0d4c4;
+            padding: 2rem 2rem;
+            margin: 2.5rem 0;
+            border-radius: 0 6px 6px 0;
+            position: relative;
+            box-shadow: 0 2px 8px rgba(139, 69, 19, 0.08);
+        }
+        .insight-box::before {
+            content: "💭";
+            position: absolute;
+            left: -2rem;
+            top: 2rem;
+            font-size: 24px;
+            opacity: 0.7;
+        }
+        .insight-box p {
+            margin: 0;
+            color: #4a4a4a;
+            line-height: 1.9;
+            font-size: 16px;
+            font-weight: 500;
+        }
+        .insight-box strong {
+            color: #8b4513;
+            font-weight: 700;
+        }
+
         /* Footnote references inline */
         .footnote-ref {
             font-size: 12px;
@@ -118,7 +149,7 @@
 
     <div class="article-header">
         <a href="../ai-experiments.html" class="back-link">&larr; Back to AI Experiments</a>
-        <h1 class="article-title">Building a Second Brain from Five Years of Notes</h1>
+        <h1 class="article-title">Building a Second Brain from years of note taking</h1>
         <div class="article-meta">
             <span>July 2026</span>
             <span>&bull;</span>
@@ -130,22 +161,20 @@
 
         <div class="article-tldr">
             <div class="article-tldr-label">TL;DR</div>
-            <p>Karpathy&rsquo;s <em>LLM wiki</em> tweet from April got a lot of people, including me super excited. The simple idea was to that one doesn't need to re-synthesise years worth of notes from scratch every time you come back to a topic: <strong>compile once, keep it fresh with deltas, move on.</strong> Over the last four weeks I pulled ~2,300 pages out of RoamResearch into Obsidian, then built a small family of Claude skills that treat raw notes as sources rather than as the finished product. <code>compile-wiki-node</code> is the synthesiser; <code>capture-topic</code>, <code>summarize-investor-conversation</code>, <code>conversation-ideas-extract</code> and <code>youtube-obsidian-batch</code> feed it. <strong>Closed-book discipline</strong>:no web search in synthesis, no facts the model happens to know from training, conflicts logged with provenance rather than silently resolved:is what makes any of it trustworthy. Two weeks in, the nodes already look like they&rsquo;re compounding.</p>
+            <p>Karpathy&rsquo;s <em>LLM wiki</em> tweet from April got a lot of people, including me super excited. The simple idea was to that one doesn't need to re-synthesise years worth of notes from scratch every time you come back to a topic: <strong>compile once, keep it fresh with deltas, move on.</strong> Over the last four weeks I pulled ~2,300 pages out of RoamResearch into Obsidian, then built a small family of Claude skills that treat raw notes as sources rather than as the finished product. <code>compile-wiki-node</code> is the synthesiser; <code>capture-topic</code>, <code>summarize-investor-conversation</code>, <code>conversation-ideas-extract</code> and <code>youtube-obsidian-batch</code> feed it. <strong>Closed-book discipline</strong>: no web search in synthesis, no facts the model happens to know from training, conflicts logged with provenance rather than silently resolved: is what makes any of it trustworthy. Two weeks in, the nodes already look like they&rsquo;re compounding.</p>
         </div>
 
         <h2>The Reframe</h2>
 
-        <p>I came across Andrej Karpathy&rsquo;s <a href="https://x.com/karpathy/status/2039805659525644595" target="_blank">&ldquo;LLM wiki&rdquo; tweet</a> about a month ago and it took me a week to sit with it. The idea is small and unfashionable: <strong>knowledge doesn&rsquo;t need to be re-derived every single query. Compile it once. Keep it fresh with deltas. Move on.</strong></p>
+        <p>I came across Andrej Karpathy&rsquo;s <a href="https://x.com/karpathy/status/2039805659525644595" target="_blank">&ldquo;LLM wiki&rdquo; tweet</a> about a few months ago around information storing and retrival, specially for one's own notes.  The idea is small and unfashionable: <strong>knowledge doesn&rsquo;t need to be re-derived every single query. Compile it once. Keep it fresh with deltas. Move on.</strong></p>
 
-        <p>That&rsquo;s the shape of it. In traditional note-taking, every time you come back to a topic on which you don&rsquo;t already have a summary, you re-synthesise from scratch: a fresh walk through the raw pages, a fresh set of connections, a fresh judgement. The re-derivation is expensive, the output isn&rsquo;t stored anywhere durable, so next month you do it again. Karpathy&rsquo;s point was that this is the wrong loop. <strong>You want a persistent, compiled document per entity:company, person, theme:that gets richer over time, not longer.</strong> Each new source adds to it. Nothing rebuilds the whole thing from the ground up.</p>
+        <p>That&rsquo;s the shape of it. In traditional note-taking, every time you come back to a topic on which you don&rsquo;t already have a summary, you re-synthesise from scratch: a fresh walk through the raw pages, a fresh set of connections, a fresh judgement. The re-derivation is expensive, the output isn&rsquo;t stored anywhere durable, so next month you do it again. Karpathy&rsquo;s point was that this is the wrong loop. <strong>You want a persistent, compiled document per entity: company, person, theme: that gets richer over time, not longer.</strong> Each new source adds to it. Nothing rebuilds the whole thing from the ground up.</p>
 
-        <p>Once I saw that, three years of frustration snapped into shape.</p>
-
-        <h2>Getting Out of Roam</h2>
+        <h2>Getting Out of RoamResearch</h2>
 
         <p>I&rsquo;d been on RoamResearch since 2020. Five years of daily notes, atomic notes tangled together with <code>[[links]]</code>, both work and personal, sitting behind a proprietary format that no model could read directly. Somewhere around <strong>2,300 pages</strong> had accumulated, and any real synthesis meant opening Roam, clicking around, reading for an hour, and re-deriving whatever I already thought I knew.</p>
 
-        <p>The first move was structural, not clever. Export everything to plain markdown, load it into Obsidian, put the folder somewhere Claude can read it. Once the vault was a folder of <code>.md</code> files on disk, every skill I&rsquo;d already written for other work could see my notes. <strong>Vendor lock-in was the tax I&rsquo;d been paying without noticing.</strong></p>
+        <p>The first move was structural, not clever. Export everything to plain markdown, load it into Obsidian, put the folder somewhere Claude can read it. Once the vault was a folder of <code>.md</code> files on disk, every skill I&rsquo;d already written for other work could see my notes. <strong>Vendor lock-in was the tax I&rsquo;d been paying without noticing.</strong> RoamResearch started out with a lot of promise, but the development of new features and embedding AI features never really took off. Talk about tech-debt ;)</p>
 
         <p>I don&rsquo;t think Obsidian is magic:it&rsquo;s a text editor that respects the file system. The value is that the files are yours, they&rsquo;re plaintext, and any model (this year&rsquo;s or next year&rsquo;s) can be pointed at the vault without a migration.</p>
 
@@ -167,13 +196,13 @@
 
         <p><code>youtube-obsidian-batch</code> does the same monthly for video notes: I paste a batch of Gemini-generated bullets from that month&rsquo;s watching, and the skill files each one and updates a master index.</p>
 
-        <p><code>conversation-ideas-extract</code> is the one I use least often but rely on most heavily. It crawls all ~2,300 pages and answers structured questions like &ldquo;which companies has Person X raised across our conversations&rdquo; or &ldquo;who&rsquo;s raised idea Y&rdquo;. <strong>Completeness is the whole product</strong>:the skill&rsquo;s job is to extract every idea from every dated chat, not just the ones I later summarised.</p>
+        <p><code>conversation-ideas-extract</code> is the one I use least often but rely on most heavily. It crawls all ~2,300 pages and answers structured questions like &ldquo;which companies has Person X raised across our conversations&rdquo; or &ldquo;who&rsquo;s raised idea Y&rdquo;. <strong>Completeness is the whole product</strong>: the skill&rsquo;s job is to extract every idea from every dated chat, not just the ones I later summarised.</p>
 
         <p>The pattern here isn&rsquo;t obvious until you&rsquo;ve written a few: <strong>the capture skills matter more than the compile skill.</strong> You can always re-run the compiler over a well-fed vault. You cannot re-run the capture on a conversation you never wrote down.</p>
 
         <h2>The Compile Skill</h2>
 
-        <p><code>compile-wiki-node</code> is the synthesiser. Give it an entity name:a company, a person, a theme like <code>Meditation</code> or <code>AI Investing</code>:and it reads everything in the vault that mentions that entity, builds or updates the corresponding node in <code>Wiki/</code>, and tags every claim with the file it came from.</p>
+        <p><code>compile-wiki-node</code> is the synthesiser. Give it an entity name: a company, a person, a theme like <code>Meditation</code> or <code>AI Investing</code>: and it reads everything in the vault that mentions that entity, builds or updates the corresponding node in <code>Wiki/</code>, and tags every claim with the file it came from.</p>
 
         <p>The skill I ended up with was maybe the third or fourth attempt. The first few failed for the same reason: Claude didn&rsquo;t know what my notes looked like, so its synthesis missed the load-bearing structure. Voice transcripts are different from filings are different from daily-note bullets, and the compiler has to treat them differently. What actually worked was going back and forth with Claude for two or three sessions, showing it examples from <code>Notes/</code> and <code>Pages/</code>, and having it build <strong>an index/ontology on top of my source notes</strong>:a lookup describing what a &ldquo;conversation note&rdquo; looks like, what a &ldquo;capture page&rdquo; looks like, what the two-way relationships between speakers, companies and themes should be. The compiler reads that index first, and consults it while synthesising.</p>
 
@@ -197,7 +226,7 @@
 
         <p>The clearest signal is that when I add a new source:a fresh 10-K, a new call transcript, a batch of YouTube notes:and re-run the compile, the node gets sharper, not just longer. New evidence sometimes corroborates an existing claim, sometimes contradicts it (which the conflict-logging catches), sometimes adds a dimension the node didn&rsquo;t have. What I&rsquo;m <em>not</em> seeing, which I was worried about, is monotonic bloat:the compiled node isn&rsquo;t drifting toward &ldquo;everything I&rsquo;ve ever said,&rdquo; it&rsquo;s staying focused on what the entity actually is.</p>
 
-        <p>Two weeks is not a real test. Check back in six months. But the shape of the compounding is right.</p>
+        <p>Two weeks is not a real test but the direction seems right.</p>
 
         <h2>If You&rsquo;re Building Your Own</h2>
 
@@ -246,11 +275,13 @@
             </div>
         </div>
 
-        <h2>Where This Leaves Me</h2>
+        <h2>In summary ... </h2>
 
         <p>The meta-observation, since this is now the third or fourth skill family I&rsquo;ve built along these lines: <strong>I keep trusting the model with less and building more scaffolding around it.</strong> The scaffolding (indexes, ontologies, closed source lists, provenance tags, failure logs) is where the domain knowledge actually lives. The model is the fast, patient reader that fills the shape the scaffolding defines.</p>
 
-        <p>What I&rsquo;m curious about is how much of the scaffolding survives as models get better at horizontal work. There&rsquo;s a version of the future where a model trained on enough of the world does the ontology-building on the fly and the harness collapses to a single prompt. There&rsquo;s another version where the domain knowledge in the harness (my notes, my ontology, my failure log, my sense of what a good source is) is what makes any of it useful, and horizontal capability increases don&rsquo;t touch that at all. My guess is closer to the second, but I&rsquo;ve been wrong about which side of that line things fall on before.</p>
+        <div class="insight-box">
+            <p>What I&rsquo;m curious about is <strong>how much of the scaffolding survives</strong> as models get better at horizontal work. There&rsquo;s a version of the future where a model trained on enough of the world does the ontology-building on the fly and the harness collapses to a single prompt. There&rsquo;s another version where <strong>the domain knowledge in the harness</strong> (my notes, my ontology, my failure log, my sense of what a good source is) <strong>is what makes any of it useful</strong>, and horizontal capability increases don&rsquo;t touch that at all. <strong>My guess is closer to the second</strong>, but I&rsquo;ve been wrong about which side of that line things fall on before.</p>
+        </div>
 
         <p>For now the vault is a folder of markdown files, the compile skill is a few hundred lines of Python around a Claude call, and the nodes are getting a little richer each week. Which was the point.</p>
 
