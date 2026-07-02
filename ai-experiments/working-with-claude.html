@@ -131,7 +131,7 @@
 
         <div class="article-tldr">
             <div class="article-tldr-label">TL;DR</div>
-            <p>Two months in, the gap between people who get a lot out of Claude (Cowork) and people who don&rsquo;t isn&rsquo;t just about prompts or designing workflows &mdash; me thinks it is about giving Claude the things it would have remembered, if it could. Some of the things I've incorporated are a working folder it never leaves, a CLAUDE.md file it reads at the start of every session, skills that encode the work I do repeatedly, and a voice DNA file so the writing comes out like mine. Below is the toolkit I&rsquo;ve ended up with, and the one I didn&rsquo;t see coming: building all of this taught me how I think more than it taught Claude how to help me.</p>
+            <p>Two months in, the gap between people who get a lot out of Claude (Cowork) and people who don&rsquo;t isn&rsquo;t just about prompts or designing workflows:me thinks it is about giving Claude the things it would have remembered, if it could. Some of the things I've incorporated are a working folder it never leaves, a CLAUDE.md file it reads at the start of every session, skills that encode the work I do repeatedly, and a voice DNA file so the writing comes out like mine. Below is the toolkit I&rsquo;ve ended up with, and the one I didn&rsquo;t see coming: building all of this taught me how I think more than it taught Claude how to help me.</p>
         </div>
 
         <p><strong>Claude is a colleague who forgets everything overnight.</strong> Brilliant, fast, broadly skilled. Reads what you put in front of it. Writes a draft, reviews a filing, explains a concept, runs a script. Then closes the laptop, and tomorrow morning has no memory that you exist.</p>
@@ -148,7 +148,7 @@
 
         <p>Below is the toolkit, in three layers. Setup, memory, discipline.</p>
 
-        <h2>Layer 1: Setup &mdash; where Claude works</h2>
+        <h2>Layer 1: Setup:where Claude works</h2>
 
         <h3>1. The working folder</h3>
 
@@ -160,17 +160,17 @@
 
         <h3>2. Pick the right model for the job</h3>
 
-        <p>Claude isn&rsquo;t one model; it&rsquo;s a family. Sonnet for most things. Opus when the work needs more reasoning depth or nuance &mdash; investment analysis, voice writing, anything I&rsquo;d describe as judgment-heavy. Haiku for fast, cheap, narrow tasks. Knowing which one I want before I start is a small habit and it changes the texture of the output more than people realise. <strong>Asking Sonnet to do Opus work produces something that looks fine and is subtly wrong; asking Opus to do Sonnet work is just slow and expensive.</strong></p>
+        <p>Claude isn&rsquo;t one model; it&rsquo;s a family. Sonnet for most things. Opus when the work needs more reasoning depth or nuance:investment analysis, voice writing, anything I&rsquo;d describe as judgment-heavy. Haiku for fast, cheap, narrow tasks. Knowing which one I want before I start is a small habit and it changes the texture of the output more than people realise. <strong>Asking Sonnet to do Opus work produces something that looks fine and is subtly wrong; asking Opus to do Sonnet work is just slow and expensive.</strong></p>
 
         <p>I now ask the model selection question before anything non-trivial. Sonnet 4.6 or Opus 4.6? <strong>Two seconds of decision, hours of difference downstream.</strong></p>
 
-        <h2>Layer 2: Memory &mdash; what Claude knows about you</h2>
+        <h2>Layer 2: Memory:what Claude knows about you</h2>
 
         <h3>3. CLAUDE.md and persistent memory</h3>
 
         <p><strong>The single most important file in my Claude setup is one called <code>CLAUDE.md</code>.</strong> It lives at <code>C:\Users\tgrka\.claude\CLAUDE.md</code>, and Claude Code reads it automatically at the start of every session. Inside it: who I am, what I do, my hard rules (never fabricate financial data, never use sub-agents for analysis, always ask which model), the paths I work in, the projects I have running, and a changelog of every meaningful behavioural decision I&rsquo;ve made about how Claude should work for me.</p>
 
-        <p>Today the file is around 140 lines. It started at twelve. <strong>Each time something went wrong &mdash; or something worked and I wanted to keep it &mdash; a line gets added.</strong> The fabrication incident with Snowflake&rsquo;s financials became Hard Rule 9: never spawn sub-agents. The misinterpretation of my "auto mode" instruction became Hard Rule 10: distinguish tool-internal errors from real permission prompts. The Pinegrow rationale for CSS variables, abandoned when I moved off Pinegrow, got rewritten in place.</p>
+        <p>Today the file is around 140 lines. It started at twelve. <strong>Each time something went wrong:or something worked and I wanted to keep it:a line gets added.</strong> The fabrication incident with Snowflake&rsquo;s financials became Hard Rule 9: never spawn sub-agents. The misinterpretation of my "auto mode" instruction became Hard Rule 10: distinguish tool-internal errors from real permission prompts. The Pinegrow rationale for CSS variables, abandoned when I moved off Pinegrow, got rewritten in place.</p>
 
         <p>This is the closest thing Claude has to persistent memory. <strong>It is also, more honestly, my own running document of what I&rsquo;ve learned about working with an AI.</strong> The file outlives any individual conversation, and I am the only person who edits it.</p>
 
@@ -182,12 +182,12 @@
 
         <div class="doc-quote">
             <p>&ldquo;A skill is a directory that contains a SKILL.md file.&rdquo;</p>
-            <span class="doc-quote-attr">&mdash; Anthropic engineering, "Equipping agents for the real world with Agent Skills"</span>
+            <span class="doc-quote-attr">- Anthropic engineering, "Equipping agents for the real world with Agent Skills"</span>
         </div>
 
         <p>The directory holds instructions, optional scripts, and reference material. The SKILL.md file describes what the skill does and when Claude should use it. Anthropic describes them as folders Claude can discover and load on demand for specific tasks.<a href="#fn1" class="footnote-ref"><sup>1</sup></a> Skills work the same way across Claude.ai, Claude Code, and the API.</p>
 
-        <p>What this means in practice: <strong>I can take a piece of work I do repeatedly &mdash; reading a 10-K, drafting an investment memo, writing a blog post in my voice &mdash; and turn the way I do it into a folder Claude reads.</strong> Next time I trigger that work, the folder loads automatically and Claude follows the instructions without me re-explaining.</p>
+        <p>What this means in practice: <strong>I can take a piece of work I do repeatedly:reading a 10-K, drafting an investment memo, writing a blog post in my voice:and turn the way I do it into a folder Claude reads.</strong> Next time I trigger that work, the folder loads automatically and Claude follows the instructions without me re-explaining.</p>
 
         <p>Over two months I&rsquo;ve built about a dozen skills. They fall into three categories.</p>
 
@@ -196,11 +196,11 @@
         <div class="skills-grid">
             <div class="skill-card">
                 <div class="skill-card-name">SellSideInitiation</div>
-                <div class="skill-card-desc">A five-phase pipeline that produces a closed-book fundamental analysis of a public company &mdash; business model, financial history, management delivery, earnings sentiment, competitive ecosystem &mdash; sourced entirely from documents I provide. Output is a 25-page Word document. Triggered by one phrase. The skill encodes which financial template applies to which business model type, what counts as a fabricated figure, and how the seven verification gates run.</div>
+                <div class="skill-card-desc">A five-phase pipeline that produces a closed-book fundamental analysis of a public company:business model, financial history, management delivery, earnings sentiment, competitive ecosystem:sourced entirely from documents I provide. Output is a 25-page Word document. Triggered by one phrase. The skill encodes which financial template applies to which business model type, what counts as a fabricated figure, and how the seven verification gates run.</div>
             </div>
             <div class="skill-card">
                 <div class="skill-card-name">investment-moats</div>
-                <div class="skill-card-desc">Four frameworks for analysing competitive advantage &mdash; Helmer&rsquo;s 7 Powers, Greenwald&rsquo;s Earnings Power Value, Buffett-Munger mental models, and Porter&rsquo;s Five Forces &mdash; written in the same schema. Triggers when I ask about a company&rsquo;s moat or strategic position. Combines all four into a structured analysis.</div>
+                <div class="skill-card-desc">Four frameworks for analysing competitive advantage:Helmer&rsquo;s 7 Powers, Greenwald&rsquo;s Earnings Power Value, Buffett-Munger mental models, and Porter&rsquo;s Five Forces:written in the same schema. Triggers when I ask about a company&rsquo;s moat or strategic position. Combines all four into a structured analysis.</div>
             </div>
             <div class="skill-card">
                 <div class="skill-card-name">Earnings Sentiment</div>
@@ -208,7 +208,7 @@
             </div>
             <div class="skill-card">
                 <div class="skill-card-name">Initiation Merge</div>
-                <div class="skill-card-desc">A deterministic Python script that assembles outputs from the four pipeline stages into one report. Not an LLM &mdash; pure code, regex, and assertion checks. The merge step is where LLM creativity becomes a bug.</div>
+                <div class="skill-card-desc">A deterministic Python script that assembles outputs from the four pipeline stages into one report. Not an LLM:pure code, regex, and assertion checks. The merge step is where LLM creativity becomes a bug.</div>
             </div>
         </div>
 
@@ -230,7 +230,7 @@
         <div class="skills-grid">
             <div class="skill-card">
                 <div class="skill-card-name">Karthik_Coding / gstack</div>
-                <div class="skill-card-desc">Fast headless browser for QA testing my own website &mdash; navigate, interact, screenshot, verify state, diff before-and-after. Hundred milliseconds per command. Used when I want Claude to dogfood a change before I commit it.</div>
+                <div class="skill-card-desc">Fast headless browser for QA testing my own website:navigate, interact, screenshot, verify state, diff before-and-after. Hundred milliseconds per command. Used when I want Claude to dogfood a change before I commit it.</div>
             </div>
             <div class="skill-card">
                 <div class="skill-card-name">ir-scraper</div>
@@ -244,11 +244,11 @@
 
         <p>The voice-dna skill deserves its own line. It started as a way to get Claude to write blog posts that sounded less like a press release and more like me. It became something more useful than that.</p>
 
-        <p>The skill is built on close reading of sixteen of my actual writing samples spanning seven years &mdash; Substack essays, Medium pieces, IFC investment memos, board papers, technical posts. Three registers, four formats, a dial for how professional the output should be. <strong>It&rsquo;s the most opinionated file in my whole setup, and the one with the strongest deterministic enforcement.</strong></p>
+        <p>The skill is built on close reading of sixteen of my actual writing samples spanning seven years:Substack essays, Medium pieces, IFC investment memos, board papers, technical posts. Three registers, four formats, a dial for how professional the output should be. <strong>It&rsquo;s the most opinionated file in my whole setup, and the one with the strongest deterministic enforcement.</strong></p>
 
-        <p>The enforcement matters. A skill is a prompt, and prompts are suggestions. <a href="ai-experiments/llm-assembly-problem.html">Earlier this month I wrote about how LLMs are bad at the mechanical parts of work</a>; the same logic applies to writing. Some rules are non-negotiable &mdash; certain rhetorical patterns I always strip out, certain layouts I won&rsquo;t use (no pull-quote boxes containing one-line maxims), certain closings I won&rsquo;t accept (the kind that announces the takeaway) &mdash; and the only honest way to enforce non-negotiable rules is with code that fails the build. So I built voice_gate.py: regex over the output, two tiers, hard violations block delivery. The skill is the spec; the gate is the gate.</p>
+        <p>The enforcement matters. A skill is a prompt, and prompts are suggestions. <a href="ai-experiments/llm-assembly-problem.html">Earlier this month I wrote about how LLMs are bad at the mechanical parts of work</a>; the same logic applies to writing. Some rules are non-negotiable:certain rhetorical patterns I always strip out, certain layouts I won&rsquo;t use (no pull-quote boxes containing one-line maxims), certain closings I won&rsquo;t accept (the kind that announces the takeaway):and the only honest way to enforce non-negotiable rules is with code that fails the build. So I built voice_gate.py: regex over the output, two tiers, hard violations block delivery. The skill is the spec; the gate is the gate.</p>
 
-        <h2>Layer 3: Discipline &mdash; how Claude does its work</h2>
+        <h2>Layer 3: Discipline:how Claude does its work</h2>
 
         <h3>6. The session recap</h3>
 
@@ -258,7 +258,7 @@
 
         <h3>7. Failure logs</h3>
 
-        <p>Each major skill of mine has a file called <code>FAILURE_LOG.md</code> sitting next to its SKILL.md. When something breaks &mdash; a fabricated figure, a misformatted table, a section that came back empty &mdash; the failure goes into the log with date, root cause, and what was changed to prevent it. The SellSideInitiation skill&rsquo;s log is twenty-four entries long and growing.</p>
+        <p>Each major skill of mine has a file called <code>FAILURE_LOG.md</code> sitting next to its SKILL.md. When something breaks:a fabricated figure, a misformatted table, a section that came back empty:the failure goes into the log with date, root cause, and what was changed to prevent it. The SellSideInitiation skill&rsquo;s log is twenty-four entries long and growing.</p>
 
         <p><strong>This is the difference between a skill that improves and a skill that gets broken in the same way every other Wednesday.</strong> Without a log, every fix is local: this one report, this one company, this one bug. With the log, every fix is structural: a rule added to the skill, a check added to the verification gate, a sentence in CLAUDE.md.</p>
 
@@ -270,9 +270,9 @@
 
         <h3>9. Don&rsquo;t use sub-agents for analytical work</h3>
 
-        <p>This one was learned the hard way. For a while I was using sub-agents to parallelise long pipelines &mdash; the merge step, the audit step, the data-extraction step. The architecture looked clean. Each sub-agent was given a clear, narrow brief.</p>
+        <p>This one was learned the hard way. For a while I was using sub-agents to parallelise long pipelines:the merge step, the audit step, the data-extraction step. The architecture looked clean. Each sub-agent was given a clear, narrow brief.</p>
 
-        <p>What I didn&rsquo;t see, until I checked the numbers carefully, was that <strong>sub-agents lose context</strong>. They can&rsquo;t see CLAUDE.md, the conversation history, the skills. They&rsquo;re launched fresh each time. And when they don&rsquo;t have what they need, they fill in plausibly from training data &mdash; and the orchestrator stitches the plausible-but-wrong outputs together with no way to tell.</p>
+        <p>What I didn&rsquo;t see, until I checked the numbers carefully, was that <strong>sub-agents lose context</strong>. They can&rsquo;t see CLAUDE.md, the conversation history, the skills. They&rsquo;re launched fresh each time. And when they don&rsquo;t have what they need, they fill in plausibly from training data:and the orchestrator stitches the plausible-but-wrong outputs together with no way to tell.</p>
 
         <p>The Snowflake run was the wake-up call. A hundred out of one hundred and twenty-two financial data points in one Section came back fabricated by a sub-agent that had been given a perfectly clear instruction. Revenue and gross profit were right because they were the first two fields in the API response. Everything after that was hallucinated, with the right tags attached. The report read fine. It was wrong in every detail.</p>
 
@@ -282,7 +282,7 @@
 
         <p>I started this thinking I was teaching Claude how to do my work. Two months in, the surprise is that <strong>Claude is teaching me how I do my work.</strong></p>
 
-        <p>Writing voice-dna meant articulating what makes my writing mine, in a way I&rsquo;d never had to make explicit. Writing SellSideInitiation meant naming, in order, every analytical step I run on a company &mdash; including the steps I do unconsciously. Writing the failure log meant being honest about every mistake I&rsquo;d been making and quietly not codifying. The artefacts that exist as instructions for a stateless colleague turned out to be the clearest description I&rsquo;ve ever had of how I work.</p>
+        <p>Writing voice-dna meant articulating what makes my writing mine, in a way I&rsquo;d never had to make explicit. Writing SellSideInitiation meant naming, in order, every analytical step I run on a company:including the steps I do unconsciously. Writing the failure log meant being honest about every mistake I&rsquo;d been making and quietly not codifying. The artefacts that exist as instructions for a stateless colleague turned out to be the clearest description I&rsquo;ve ever had of how I work.</p>
 
         <p>That wasn&rsquo;t the goal. It might be the most useful side effect.</p>
 

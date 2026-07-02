@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en" data-depth="1">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building a Second Brain from Five Years of Notes - Karthik Tiruvarur</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .article-header { max-width: 1050px; margin: 3rem auto 2rem; padding: 0 2rem; }
+        .article-title { font-size: 36px; font-weight: 600; margin-bottom: 1rem; line-height: 1.2; }
+        .article-meta { display: flex; gap: 1rem; align-items: center; font-size: 14px; color: #666666; margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid #e0e0e0; }
+        .article-body { max-width: 1050px; margin: 0 auto; padding: 0 2rem; line-height: 1.8; }
+        .article-body p { margin-bottom: 1.5rem; font-size: 16px; color: #666666; }
+        .article-body h2 { font-size: 24px; margin-top: 3rem; margin-bottom: 1.5rem; color: #000000; }
+        .article-body h3 { font-size: 18px; margin-top: 2rem; margin-bottom: 1rem; color: #000000; }
+        .article-body strong { font-weight: 600; color: #000000; }
+        .article-body em { font-style: italic; }
+        .article-body code { background: #f5f5f5; padding: 1px 6px; border-radius: 3px; font-size: 13px; color: #000000; }
+        .article-footer { max-width: 1050px; margin: 3rem auto 0; padding: 2rem 2rem; background: #f5f5f5; text-align: center; }
+        .back-link { display: inline-block; margin-bottom: 2rem; font-size: 14px; color: #666666; }
+        .back-link:hover { color: #000000; }
+
+        /* TLDR box */
+        .article-tldr {
+            background: #fdf6ec;
+            border-left: 3px solid #8b4513;
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 2rem;
+            border-radius: 0 4px 4px 0;
+        }
+        .article-tldr-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #8b4513;
+            margin-bottom: 0.5rem;
+        }
+        .article-tldr p {
+            font-size: 15px;
+            color: #555555;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        /* Pattern recap grid */
+        .pattern-grid {
+            margin: 1.5rem 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+        }
+        .pattern-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 0.8rem 1rem;
+            background: #ffffff;
+        }
+        .pattern-card-num {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            color: #8b4513;
+        }
+        .pattern-card-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #000000;
+            line-height: 1.3;
+            margin-top: 0.1rem;
+        }
+        .pattern-card-desc {
+            font-size: 13px;
+            color: #666666;
+            line-height: 1.55;
+            margin-top: 0.3rem;
+        }
+        @media (max-width: 768px) {
+            .pattern-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Footnote references inline */
+        .footnote-ref {
+            font-size: 12px;
+            vertical-align: super;
+            line-height: 0;
+            color: #000000;
+            border-bottom: 1px dotted #666666;
+            padding: 0 2px;
+        }
+        .footnote-ref:hover { opacity: 0.7; }
+
+        /* Footnotes section */
+        .footnotes {
+            max-width: 1050px;
+            margin: 2rem auto;
+            padding: 1.5rem 2rem;
+            border-top: 1px solid #e0e0e0;
+        }
+        .footnotes p {
+            font-size: 13px;
+            color: #666666;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        .footnotes a {
+            color: #666666;
+            border-bottom: 1px dotted #e0e0e0;
+        }
+        .footnotes a:hover { color: #000000; }
+
+        @media (max-width: 768px) { .article-title { font-size: 24px; } .article-body p { font-size: 15px; } }
+        @media (max-width: 480px) { .article-title { font-size: 20px; } .article-body p { font-size: 14px; } .article-footer { padding: 1.25rem 1rem; } }
+    </style>
+</head>
+<body>
+    <nav id="shared-nav"></nav>
+
+    <div class="article-header">
+        <a href="../ai-experiments.html" class="back-link">&larr; Back to AI Experiments</a>
+        <h1 class="article-title">Building a Second Brain from Five Years of Notes</h1>
+        <div class="article-meta">
+            <span>July 2026</span>
+            <span>&bull;</span>
+            <span>Notes &amp; Synthesis</span>
+        </div>
+    </div>
+
+    <article class="article-body">
+
+        <div class="article-tldr">
+            <div class="article-tldr-label">TL;DR</div>
+            <p>Karpathy&rsquo;s <em>LLM wiki</em> tweet from June pointed at a shape I hadn&rsquo;t seen. Don&rsquo;t re-synthesise five years of notes from scratch every time you come back to a topic: <strong>compile once, keep it fresh with deltas, move on.</strong> Over the last four weeks I pulled ~2,300 pages out of RoamResearch into Obsidian, then built a small family of Claude skills that treat raw notes as sources rather than as the finished product. <code>compile-wiki-node</code> is the synthesiser; <code>capture-topic</code>, <code>summarize-investor-conversation</code>, <code>conversation-ideas-extract</code> and <code>youtube-obsidian-batch</code> feed it. <strong>Closed-book discipline</strong>:no web search in synthesis, no facts the model happens to know from training, conflicts logged with provenance rather than silently resolved:is what makes any of it trustworthy. Two weeks in, the nodes already look like they&rsquo;re compounding.</p>
+        </div>
+
+        <h2>The Reframe</h2>
+
+        <p>I came across Andrej Karpathy&rsquo;s <a href="https://x.com/karpathy/status/2039805659525644595" target="_blank">&ldquo;LLM wiki&rdquo; tweet</a> about a month ago and it took me a week to sit with it. The idea is small and unfashionable: <strong>knowledge doesn&rsquo;t need to be re-derived every single query. Compile it once. Keep it fresh with deltas. Move on.</strong></p>
+
+        <p>That&rsquo;s the shape of it. In traditional note-taking, every time you come back to a topic on which you don&rsquo;t already have a summary, you re-synthesise from scratch: a fresh walk through the raw pages, a fresh set of connections, a fresh judgement. The re-derivation is expensive, the output isn&rsquo;t stored anywhere durable, so next month you do it again. Karpathy&rsquo;s point was that this is the wrong loop. <strong>You want a persistent, compiled document per entity:company, person, theme:that gets richer over time, not longer.</strong> Each new source adds to it. Nothing rebuilds the whole thing from the ground up.</p>
+
+        <p>Once I saw that, three years of frustration snapped into shape.</p>
+
+        <h2>Getting Out of Roam</h2>
+
+        <p>I&rsquo;d been on RoamResearch since 2020. Five years of daily notes, atomic notes tangled together with <code>[[links]]</code>, both work and personal, sitting behind a proprietary format that no model could read directly. Somewhere around <strong>2,300 pages</strong> had accumulated, and any real synthesis meant opening Roam, clicking around, reading for an hour, and re-deriving whatever I already thought I knew.</p>
+
+        <p>The first move was structural, not clever. Export everything to plain markdown, load it into Obsidian, put the folder somewhere Claude can read it. Once the vault was a folder of <code>.md</code> files on disk, every skill I&rsquo;d already written for other work could see my notes. <strong>Vendor lock-in was the tax I&rsquo;d been paying without noticing.</strong></p>
+
+        <p>I don&rsquo;t think Obsidian is magic:it&rsquo;s a text editor that respects the file system. The value is that the files are yours, they&rsquo;re plaintext, and any model (this year&rsquo;s or next year&rsquo;s) can be pointed at the vault without a migration.</p>
+
+        <h2>Notes as Feedstock</h2>
+
+        <p>The move Karpathy was actually suggesting, and this is the part that took a week to land, is a change of category. <strong>The raw notes stop being the deliverable. They become the source material:the feedstock:for a separate, compiled artefact that lives in a different folder.</strong></p>
+
+        <p>In the old model, when I wanted to think about a company I opened Roam, found the pages, read them, and held it all in my head long enough to make a decision. The head was the compiler. When I closed the tab the compilation was gone. Next time, I did it again.</p>
+
+        <p>In the new model there&rsquo;s a <code>Wiki/</code> folder next to <code>Pages/</code>. Each entity has one file in <code>Wiki/</code>. That file <em>is</em> the compiled document. <code>Pages/</code> is the append-only stream of raw material: daily notes, transcripts, captures from chat sessions. <code>Wiki/</code> is the derived layer. The model does the compilation; I edit the output; the artefact persists.</p>
+
+        <h2>The Capture Skills</h2>
+
+        <p>Compiling from empty is useless:the vault has to be fed first. So the skills I actually wrote first were the capture skills, the front doors.</p>
+
+        <p><code>capture-topic</code> turns a chat-and-search session into a dated markdown page in <code>Pages/</code>. When I&rsquo;ve spent an hour with Claude going through a company or a philosophical thread and I say &ldquo;capture this&rdquo;, the skill files the whole session as <code>Pages/YYYY-MM-DD Topic.md</code> with auto-suggested <code>[[wikilinks]]</code> and tags. It&rsquo;s the difference between having thought about something and having it in the vault.</p>
+
+        <p><code>summarize-investor-conversation</code> takes a voice transcript from a call with another investor (often long, often Hinglish-heavy) and files it as a structured note in <code>Notes/</code>, then appends a backlinked chat-bullet block to the canonical <code>Speaker.md</code> page (creating the canonical page if it doesn&rsquo;t yet exist). Over time each speaker&rsquo;s page becomes a running ledger of what they&rsquo;ve said across all our conversations, cross-linked to the companies and themes they&rsquo;ve touched.</p>
+
+        <p><code>youtube-obsidian-batch</code> does the same monthly for video notes: I paste a batch of Gemini-generated bullets from that month&rsquo;s watching, and the skill files each one and updates a master index.</p>
+
+        <p><code>conversation-ideas-extract</code> is the one I use least often but rely on most heavily. It crawls all ~2,300 pages and answers structured questions like &ldquo;which companies has Person X raised across our conversations&rdquo; or &ldquo;who&rsquo;s raised idea Y&rdquo;. <strong>Completeness is the whole product</strong>:the skill&rsquo;s job is to extract every idea from every dated chat, not just the ones I later summarised.</p>
+
+        <p>The pattern here isn&rsquo;t obvious until you&rsquo;ve written a few: <strong>the capture skills matter more than the compile skill.</strong> You can always re-run the compiler over a well-fed vault. You cannot re-run the capture on a conversation you never wrote down.</p>
+
+        <h2>The Compile Skill</h2>
+
+        <p><code>compile-wiki-node</code> is the synthesiser. Give it an entity name:a company, a person, a theme like <code>Meditation</code> or <code>AI Investing</code>:and it reads everything in the vault that mentions that entity, builds or updates the corresponding node in <code>Wiki/</code>, and tags every claim with the file it came from.</p>
+
+        <p>The skill I ended up with was maybe the third or fourth attempt. The first few failed for the same reason: Claude didn&rsquo;t know what my notes looked like, so its synthesis missed the load-bearing structure. Voice transcripts are different from filings are different from daily-note bullets, and the compiler has to treat them differently. What actually worked was going back and forth with Claude for two or three sessions, showing it examples from <code>Notes/</code> and <code>Pages/</code>, and having it build <strong>an index/ontology on top of my source notes</strong>:a lookup describing what a &ldquo;conversation note&rdquo; looks like, what a &ldquo;capture page&rdquo; looks like, what the two-way relationships between speakers, companies and themes should be. The compiler reads that index first, and consults it while synthesising.</p>
+
+        <p>This is the boring bit of building agents that nobody writes about. The actual model call at the end is short. <strong>The engineering is entirely in giving the model enough scaffolding:index, examples, hierarchy:that it doesn&rsquo;t have to guess.</strong></p>
+
+        <h2>Closed-Book Discipline</h2>
+
+        <p>The design constraint I explicitly worked into <code>compile-wiki-node</code>, and the one I think is doing most of the work, is what I&rsquo;ve started calling closed-book discipline. <strong>A node can only hold what&rsquo;s in the vault. No web search during synthesis. No share prices pulled from training data. No biographical facts the model happens to know but the vault doesn&rsquo;t say.</strong></p>
+
+        <p>Two consequences follow that took me a while to fully accept.</p>
+
+        <p>The first is that the vault&rsquo;s holes become visible. If I&rsquo;ve never captured anything about the CFO of a company, the node&rsquo;s CFO section is empty:not &ldquo;here&rsquo;s what training data says,&rdquo; not a plausible sentence, but empty, or flagged <code>[not in vault]</code>. <strong>That emptiness is the whole point.</strong> It tells me where I actually have coverage and where I&rsquo;ve been fooling myself.</p>
+
+        <p>The second is what happens when two sources in the vault disagree:say a 10-K says 4,000 stores and an investor call says 5,000. The old instinct (and Claude&rsquo;s instinct, unsupervised) is to pick a winner or paper over the difference. The skill instead <strong>logs both, with their original source paths, and marks the row as an unresolved conflict.</strong> The conflict is the point of building or invalidating a thesis. Silently resolving it is the failure mode.</p>
+
+        <p>Every skill I&rsquo;ve written over the last three months has moved further in this direction: training data is not a source, the vault is the world, gaps are honest output. It works here for the same reason it works in <a href="skill-architecture.html">the report pipeline</a>: the model can&rsquo;t reliably tell what it retrieved from what it recalls, but a closed source list is a set-membership test that a hundred lines of Python can enforce.<a href="#fn1" class="footnote-ref"><sup>1</sup></a></p>
+
+        <h2>Two Weeks In</h2>
+
+        <p>The nodes look like they&rsquo;re compounding, which is the specific thing I hoped for and wasn&rsquo;t sure I&rsquo;d see.</p>
+
+        <p>The clearest signal is that when I add a new source:a fresh 10-K, a new call transcript, a batch of YouTube notes:and re-run the compile, the node gets sharper, not just longer. New evidence sometimes corroborates an existing claim, sometimes contradicts it (which the conflict-logging catches), sometimes adds a dimension the node didn&rsquo;t have. What I&rsquo;m <em>not</em> seeing, which I was worried about, is monotonic bloat:the compiled node isn&rsquo;t drifting toward &ldquo;everything I&rsquo;ve ever said,&rdquo; it&rsquo;s staying focused on what the entity actually is.</p>
+
+        <p>Two weeks is not a real test. Check back in six months. But the shape of the compounding is right.</p>
+
+        <h2>If You&rsquo;re Building Your Own</h2>
+
+        <p>Some of this is specific to how I work; most of it isn&rsquo;t. The patterns that would generalise if you wanted to try the same shape on your own notes:</p>
+
+        <div class="pattern-grid">
+            <div class="pattern-card">
+                <div class="pattern-card-num">01</div>
+                <div class="pattern-card-name">Get to plaintext first</div>
+                <div class="pattern-card-desc">If your notes are locked in a vendor&rsquo;s format, the whole exercise is downstream of an export. Do the export first, put the folder somewhere the model can read directly, then start building.</div>
+            </div>
+            <div class="pattern-card">
+                <div class="pattern-card-num">02</div>
+                <div class="pattern-card-name">Capture skills before compile skill</div>
+                <div class="pattern-card-desc">The compile skill is what people show off. The capture skills are what make the vault worth compiling. Compile over an empty vault produces nothing useful.</div>
+            </div>
+            <div class="pattern-card">
+                <div class="pattern-card-num">03</div>
+                <div class="pattern-card-name">Force closed-book on the synthesiser</div>
+                <div class="pattern-card-desc">No web search, no training-data facts. It&rsquo;s one line in the skill file and it removes an entire failure mode. If the vault doesn&rsquo;t say it, the node doesn&rsquo;t say it.</div>
+            </div>
+            <div class="pattern-card">
+                <div class="pattern-card-num">04</div>
+                <div class="pattern-card-name">Log conflicts, don&rsquo;t resolve them</div>
+                <div class="pattern-card-desc">When two sources disagree, keep both with provenance. The disagreement is thesis material:or invalidation material:and silently picking a winner throws that signal away.</div>
+            </div>
+            <div class="pattern-card">
+                <div class="pattern-card-num">05</div>
+                <div class="pattern-card-name">One node per entity, updated in place</div>
+                <div class="pattern-card-desc">Compile per company, per person, per theme. Update in place. Do not regenerate from scratch:you&rsquo;ll lose the edits you already made, and the compounding is what you&rsquo;re building toward.</div>
+            </div>
+            <div class="pattern-card">
+                <div class="pattern-card-num">06</div>
+                <div class="pattern-card-name">Do the ontology work explicitly</div>
+                <div class="pattern-card-desc">Before writing the compile skill, spend a session teaching the model what your different note types are and how they relate. It looks like a detour. It&rsquo;s the actual work.</div>
+            </div>
+            <div class="pattern-card">
+                <div class="pattern-card-num">07</div>
+                <div class="pattern-card-name">Design a delta path from day one</div>
+                <div class="pattern-card-desc">New source in, integrated into the existing node, node persists. If you can only rebuild-from-scratch, you don&rsquo;t have a wiki:you have a very slow LLM query.</div>
+            </div>
+            <div class="pattern-card">
+                <div class="pattern-card-num">08</div>
+                <div class="pattern-card-name">Tag provenance on every claim</div>
+                <div class="pattern-card-desc">Every sentence in the compiled node carries the source file it came from. Without provenance you can&rsquo;t audit the node, and without an audit you can&rsquo;t trust it.</div>
+            </div>
+        </div>
+
+        <h2>Where This Leaves Me</h2>
+
+        <p>The meta-observation, since this is now the third or fourth skill family I&rsquo;ve built along these lines: <strong>I keep trusting the model with less and building more scaffolding around it.</strong> The scaffolding (indexes, ontologies, closed source lists, provenance tags, failure logs) is where the domain knowledge actually lives. The model is the fast, patient reader that fills the shape the scaffolding defines.</p>
+
+        <p>What I&rsquo;m curious about is how much of the scaffolding survives as models get better at horizontal work. There&rsquo;s a version of the future where a model trained on enough of the world does the ontology-building on the fly and the harness collapses to a single prompt. There&rsquo;s another version where the domain knowledge in the harness (my notes, my ontology, my failure log, my sense of what a good source is) is what makes any of it useful, and horizontal capability increases don&rsquo;t touch that at all. My guess is closer to the second, but I&rsquo;ve been wrong about which side of that line things fall on before.</p>
+
+        <p>For now the vault is a folder of markdown files, the compile skill is a few hundred lines of Python around a Claude call, and the nodes are getting a little richer each week. Which was the point.</p>
+
+    </article>
+
+    <div class="footnotes">
+        <p id="fn1"><sup>1</sup> The reason a closed source list works and &ldquo;don&rsquo;t hallucinate&rdquo; doesn&rsquo;t is that the model has no internal flag separating a retrieved fact from a confidently recalled one. It&rsquo;s all just text to it. &ldquo;Don&rsquo;t cite anything outside this list of files&rdquo; is a set-membership test:a downstream Python check can enforce it deterministically, no model judgement required.</p>
+    </div>
+
+    <div class="article-footer">
+        <p style="margin-bottom: 1.5rem;">More on building with AI:</p>
+        <div class="social-links" style="justify-content: center;">
+            <a href="../ai-experiments.html" class="btn btn-primary">Back to Experiments</a>
+            <a href="https://tgrkarthik.substack.com/" target="_blank" class="btn btn-secondary">Subscribe</a>
+        </div>
+    </div>
+
+    <footer id="shared-footer"></footer>
+
+    <script src="../components/nav-footer.js"></script>
+</body>
+</html>

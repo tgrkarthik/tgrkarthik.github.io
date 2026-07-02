@@ -152,7 +152,7 @@
 
     <div class="article-header">
         <a href="../ai-experiments.html" class="back-link">&larr; Back to AI Experiments</a>
-        <h1 class="article-title">Writing Skills.md &mdash; My Learnings on Self-Improving Code</h1>
+        <h1 class="article-title">Writing Skills.md:My Learnings on Self-Improving Code</h1>
         <div class="article-meta">
             <span>June 2026</span>
             <span>&bull;</span>
@@ -178,7 +178,7 @@
             </div>
             <div class="timeline-entry">
                 <div class="timeline-date">April</div>
-                <p><span class="timeline-skill">Initiation Merge.</span> A pure-Python script, no model involved, that stitches separate report stages into one document. The first step I deliberately took away from the model &mdash; because assembling text turned out to be a code problem, and model improvisation at the join is a defect, not a flourish.</p>
+                <p><span class="timeline-skill">Initiation Merge.</span> A pure-Python script, no model involved, that stitches separate report stages into one document. The first step I deliberately took away from the model:because assembling text turned out to be a code problem, and model improvisation at the join is a defect, not a flourish.</p>
             </div>
             <div class="timeline-entry">
                 <div class="timeline-date">April</div>
@@ -190,7 +190,7 @@
             </div>
             <div class="timeline-entry">
                 <div class="timeline-date">April</div>
-                <p><span class="timeline-skill">investment-moats.</span> Competitive-advantage analysis through four named frameworks &mdash; Helmer&rsquo;s 7 Powers, Greenwald&rsquo;s Earnings Power Value, Buffett-Munger, Porter. It proved the structure wasn&rsquo;t tied to reports; the same discipline carried straight over to a framework skill.</p>
+                <p><span class="timeline-skill">investment-moats.</span> Competitive-advantage analysis through four named frameworks:Helmer&rsquo;s 7 Powers, Greenwald&rsquo;s Earnings Power Value, Buffett-Munger, Porter. It proved the structure wasn&rsquo;t tied to reports; the same discipline carried straight over to a framework skill.</p>
             </div>
             <div class="timeline-entry">
                 <div class="timeline-date">April</div>
@@ -212,17 +212,17 @@
 
         <p>The first thing I got wrong was treating the model&rsquo;s own knowledge as a resource. It isn&rsquo;t. A model knows a great deal about most public companies from training, and that knowledge is invisible, unverifiable, and often a year or two stale. So the rule across every analytical skill became blunt: <strong>training data is not a source.</strong> If I can&rsquo;t point to a specific document I retrieved for a claim, the claim either gets tagged as unverified or doesn&rsquo;t get made.</p>
 
-        <p>Making that real took three mechanisms. The first is <strong>provenance as a type</strong>. Every number in a report carries a tag from a fixed, six-symbol vocabulary saying where it came from: the data feed, a filing in the project folder, an official exchange filing, a transcript, a live web lookup, or &mdash; honestly &mdash; not retrieved. The tags are ranked, so the skill knows to drop to a weaker source only when the stronger one is empty. And because the vocabulary is closed, a script downstream can check that nothing slipped through untagged.</p>
+        <p>Making that real took three mechanisms. The first is <strong>provenance as a type</strong>. Every number in a report carries a tag from a fixed, six-symbol vocabulary saying where it came from: the data feed, a filing in the project folder, an official exchange filing, a transcript, a live web lookup, or:honestly:not retrieved. The tags are ranked, so the skill knows to drop to a weaker source only when the stronger one is empty. And because the vocabulary is closed, a script downstream can check that nothing slipped through untagged.</p>
 
-        <p>The second is <strong>an explicit, finite list of sources</strong>. Each report builds a log of every document it actually retrieved, and that log <em>is</em> the world. Nothing may be cited outside it, even if the model happens to know the contents. This is the sharpest idea I found in three months, because &ldquo;don&rsquo;t hallucinate&rdquo; is not an instruction a model can follow &mdash; it has no internal flag separating a retrieved fact from a confidently recalled one. &ldquo;Don&rsquo;t cite anything outside this list&rdquo; is a set-membership test, and a hundred lines of Python can enforce it.</p>
+        <p>The second is <strong>an explicit, finite list of sources</strong>. Each report builds a log of every document it actually retrieved, and that log <em>is</em> the world. Nothing may be cited outside it, even if the model happens to know the contents. This is the sharpest idea I found in three months, because &ldquo;don&rsquo;t hallucinate&rdquo; is not an instruction a model can follow:it has no internal flag separating a retrieved fact from a confidently recalled one. &ldquo;Don&rsquo;t cite anything outside this list&rdquo; is a set-membership test, and a hundred lines of Python can enforce it.</p>
 
         <p>The third is treating <strong>web search as a switch, not a default</strong>. In the report pipeline it&rsquo;s off for the first three phases and turns on in exactly two named places: one step to fetch live market data, every cell tagged accordingly, and the valuation phase for prices and comparables. Everywhere else, off. Once the model can reach the open web mid-analysis, the whole provenance system leaks, because a number can enter whose source is just &ldquo;something I found.&rdquo;</p>
 
-        <p>The reframe underneath all three is the one that took longest to accept emotionally: <strong>a report with honest gaps is correct output, and a report with a confident wrong number is broken</strong> &mdash; even if the number happens to be right, because the process that produced it can&rsquo;t tell the difference. An empty cell labelled &ldquo;not retrieved&rdquo; is a success. The model is so good at producing the plausible thing, and the plausible thing is usually close. Close is the whole problem.</p>
+        <p>The reframe underneath all three is the one that took longest to accept emotionally: <strong>a report with honest gaps is correct output, and a report with a confident wrong number is broken</strong>:even if the number happens to be right, because the process that produced it can&rsquo;t tell the difference. An empty cell labelled &ldquo;not retrieved&rdquo; is a success. The model is so good at producing the plausible thing, and the plausible thing is usually close. Close is the whole problem.</p>
 
         <h2>The Snowflake run</h2>
 
-        <p>For a while I parallelised the long pipelines with sub-agents &mdash; a merge agent, an audit agent, a data-extraction agent. Clean architecture, narrow briefs. Then I checked the numbers on one run carefully.</p>
+        <p>For a while I parallelised the long pipelines with sub-agents:a merge agent, an audit agent, a data-extraction agent. Clean architecture, narrow briefs. Then I checked the numbers on one run carefully.</p>
 
         <p>One section had come back with <strong>100 of its 122 financial data points fabricated</strong>, by a sub-agent that had been given a perfectly clear instruction. Revenue and gross profit were right, because they were the first two fields in the API response. Everything after that was invented, with the correct source tags attached. The report read fine. It was wrong in nearly every detail.</p>
 
@@ -232,7 +232,7 @@
 
         <p>Every serious skill has a file called <code>FAILURE_LOG.md</code> sitting next to it. It&rsquo;s append-only. Each entry records what broke, the run that triggered it, and the rule that now prevents it. <strong>Reading it is step one of every run</strong>, before any retrieval or writing.</p>
 
-        <p>It works because it closes the loop between &ldquo;something broke&rdquo; and &ldquo;the skill changed.&rdquo; Without a log, every fix is local &mdash; this report, this company, this bug &mdash; and the same mistake comes back the following week in slightly different clothes. With a log, every fix is structural: a rule in the skill, a check in a gate, a line in the instructions file. New failures get written down <strong>in the same session</strong> they happen, never deferred, because by next time the context is gone. Trace almost any rule I have back far enough and you find a logged failure at the root of it. The Snowflake run is one. A run where a bank&rsquo;s accounts got read with a software template, producing phantom debt that didn&rsquo;t exist, is another. The log is the thing the skills actually grew out of.</p>
+        <p>It works because it closes the loop between &ldquo;something broke&rdquo; and &ldquo;the skill changed.&rdquo; Without a log, every fix is local:this report, this company, this bug:and the same mistake comes back the following week in slightly different clothes. With a log, every fix is structural: a rule in the skill, a check in a gate, a line in the instructions file. New failures get written down <strong>in the same session</strong> they happen, never deferred, because by next time the context is gone. Trace almost any rule I have back far enough and you find a logged failure at the root of it. The Snowflake run is one. A run where a bank&rsquo;s accounts got read with a software template, producing phantom debt that didn&rsquo;t exist, is another. The log is the thing the skills actually grew out of.</p>
 
         <h2>The skill is the spec; the gate is the gate</h2>
 
@@ -240,15 +240,15 @@
 
         <p>So the rules I refuse to ship without are each backed by a small Python program that runs over the output and exits with an error when something&rsquo;s wrong. One runs regex over prose and hard-fails on the worst machine-writing tells. One runs five checks over a finished report: no leftover placeholder tags, no unretrieved numbers in historical columns, citations that actually resolve, a balance sheet that reconciles to the dollar. One diffs the written numbers against the raw data feed to catch exactly the Snowflake failure. <strong>Each gate is a hundred lines or less, runs in seconds, and uses no model at all.</strong> That last part is the point: <strong>you can&rsquo;t ask the thing that makes the mistake to also be the thing that reliably catches it.</strong> The catcher has to be dumber, deterministic, and incorruptible.</p>
 
-        <p>This is the same line drawn over and over. The model does judgment &mdash; reading, weighing, classifying, composing. Deterministic code does assembly, transformation, and checking. If a task has one correct output given its input, it belongs in code; if it needs reading and weighing, it belongs to the model, and its output then goes straight to code for assembly and verification. Most of my failures came from putting the model on the wrong side of that line: asking it to do bookkeeping and watching it improvise.</p>
+        <p>This is the same line drawn over and over. The model does judgment:reading, weighing, classifying, composing. Deterministic code does assembly, transformation, and checking. If a task has one correct output given its input, it belongs in code; if it needs reading and weighing, it belongs to the model, and its output then goes straight to code for assembly and verification. Most of my failures came from putting the model on the wrong side of that line: asking it to do bookkeeping and watching it improvise.</p>
 
         <h2>The smaller habits that compounded</h2>
 
         <p>A few lighter patterns earned their place. <strong>Classify the input before you process it.</strong> The report pipeline decides whether a company is a software business, a bank, an insurer, a REIT, a marketplace, a miner, or a holding company <em>before</em> it touches the financials, because each needs a different template and the wrong one corrupts everything quietly. That step exists because a bank once got read as a software company and the output looked clean while being conceptually wrong.</p>
 
-        <p><strong>Tell the model where it may and may not exercise judgment.</strong> In my note-taking skills the body of a note is copied verbatim &mdash; no summarising, no improving &mdash; and the only authored parts are the title and a few lines of metadata. The model&rsquo;s instinct is to add value everywhere, and &ldquo;value&rdquo; often means paraphrase, which is destructive when the whole point is fidelity to the source.</p>
+        <p><strong>Tell the model where it may and may not exercise judgment.</strong> In my note-taking skills the body of a note is copied verbatim:no summarising, no improving:and the only authored parts are the title and a few lines of metadata. The model&rsquo;s instinct is to add value everywhere, and &ldquo;value&rdquo; often means paraphrase, which is destructive when the whole point is fidelity to the source.</p>
 
-        <p><strong>Write the skill against the tool, not the vendor.</strong> The data source appears throughout as a single named parameter with a note that today it&rsquo;s one provider and tomorrow it might be another. Connectors change; a skill with the vendor&rsquo;s name welded into forty instructions becomes a rewrite, while a parameterised one is a one-line change. <strong>Pick the model deliberately</strong> &mdash; the faster one for mechanical work, the stronger one for judgment &mdash; and <strong>ask your questions in one batch up front</strong>, never one a time, and never a question whose answer is already sitting in what I just told it.</p>
+        <p><strong>Write the skill against the tool, not the vendor.</strong> The data source appears throughout as a single named parameter with a note that today it&rsquo;s one provider and tomorrow it might be another. Connectors change; a skill with the vendor&rsquo;s name welded into forty instructions becomes a rewrite, while a parameterised one is a one-line change. <strong>Pick the model deliberately</strong>:the faster one for mechanical work, the stronger one for judgment:and <strong>ask your questions in one batch up front</strong>, never one a time, and never a question whose answer is already sitting in what I just told it.</p>
 
         <h2>The whole kit, on one page</h2>
 

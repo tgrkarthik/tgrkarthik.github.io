@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> A Telegram Remote for My Claude Workflows - ClaudeSync_ToPhone - Karthik Tiruvarur</title>
+    <title> Using my phone to interact with Claude Workflows - ClaudeSync_ToPhone - Karthik Tiruvarur</title>
     <link rel="stylesheet" href="../styles.css">
     <style>
         .article-header { max-width: 1050px; margin: 3rem auto 2rem; padding: 0 2rem; }
@@ -82,7 +82,7 @@
 
     <div class="article-header">
         <a href="../ai-experiments.html" class="back-link">&larr; Back to AI Experiments</a>
-        <h1 class="article-title">A Telegram Remote for My Claude Workflows : ClaudeSync_ToPhone </h1>
+        <h1 class="article-title">Using my phone to launch and interact with Claude Workflows : ClaudeSync_ToPhone </h1>
         <div class="article-meta">
             <span>June 2026</span>
             <span>&bull;</span>
@@ -99,43 +99,43 @@
 
         <p>I have several workflows I use regularly. For example an IR (investor relations') Scraper that downloads investor relations documents from any public company&rsquo;s website. A SellSide Initiation pipeline writes equity research reports in six stages across multiple Claude API calls. A <code>compile-wiki-node</code> skill synthesises everything in my Obsidian vault about a company into a single compiled wiki style note. A <code>summarize-investor-conversation</code> skill turns voice transcripts of my investor meetings into structured notes with explicit desing to extract themes, company names etc. The conversation summarization logic here would be different say from other summarizing other calls where I am speakig about travels, music, food or something entirely different.   </p>
 
-        <p>All of these run in Cowork or Claude Code. Fine when I&rsquo;m at my desk. <strong>Not fine when I&rsquo;m traveling, in a meeting, or on my phone &mdash; and a workflow has paused mid-run waiting for me to answer a question.</strong></p>
+        <p>All of these run in Cowork or Claude Code. Fine when I&rsquo;m at my desk. <strong>Not fine when I&rsquo;m traveling, in a meeting, or on my phone:and a workflow has paused mid-run waiting for me to answer a question.</strong></p>
 
         <h2>The Wall</h2>
 
         <p>The immediate instinct was to intercept Cowork&rsquo;s question prompts and forward them to my phone.</p>
 
-        <p>When Claude pauses in Cowork and asks a question, it renders a UI widget in the desktop app. There&rsquo;s no webhook, no notification event, no hook that fires to an external service. Cowork&rsquo;s interruptions are UI events, not API events. Claude Code has a notification hook system, but it fires one-way &mdash; the reply path (phone back to Claude Code, to resume the paused workflow) has no bridge.</p>
+        <p>When Claude pauses in Cowork and asks a question, it renders a UI widget in the desktop app. There&rsquo;s no webhook, no notification event, no hook that fires to an external service. Cowork&rsquo;s interruptions are UI events, not API events. Claude Code has a notification hook system, but it fires one-way:the reply path (phone back to Claude Code, to resume the paused workflow) has no bridge.</p>
 
         <p>The wall isn&rsquo;t obvious until you look directly at it.</p>
 
         <h2>The Reframe</h2>
 
-        <p>The thing I hadn&rsquo;t seen clearly: <strong>my <code>SKILL.md</code> files are prompts, and prompts are portable</strong>. Cowork is one runner &mdash; a desktop UI that reads a prompt and executes it. A Python script calling the Claude API directly is another runner. If you control the runner, you control the I/O channel.</p>
+        <p>The thing I hadn&rsquo;t seen clearly: <strong>my <code>SKILL.md</code> files are prompts, and prompts are portable</strong>. Cowork is one runner:a desktop UI that reads a prompt and executes it. A Python script calling the Claude API directly is another runner. If you control the runner, you control the I/O channel.</p>
 
-        <p>Instead of trying to intercept Cowork, I could have Claude build a different runner entirely &mdash; one that uses Telegram as the terminal. The same <code>SKILL.md</code> content that tells Claude how to compile a wiki node or run a SellSide analysis works identically when passed as a system prompt to the Claude API from a Python script. The intelligence is in the file. The UI is interchangeable.</p>
+        <p>Instead of trying to intercept Cowork, I could have Claude build a different runner entirely:one that uses Telegram as the terminal. The same <code>SKILL.md</code> content that tells Claude how to compile a wiki node or run a SellSide analysis works identically when passed as a system prompt to the Claude API from a Python script. The intelligence is in the file. The UI is interchangeable.</p>
 
         <p>This reframe collapsed the problem. I didn&rsquo;t need to bridge Cowork to my phone. I needed a runner that natively used my phone as its I/O.</p>
 
         <h2>Why Not WhatsApp</h2>
 
-        <p>The first plan Claude proposed involved Twilio&rsquo;s WhatsApp Business API. This turned out to be more friction than the actual problem. WhatsApp Business API requires Meta Business Verification &mdash; a formal approval process that takes 1&ndash;3 days and sometimes longer. You also need a dedicated phone number not already registered as a personal WhatsApp account. There are per-message fees on top.</p>
+        <p>The first plan Claude proposed involved Twilio&rsquo;s WhatsApp Business API. This turned out to be more friction than the actual problem. WhatsApp Business API requires Meta Business Verification:a formal approval process that takes 1&ndash;3 days and sometimes longer. You also need a dedicated phone number not already registered as a personal WhatsApp account. There are per-message fees on top.</p>
 
-        <p>Telegram sidesteps all of it. Open @BotFather on Telegram, send <code>/newbot</code>, give it a name, get a token. <strong>Five minutes. Free. Fully bidirectional.</strong> The Python library &mdash; <code>python-telegram-bot</code> &mdash; is mature and async-native. I didn&rsquo;t need to think about infrastructure.</p>
+        <p>Telegram sidesteps all of it. Open @BotFather on Telegram, send <code>/newbot</code>, give it a name, get a token. <strong>Five minutes. Free. Fully bidirectional.</strong> The Python library:<code>python-telegram-bot</code>:is mature and async-native. I didn&rsquo;t need to think about infrastructure.</p>
 
         <h2>Building remote access through my mobile</h2>
 
-        <p>Claude helped design an agentic loop. The bot receives a Telegram message, calls the Claude API, handles whatever Claude wants to do &mdash; use a tool, ask a question, finish &mdash; and sends the result back. It&rsquo;s async throughout: the bot keeps polling for new messages while Claude works in the background.</p>
+        <p>Claude helped design an agentic loop. The bot receives a Telegram message, calls the Claude API, handles whatever Claude wants to do:use a tool, ask a question, finish:and sends the result back. It&rsquo;s async throughout: the bot keeps polling for new messages while Claude works in the background.</p>
 
-        <p>Claude has five tools available in every workflow. <strong><code>ask_human</code></strong> pauses the workflow and sends me a Telegram message with a question; I reply, it resumes. <strong><code>run_command</code></strong> executes a shell command or Python script on my Windows machine, streaming progress updates every 20 seconds. <code>read_file</code>, <code>write_file</code>, and <code>list_files</code> give full file system access &mdash; vault notes, <code>SKILL.md</code> files, transcripts, output folders.</p>
+        <p>Claude has five tools available in every workflow. <strong><code>ask_human</code></strong> pauses the workflow and sends me a Telegram message with a question; I reply, it resumes. <strong><code>run_command</code></strong> executes a shell command or Python script on my Windows machine, streaming progress updates every 20 seconds. <code>read_file</code>, <code>write_file</code>, and <code>list_files</code> give full file system access:vault notes, <code>SKILL.md</code> files, transcripts, output folders.</p>
 
-        <p>The bot also has a skill registry: a Python dictionary mapping skill names to their <code>SKILL.md</code> paths. When I send <code>/run compile-wiki-node</code>, the bot reads the <code>SKILL.md</code>, passes it as Claude&rsquo;s system prompt, and starts the workflow. <strong>Seven skills are registered</strong>: <code>compile-wiki-node</code>, <code>summarize-investor-conversation</code>, SellSide Initiation, <code>conversation-ideas-extract</code>, <code>capture-topic</code>, <code>voice-dna</code>, and the IR Scraper. The last one is different &mdash; instead of running as a Claude conversation, it executes <code>run.py</code> as a subprocess via <code>run_command</code> and streams the output back to Telegram.<a href="#fn1" class="footnote-ref"><sup>1</sup></a></p>
+        <p>The bot also has a skill registry: a Python dictionary mapping skill names to their <code>SKILL.md</code> paths. When I send <code>/run compile-wiki-node</code>, the bot reads the <code>SKILL.md</code>, passes it as Claude&rsquo;s system prompt, and starts the workflow. <strong>Seven skills are registered</strong>: <code>compile-wiki-node</code>, <code>summarize-investor-conversation</code>, SellSide Initiation, <code>conversation-ideas-extract</code>, <code>capture-topic</code>, <code>voice-dna</code>, and the IR Scraper. The last one is different:instead of running as a Claude conversation, it executes <code>run.py</code> as a subprocess via <code>run_command</code> and streams the output back to Telegram.<a href="#fn1" class="footnote-ref"><sup>1</sup></a></p>
 
         <h2>The Approval Gate in Practice</h2>
 
         <p>The part I was most keen to test: Claude pausing mid-workflow and asking me a question on my phone, then resuming when I reply.</p>
 
-        <p>The first live test was <code>/scrape SNOW</code> &mdash; the IR Scraper for Snowflake. Claude sent three questions before running: document types, date range, output path. I replied to question 2 with &ldquo;5 years&rdquo; from my phone, and the bot sent back: &ldquo;&#9654;&#65039; Continuing&hellip;&rdquo; Claude resumed with my answer and kept going. The pause-reply-resume pattern worked exactly as intended.</p>
+        <p>The first live test was <code>/scrape SNOW</code>:the IR Scraper for Snowflake. Claude sent three questions before running: document types, date range, output path. I replied to question 2 with &ldquo;5 years&rdquo; from my phone, and the bot sent back: &ldquo;&#9654;&#65039; Continuing&hellip;&rdquo; Claude resumed with my answer and kept going. The pause-reply-resume pattern worked exactly as intended.</p>
 
         <p>A research query came back first time, no friction. The reply arrived in Telegram inside ten seconds.</p>
 
@@ -143,24 +143,18 @@
 
         <h2>What I Got Wrong First</h2>
 
-        <p>My initial plan was a five-day outline covering Twilio, async job queues, iOS Shortcuts, approval gate state machines, and Railway deployment. All of it real &mdash; but all of it week-two thinking laid out as day-one requirements.</p>
+        <p>My initial plan was a five-day outline covering Twilio, async job queues, iOS Shortcuts, approval gate state machines, and Railway deployment. All of it real:but all of it week-two thinking laid out as day-one requirements.</p>
 
         <p>The useful pushback was: &ldquo;Why 5 days? Should be simpler.&rdquo; It was. The working core is 300 lines. Telegram handles polling natively. The skill registry is a dictionary. The agentic loop is a while loop. <strong>The complexity I was front-loading was real but unnecessary until the basic thing worked.</strong></p>
 
 
 
-        <h2>What&rsquo;s Not Done Yet</h2>
-
-        <p>The <code>/research</code> command uses Claude&rsquo;s training knowledge, not live search. That&rsquo;s the next tool to add &mdash; a <code>web_search</code> wrapper so research queries actually fetch rather than recall. The daily briefing command has the same gap.</p>
-
-        <p>The bot runs on my Windows machine, which means it only works when the machine is on. Getting <code>/briefing</code> to arrive at 7am regardless of whether I&rsquo;m at my desk requires a deploy to somewhere always-on &mdash; either a Cloudflare Tunnel keeping the machine reachable, or a cheap cloud instance at around $5/month on Railway.</p>
-
-        <p>SellSide Initiation via phone is the real test. Six stages, multiple model switches, Quartr API calls, document output. Running that end-to-end through Telegram &mdash; with approval gates at the right decision points &mdash; is the next experiment. ClaudeSync works now for research queries and simple skill invocations. Whether the approval gate holds up across a full SellSide run &mdash; that&rsquo;s what I don&rsquo;t know yet.</p>
+ 
 
     </article>
 
     <div class="footnotes">
-        <p id="fn1"><sup>1</sup> The two-tier skill registry &mdash; LLM skills that run as Claude conversations, script skills that run as subprocesses &mdash; turned out to be the right design split. LLM skills need the conversation loop to handle tool calls and multi-turn reasoning. Script skills like the IR Scraper have their own execution engine; Claude&rsquo;s role there is just parameter collection via <code>ask_human</code>, then handing off to the subprocess.</p>
+        <p id="fn1"><sup>1</sup> The two-tier skill registry:LLM skills that run as Claude conversations, script skills that run as subprocesses:turned out to be the right design split. LLM skills need the conversation loop to handle tool calls and multi-turn reasoning. Script skills like the IR Scraper have their own execution engine; Claude&rsquo;s role there is just parameter collection via <code>ask_human</code>, then handing off to the subprocess.</p>
     </div>
 
     <div class="article-footer">

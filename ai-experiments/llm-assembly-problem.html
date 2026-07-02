@@ -42,7 +42,7 @@
 
     <article class="article-body">
 
-        <p><strong>The generation step works.</strong> Give an LLM a 400-line skill file, access to a financial data API, and a company ticker, and it&rsquo;ll produce a 13-section initiation report &mdash; sourced figures, internal consistency checks, a variant perception thesis, the lot. I&rsquo;ve now run the pipeline on Veeva, Palantir, Amazon, Snowflake, Thermo Fisher, Danaher and a few others. Structurally sound, directionally useful. Not perfect, but the analytical work is doing what I asked.</p>
+        <p><strong>The generation step works.</strong> Give an LLM a 400-line skill file, access to a financial data API, and a company ticker, and it&rsquo;ll produce a 13-section initiation report: sourced figures, internal consistency checks, a variant perception thesis, the lot. I&rsquo;ve now run the pipeline on Veeva, Palantir, Amazon, Snowflake, Thermo Fisher, Danaher and a few others. Structurally sound, directionally useful. Not perfect, but the analytical work is doing what I asked.</p>
 
         <p><strong>What doesn&rsquo;t work is what comes after.</strong></p>
 
@@ -50,7 +50,7 @@
 
         <p>It wasn&rsquo;t.</p>
 
-        <p>The merge agent has no memory of my formatting preferences. No access to the tested document converter. No awareness that the section structure is defined in a separate skill file the agent can&rsquo;t see. So it improvised. It reordered sections based on its own judgment. It wrote an ad-hoc Python converter that didn&rsquo;t handle markdown bold syntax or table parsing. It paraphrased content during assembly &mdash; which subtly altered source-tagged figures, <strong>which is the one thing that absolutely cannot happen in financial work.</strong> Thermo Fisher came back with 795 paragraphs of unrendered bold markers. Danaher&rsquo;s sections were renumbered. Two reports, same pipeline, minutes apart, different structures.</p>
+        <p>The merge agent has no memory of my formatting preferences. No access to the tested document converter. No awareness that the section structure is defined in a separate skill file the agent can&rsquo;t see. So it improvised. It reordered sections based on its own judgment. It wrote an ad-hoc Python converter that didn&rsquo;t handle markdown bold syntax or table parsing. It paraphrased content during assembly, which subtly altered source-tagged figures. <strong>This is the one thing that absolutely cannot happen in financial work.</strong> Thermo Fisher came back with 795 paragraphs of unrendered bold markers. Danaher&rsquo;s sections were renumbered. Two reports, same pipeline, minutes apart, different structures.</p>
 
         <h2>The Step That Needs the Least Intelligence</h2>
 
@@ -60,17 +60,17 @@
 
         <h2>The Verification Tax I Should Have Paid Earlier</h2>
 
-        <p>Every failure mode I encountered &mdash; a cross-line regex that matched newlines and corrupted a financial table, an annotation tag that broke the bold parser, Stage 3 valuation headings appearing as peer-level sections in the merged output &mdash; <strong>was caught not by me reading the document, but by automated verification checks I built after the fact.</strong></p>
+        <p>Every failure mode I encountered (a cross-line regex that matched newlines and corrupted a financial table, an annotation tag that broke the bold parser, Stage 3 valuation headings appearing as peer-level sections in the merged output) was caught not by me reading the document, but by automated verification checks I built after the fact.</p>
 
         <p><code>grep &quot;^## &quot;</code> on the final markdown tells you instantly if the section structure is clean. A three-line Python snippet counting <code>**</code> in the docx paragraphs tells you if the converter worked. <strong>Both trivial to write. I should have built them from the start.</strong></p>
 
-        <p>The hours I spent tracing a <code>\s</code> regex that matched across line boundaries, tracking down a triple-bold pattern that one company&rsquo;s filings produced and no other company did &mdash; that was the cost of delivering output without verification and discovering problems only by reading the final product. <strong>Verification scripts catch in two seconds what a careful human read catches in twenty minutes.</strong> And the careful human read often misses things the script wouldn&rsquo;t.</p>
+        <p>The hours I spent tracing a <code>\s</code> regex that matched across line boundaries, tracking down a triple-bold pattern that one company&rsquo;s filings produced and no other company did: that was the cost of delivering output without verification and discovering problems only by reading the final product. <strong>Verification scripts catch in two seconds what a careful human read catches in twenty minutes.</strong> And the careful human read often misses things the script wouldn&rsquo;t.</p>
 
         <h2>Letting the Pipeline Read Its Own Failure Log</h2>
 
         <p>The pipeline now has a single entry point. A unique trigger phrase. Verbatim subagent prompts that leave no room for interpretation. Deterministic merge. Automated verification. <strong>And a failure log that persists across sessions, so the system accumulates knowledge instead of repeating mistakes.</strong></p>
 
-        <p>Of all of those, the failure log mattered most, in a way I didn&rsquo;t see coming. After one particularly bad run I asked Claude a simple question: under what conditions will this break? The response was a structured taxonomy &mdash; failure modes sorted by probability and severity, honest assessments of what&rsquo;s solved, what&rsquo;s mitigated, and what is still an accepted risk that the verification step will catch. I took that taxonomy and fed it back into the orchestrator itself as a mandatory pre-read. <strong>Before the system runs a single stage now, it reads its own failure log.</strong> The LLM that might break the pipeline starts every run by studying exactly how it has broken before.</p>
+        <p>Of all of those, the failure log mattered most, in a way I didn&rsquo;t see coming. After one particularly bad run I asked Claude a simple question: under what conditions will this break? The response was a structured taxonomy: failure modes sorted by probability and severity, honest assessments of what&rsquo;s solved, what&rsquo;s mitigated, and what is still an accepted risk that the verification step will catch. I took that taxonomy and fed it back into the orchestrator itself as a mandatory pre-read. <strong>Before the system runs a single stage now, it reads its own failure log.</strong> The LLM that might break the pipeline starts every run by studying exactly how it has broken before.</p>
 
         <p><strong>An LLM&rsquo;s self-awareness can be an engineering input.</strong> It knows its own failure modes better than I would have guessed. Ask the right question and you get a structured answer you can operationalise. Then the feedback loop closes: the system breaks, you diagnose it together, the diagnosis becomes part of the system&rsquo;s own instructions, and the next run is harder to break in the same way.</p>
 
