@@ -110,6 +110,72 @@
             font-weight: 700;
         }
 
+        /* Tweet embed — matches ai-experiments.html style */
+        .tweet-embed {
+            max-width: 480px;
+            margin: 2rem 0 2.5rem;
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            transition: box-shadow 0.2s ease;
+        }
+        .tweet-embed:hover {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+        }
+        .tweet-embed-inner {
+            padding: 16px;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        .tweet-embed-inner:hover { text-decoration: none; }
+        .tweet-embed-top {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .tweet-embed-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+            margin-right: 10px;
+        }
+        .tweet-embed-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .tweet-embed-name {
+            font-size: 15px;
+            font-weight: 700;
+            color: #0f1419;
+            line-height: 1.2;
+        }
+        .tweet-embed-handle {
+            font-size: 13px;
+            color: #536471;
+            line-height: 1.2;
+        }
+        .tweet-embed-xlogo {
+            margin-left: auto;
+            flex-shrink: 0;
+        }
+        .tweet-embed-text {
+            font-size: 15px;
+            color: #0f1419;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+        .tweet-embed-date {
+            font-size: 13px;
+            color: #536471;
+        }
+
         /* Footnote references inline */
         .footnote-ref {
             font-size: 12px;
@@ -140,7 +206,7 @@
         }
         .footnotes a:hover { color: #000000; }
 
-        @media (max-width: 768px) { .article-title { font-size: 24px; } .article-body p { font-size: 15px; } }
+        @media (max-width: 768px) { .article-title { font-size: 24px; } .article-body p { font-size: 15px; } .tweet-embed { max-width: 100%; } }
         @media (max-width: 480px) { .article-title { font-size: 20px; } .article-body p { font-size: 14px; } .article-footer { padding: 1.25rem 1rem; } }
     </style>
 </head>
@@ -161,9 +227,40 @@
 
         <div class="article-tldr">
             <div class="article-tldr-label">TL;DR</div>
-            <p>When andrej karpathy tweeted his "LLM wiki" in April he got many people excited. one of whom was me. The simplicity of the concept was to allow someone to take years of their own note-taking, and not have to re-create all the synthesized content each time they returned to a subject. Create it once, add deltas periodically, and move on. For the last 4 weeks i extracted approximately 2300 pages of my roam research into Obsidian, then developed a small family of Claude skills. These skills use unprocessed notes as sources instead of processed ones. <code>compile-wiki-node</code> is the synthesizer; <code>capture-topic</code>, <code>summarize-investor-conversation</code>, <code>conversation-ideas-extract</code> and <code>youtube-obsidian-batch</code> all feed it. <strong>Closed book rule</strong>: no web searches during synthesis, no information the model happened to learn from its own training, and any conflicts were logged with provenance (i.e., why), as opposed to silently resolving them: this is what gives any of it credibility. After two weeks the nodes already seem to be compounding.</p>
-            <p style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(139, 69, 19, 0.2);"><strong>Sample Wiki Node:</strong> A sample compiled node created from my notes is available <a href="../documents/AI%20-%20LLMs%2C%20Scaling%20and%20Compute.pdf" style="color: #8b4513; font-weight: 600; border-bottom: 2px solid #8b4513; text-decoration: none;">here</a>. Note: This document is password-protected as it contains personal information including names and details from private conversations. Access is restricted to maintain privacy.</p>
+            <p>When andrej karpathy tweeted his "LLM wiki" in April he got many people excited. one of whom was me. The simplicity of the concept was to allow someone to take years of their own note-taking, and not have to re-create all the synthesized content each time they returned to a subject. Create it once, add deltas periodically, and move on. For the last several weeks, I extracted approximately 2300 pages of my roam research into Obsidian, then developed a small family of Claude skills. These skills use unprocessed notes as sources instead of processed ones. <code>compile-wiki-node</code> is the synthesizer; <code>capture-topic</code>, <code>summarize-work-conversation</code>, <code>conversation-ideas-extract</code> and <code>youtube-obsidian-batch</code> all feed it. <strong>Closed book rule</strong>: no web searches during synthesis, no information the model happened to learn from its own training, and any conflicts were logged with provenance (i.e., why), as opposed to silently resolving them: this is what gives any of it credibility. After two weeks the nodes already seem to be compounding.</p>
+            <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(139, 69, 19, 0.2);">
+                <p style="margin: 0 0 0.75rem;"><strong>Sample Wiki Node:</strong> A sample compiled node created from my notes is available below. This document contains personal information including names and details from private conversations, so it shares the same password as the <a href="../pages/documents.html" style="color: #8b4513; border-bottom: 1px solid #8b4513; text-decoration: none;">vault</a>.</p>
+
+                <div id="sample-node-locked" style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                    <input type="password" id="sampleNodePassword" placeholder="Enter vault password" style="padding: 0.4rem 0.75rem; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; width: 180px;">
+                    <button onclick="unlockSampleNode()" style="padding: 0.4rem 1rem; background: #8b4513; color: #fff; border: none; border-radius: 4px; font-size: 14px; cursor: pointer;">Unlock</button>
+                    <span id="sampleNodeError" style="display: none; color: #d32f2f; font-size: 13px;">Incorrect password.</span>
+                </div>
+
+                <div id="sample-node-unlocked" style="display: none;">
+                    <a href="../documents/AI%20-%20LLMs%2C%20Scaling%20and%20Compute.pdf" style="color: #8b4513; font-weight: 600; border-bottom: 2px solid #8b4513; text-decoration: none;" target="_blank">Download: AI — LLMs, Scaling and Compute (PDF) &rarr;</a>
+                </div>
+            </div>
         </div>
+
+        <div class="tweet-embed">
+            <a href="https://x.com/karpathy/status/2039805659525644595" target="_blank" class="tweet-embed-inner">
+                <div class="tweet-embed-top">
+                    <div class="tweet-embed-avatar">
+                        <img src="ai-experiments/karpathy_avatar.jpg" alt="Andrej Karpathy" onerror="this.parentElement.innerHTML='<div style=&quot;width:48px;height:48px;border-radius:50%;background:#1a1a2e;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:18px;&quot;>AK</div>'">
+                    </div>
+                    <div>
+                        <div class="tweet-embed-name">Andrej Karpathy</div>
+                        <div class="tweet-embed-handle">@karpathy</div>
+                    </div>
+                    <div class="tweet-embed-xlogo">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="#0f1419"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    </div>
+                </div>
+                <div class="tweet-embed-text">Something I&rsquo;m finding very useful recently: using LLMs to build personal knowledge bases for various topics of research interest. A large fraction of my recent token throughput is going less into manipulating code, and more into manipulating knowledge&hellip;</div>
+                <div class="tweet-embed-date">April 2, 2026</div>
+            </a>
+        </div><a href="#fn2" class="footnote-ref">2</a>
 
         <h2>The Reframe</h2>
 
@@ -193,7 +290,7 @@
 
         <p><code>capture-topic</code> converts a chat search session into a single <code>.md</code> file in <code>Pages/</code> based upon a date. After spending hours with Claude researching a company or a particular philosophical thread, and saying "capture this", the skill creates a Page in <code>Pages/YYYY-MM-DD Topic.md</code> format and includes automatic links to Wikilinks and tags. This represents the difference between thinking about something and having it in the vault.</p>
 
-        <p><code>summarize-investor-conversation</code> takes a voice transcript or Notes from a phone call with another investor (long, possibly in multiple languages including Hindi-English heavy calls) and adds them as a structured Note in <code>Notes/</code>. Additionally, <code>summarize-investor-conversation</code> automatically appends a linked list of bullet points from that call to a relevant <code>Speakers.md</code> page (if it already exists). <strong>As such, each speaker now has a running log of their comments from across all conversations. Those comments are also cross-linked to the companies and themes discussed.</strong></p>
+        <p><code>summarize-work-conversation</code> takes a voice transcript or Notes from a phone call with another investor (long, possibly in multiple languages including Hindi-English heavy calls) and adds them as a structured Note in <code>Notes/</code>. Additionally, <code>summarize-work-conversation</code> automatically appends a linked list of bullet points from that call to a relevant <code>Speakers.md</code> page (if it already exists). <strong>As such, each speaker now has a running log of their comments from across all conversations. Those comments are also cross-linked to the companies and themes discussed.</strong></p>
 
         <p><code>youtube-obsidian-batch</code> performs this same function monthly for video notes. Each month I paste a series of bullets generated via Gemini from the videos watched during that month. <code>youtube-obsidian-batch</code> then compiles those bullets into individual notes and generates a master index.</p>
 
@@ -286,6 +383,7 @@
 
     <div class="footnotes">
         <p id="fn1"><sup>1</sup> The reason a closed source list works and "don't hallucinate" doesn't is that the model has no internal flag separating a retrieved fact from a confidently recalled one. It's all just text to it. "Don't cite anything outside this list of files" is a set-membership test: a downstream Python check can enforce it deterministically, no model judgement required.</p>
+        <p id="fn2"><sup>2</sup> Andrej Karpathy's original tweet: <a href="https://x.com/karpathy/status/2039805659525644595" target="_blank">x.com/karpathy/status/2039805659525644595</a></p>
     </div>
 
     <div class="article-footer">
@@ -299,5 +397,27 @@
     <footer id="shared-footer"></footer>
 
     <script src="../components/nav-footer.js"></script>
+    <script src="../script.js"></script>
+    <script>
+    async function unlockSampleNode() {
+        var pw = document.getElementById('sampleNodePassword').value;
+        var err = document.getElementById('sampleNodeError');
+        if (!pw) { err.textContent = 'Enter a password.'; err.style.display = 'inline'; return; }
+        var h = await hashPassword(pw);
+        if (h === CORRECT_PASSWORD_HASH) {
+            document.getElementById('sample-node-locked').style.display = 'none';
+            document.getElementById('sample-node-unlocked').style.display = 'block';
+            err.style.display = 'none';
+        } else {
+            err.textContent = 'Incorrect password.';
+            err.style.display = 'inline';
+            document.getElementById('sampleNodePassword').value = '';
+            document.getElementById('sampleNodePassword').focus();
+        }
+    }
+    document.getElementById('sampleNodePassword').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') unlockSampleNode();
+    });
+    </script>
 </body>
 </html>
