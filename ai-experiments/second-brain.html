@@ -91,7 +91,7 @@
             box-shadow: 0 2px 8px rgba(139, 69, 19, 0.08);
         }
         .insight-box::before {
-            content: "💭";
+            content: "\1F4AD";
             position: absolute;
             left: -2rem;
             top: 2rem;
@@ -161,83 +161,81 @@
 
         <div class="article-tldr">
             <div class="article-tldr-label">TL;DR</div>
-            <p>Karpathy&rsquo;s <em>LLM wiki</em> tweet from April got a lot of people, including me super excited. The simple idea was to that one doesn't need to re-synthesise years worth of notes from scratch every time you come back to a topic: <strong>compile once, keep it fresh with deltas, move on.</strong> Over the last four weeks I pulled ~2,300 pages out of RoamResearch into Obsidian, then built a small family of Claude skills that treat raw notes as sources rather than as the finished product. <code>compile-wiki-node</code> is the synthesiser; <code>capture-topic</code>, <code>summarize-investor-conversation</code>, <code>conversation-ideas-extract</code> and <code>youtube-obsidian-batch</code> feed it. <strong>Closed-book discipline</strong>: no web search in synthesis, no facts the model happens to know from training, conflicts logged with provenance rather than silently resolved: is what makes any of it trustworthy. Two weeks in, the nodes already look like they&rsquo;re compounding.</p>
+            <p>When andrej karpathy tweeted his "LLM wiki" in April he got many people excited. one of whom was me. The simplicity of the concept was to allow someone to take years of their own note-taking, and not have to re-create all the synthesized content each time they returned to a subject. Create it once, add deltas periodically, and move on. For the last 4 weeks i extracted approximately 2300 pages of my roam research into Obsidian, then developed a small family of Claude skills. These skills use unprocessed notes as sources instead of processed ones. <code>compile-wiki-node</code> is the synthesizer; <code>capture-topic</code>, <code>summarize-investor-conversation</code>, <code>conversation-ideas-extract</code> and <code>youtube-obsidian-batch</code> all feed it. <strong>Closed book rule</strong>: no web searches during synthesis, no information the model happened to learn from its own training, and any conflicts were logged with provenance (i.e., why), as opposed to silently resolving them: this is what gives any of it credibility. After two weeks the nodes already seem to be compounding.</p>
             <p style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(139, 69, 19, 0.2);"><strong>Sample Wiki Node:</strong> A sample compiled node created from my notes is available <a href="../documents/AI%20-%20LLMs%2C%20Scaling%20and%20Compute.pdf" style="color: #8b4513; font-weight: 600; border-bottom: 2px solid #8b4513; text-decoration: none;">here</a>. Note: This document is password-protected as it contains personal information including names and details from private conversations. Access is restricted to maintain privacy.</p>
         </div>
 
         <h2>The Reframe</h2>
 
-        <p>I came across Andrej Karpathy&rsquo;s <a href="https://x.com/karpathy/status/2039805659525644595" target="_blank">&ldquo;LLM wiki&rdquo; tweet</a> about a few months ago around information storing and retrival, specially for one's own notes.  The idea is small and unfashionable: <strong>knowledge doesn&rsquo;t need to be re-derived every single query. Compile it once. Keep it fresh with deltas. Move on.</strong></p>
+        <p>I ran across andrej karpathy's <a href="https://x.com/karpathy/status/2039805659525644595" target="_blank">"LLM wiki" tweet</a> regarding the storing and retrieval of information, specifically for one's own notes. The idea is deceptively simple: knowledge does not have to be re-created for every query. Compile it once. Update it via deltas. Be done.</p>
 
-        <p>That&rsquo;s the shape of it. In traditional note-taking, every time you come back to a topic on which you don&rsquo;t already have a summary, you re-synthesise from scratch: a fresh walk through the raw pages, a fresh set of connections, a fresh judgement. The re-derivation is expensive, the output isn&rsquo;t stored anywhere durable, so next month you do it again. Karpathy&rsquo;s point was that this is the wrong loop. <strong>You want a persistent, compiled document per entity: company, person, theme: that gets richer over time, not longer.</strong> Each new source adds to it. Nothing rebuilds the whole thing from the ground up.</p>
+        <p>This is the general outline. Traditional note taking requires a fresh walk-through of your existing notes anytime you come back to a particular subject. You derive the synthesized content from scratch; the same connections are made anew; judgment calls are made again. Deriving synthesized content is an expensive process. The output is not saved in a durable location; therefore, you must go through the same derivation process again when returning to that subject later. Karpathy's assertion is that this is an incorrect loop. <strong>You should have persistent, compiled documentation per entity, i.e., company, person, theme, which becomes more robust over time.</strong> New sources are added to the compiled documentation. No piece of documentation ever derives the entire documentation from start-to-finish again.</p>
 
-        <h2>Getting Out of RoamResearch</h2>
+        <h2>Getting out of RoamResearch</h2>
 
-        <p>I&rsquo;d been on RoamResearch since 2020. Five years of daily notes, atomic notes tangled together with <code>[[links]]</code>, both work and personal, sitting behind a proprietary format that no model could read directly. Somewhere around <strong>2,300 pages</strong> had accumulated, and any real synthesis meant opening Roam, clicking around, reading for an hour, and re-deriving whatever I already thought I knew.</p>
+        <p>Since 2020 i've been writing in RoamResearch five days a week. Approximately <strong>2300 pages</strong> of daily, atomic notes, linked together with <code>[[links]]</code>, encompassing both personal and professional topics. All of my data exists within a proprietary format that models cannot directly access. At some point i decided to get out of RoamResearch and create a second brain.</p>
 
-        <p>The first move was structural, not clever. Export everything to plain markdown, load it into Obsidian, put the folder somewhere Claude can read it. Once the vault was a folder of <code>.md</code> files on disk, every skill I&rsquo;d already written for other work could see my notes. <strong>Vendor lock-in was the tax I&rsquo;d been paying without noticing.</strong> RoamResearch started out with a lot of promise, but the development of new features and embedding AI features never really took off. Talk about tech-debt ;)</p>
+        <p>The first step was structural rather than complex. It involved getting help from Claude, and exporting all of my data to markdown, loading it into Obsidian and putting the directory where Claude could find it. With the vault converted into a directory containing <code>.md</code> files on disk, i could now reuse every skill i'd previously written for another project that could also access my notes. <strong>Vendor lock-in was the cost i paid without realizing it.</strong> While RoamResearch initially showed great promise in terms of new feature development and integrating AI into its platform, little of either has occurred in recent years. What a mess!</p>
 
-        <p>I don&rsquo;t think Obsidian is magic:it&rsquo;s a text editor that respects the file system. The value is that the files are yours, they&rsquo;re plaintext, and any model (this year&rsquo;s or next year&rsquo;s) can be pointed at the vault without a migration.</p>
+        <p>Obsidian is simply a text editor that treats the file system properly. What provides value is that the files are yours; they're plaintext; and any future or past version of a model can point to the vault without migrating.</p>
 
         <h2>Notes as Feedstock</h2>
 
-        <p>The move Karpathy was actually suggesting, and this is the part that took a week to land, is a change of category. <strong>The raw notes stop being the deliverable. They become the source material:the feedstock:for a separate, compiled artefact that lives in a different folder.</strong></p>
+        <p>Karpathy's suggestion wasn't about changing the input to a Note, rather he suggested moving the Note out of the category of "deliverables" and turning it into the "feedstock" for a new piece of content, which will live in a separate directory. <strong>The raw notes stop being the deliverable. They become the source material for a separate, compiled artefact that lives in a different folder.</strong></p>
 
         <p>In the old model, when I wanted to think about a company I opened Roam, found the pages, read them, and held it all in my head long enough to make a decision. The head was the compiler. When I closed the tab the compilation was gone. Next time, I did it again.</p>
 
-        <p>In the new model there&rsquo;s a <code>Wiki/</code> folder next to <code>Pages/</code>. Each entity has one file in <code>Wiki/</code>. That file <em>is</em> the compiled document. <code>Pages/</code> is the append-only stream of raw material: daily notes, transcripts, captures from chat sessions. <code>Wiki/</code> is the derived layer. The model does the compilation; I edit the output; the artefact persists.</p>
+        <p>In the new paradigm, each item has two files associated with it: one in <code>Pages/</code>, where all the raw material exists (daily Notes, Transcripts, Chat captures); and one in <code>Wiki/</code>, where the compiled version of that information resides. The <code>Pages/</code> folder contains all the raw materials captured throughout the day, while the <code>Wiki/</code> folder contains the compiled versions of those items. The model does the compilation; I edit the compiled output; the artefact remains.</p>
 
         <h2>The Capture Skills</h2>
 
-        <p>Compiling from empty is useless:the vault has to be fed first. So the skills I actually wrote first were the capture skills, the front doors.</p>
+        <p><strong>Compiling from empty and the output won't seem promising or meaningful at the start: the vault needs to be fed first. So the skills I actually wrote first were the capture skills, the front doors.</strong></p>
 
-        <p><code>capture-topic</code> turns a chat-and-search session into a dated markdown page in <code>Pages/</code>. When I&rsquo;ve spent an hour with Claude going through a company or a philosophical thread and I say &ldquo;capture this&rdquo;, the skill files the whole session as <code>Pages/YYYY-MM-DD Topic.md</code> with auto-suggested <code>[[wikilinks]]</code> and tags. It&rsquo;s the difference between having thought about something and having it in the vault.</p>
+        <p><code>capture-topic</code> converts a chat search session into a single <code>.md</code> file in <code>Pages/</code> based upon a date. After spending hours with Claude researching a company or a particular philosophical thread, and saying "capture this", the skill creates a Page in <code>Pages/YYYY-MM-DD Topic.md</code> format and includes automatic links to Wikilinks and tags. This represents the difference between thinking about something and having it in the vault.</p>
 
-        <p><code>summarize-investor-conversation</code> takes a voice transcript from a call with another investor (often long, often Hinglish-heavy) and files it as a structured note in <code>Notes/</code>, then appends a backlinked chat-bullet block to the canonical <code>Speaker.md</code> page (creating the canonical page if it doesn&rsquo;t yet exist). Over time each speaker&rsquo;s page becomes a running ledger of what they&rsquo;ve said across all our conversations, cross-linked to the companies and themes they&rsquo;ve touched.</p>
+        <p><code>summarize-investor-conversation</code> takes a voice transcript or Notes from a phone call with another investor (long, possibly in multiple languages including Hindi-English heavy calls) and adds them as a structured Note in <code>Notes/</code>. Additionally, <code>summarize-investor-conversation</code> automatically appends a linked list of bullet points from that call to a relevant <code>Speakers.md</code> page (if it already exists). <strong>As such, each speaker now has a running log of their comments from across all conversations. Those comments are also cross-linked to the companies and themes discussed.</strong></p>
 
-        <p><code>youtube-obsidian-batch</code> does the same monthly for video notes: I paste a batch of Gemini-generated bullets from that month&rsquo;s watching, and the skill files each one and updates a master index.</p>
+        <p><code>youtube-obsidian-batch</code> performs this same function monthly for video notes. Each month I paste a series of bullets generated via Gemini from the videos watched during that month. <code>youtube-obsidian-batch</code> then compiles those bullets into individual notes and generates a master index.</p>
 
-        <p><code>conversation-ideas-extract</code> is the one I use least often but rely on most heavily. It crawls all ~2,300 pages and answers structured questions like &ldquo;which companies has Person X raised across our conversations&rdquo; or &ldquo;who&rsquo;s raised idea Y&rdquo;. <strong>Completeness is the whole product</strong>: the skill&rsquo;s job is to extract every idea from every dated chat, not just the ones I later summarised.</p>
+        <p><code>conversation-ideas-extract</code> is probably used less frequently than any of these other functions, but is relied upon very heavily. <code>conversation-ideas-extract</code> searches every one of approximately 2,300 pages and provides answers to structural queries (such as who has mentioned Idea Y across all conversations; or which companies have been referenced by Person X). <strong>Completeness is the whole product</strong>: the skill's job is to extract every idea from every dated chat, not just the ones I later summarised.</p>
 
-        <p>The pattern here isn&rsquo;t obvious until you&rsquo;ve written a few: <strong>the capture skills matter more than the compile skill.</strong> You can always re-run the compiler over a well-fed vault. You cannot re-run the capture on a conversation you never wrote down.</p>
+        <p><strong>The key aspect of building capture skills is that you can always run the compiler again, if you have enough data. You cannot however re-run a capture on a conversation you never captured.</strong></p>
 
         <h2>The Compile Skill</h2>
 
-        <p><code>compile-wiki-node</code> is the synthesiser. Give it an entity name: a company, a person, a theme like <code>Meditation</code> or <code>AI Investing</code>: and it reads everything in the vault that mentions that entity, builds or updates the corresponding node in <code>Wiki/</code>, and tags every claim with the file it came from.</p>
+        <p><code>compile-wiki-node</code> is essentially the synthesizer. Provide it with an entity name (a company, a person, a theme like <code>Meditation</code> or <code>AI Investing</code>): it then processes everything in your vault that references that entity, compiles or updates that entity's node in <code>Wiki/</code>, and applies tags to every claim linking it to the original file.</p>
 
-        <p>The skill I ended up with was maybe the third or fourth attempt. The first few failed for the same reason: Claude didn&rsquo;t know what my notes looked like, so its synthesis missed the load-bearing structure. Voice transcripts are different from filings are different from daily-note bullets, and the compiler has to treat them differently. What actually worked was going back and forth with Claude for two or three sessions, showing it examples from <code>Notes/</code> and <code>Pages/</code>, and having it build <strong>an index/ontology on top of my source notes</strong>:a lookup describing what a &ldquo;conversation note&rdquo; looks like, what a &ldquo;capture page&rdquo; looks like, what the two-way relationships between speakers, companies and themes should be. The compiler reads that index first, and consults it while synthesising.</p>
+<div class="insight-box">
+        <p>The final skill that I created was likely my 3rd or 4th iteration. My first attempts failed because Claude could not determine what my notes looked like, therefore its synthesis could not properly identify the structure necessary for compiling. Voice transcripts are different from filings; filings are different from daily-bullet notes; and each requires different treatment by the compiler. Ultimately, what allowed me to create a successful compiler was working back and forth with Claude for two or three sessions providing examples from both <code>Notes/</code> and <code>Pages/</code>, and allowing Claude to develop <strong>an index/ontology atop my source notes</strong>: an index/ontology describing how to differentiate between conversation notes; capture pages; relationships between speakers; companies; and themes. At that point, the compiler begins processing with an understanding of my note structure.</p>
+</div>
 
-        <p>This is the boring bit of building agents that nobody writes about. The actual model call at the end is short. <strong>The engineering is entirely in giving the model enough scaffolding:index, examples, hierarchy:that it doesn&rsquo;t have to guess.</strong></p>
+        <p>The rewarding bit is in getting your LLM to do the work in understanding the structure of notes. The actual model call at the end is short. <strong>All engineering work is providing sufficient scaffolding: index, examples, hierarchy, to allow Claude not guessing.</strong></p>
 
         <h2>Closed-Book Discipline</h2>
 
-        <p>The design constraint I explicitly worked into <code>compile-wiki-node</code>, and the one I think is doing most of the work, is what I&rsquo;ve started calling closed-book discipline. <strong>A node can only hold what&rsquo;s in the vault. No web search during synthesis. No share prices pulled from training data. No biographical facts the model happens to know but the vault doesn&rsquo;t say.</strong></p>
-
         <p>Two consequences follow that took me a while to fully accept.</p>
 
-        <p>The first is that the vault&rsquo;s holes become visible. If I&rsquo;ve never captured anything about the CFO of a company, the node&rsquo;s CFO section is empty:not &ldquo;here&rsquo;s what training data says,&rdquo; not a plausible sentence, but empty, or flagged <code>[not in vault]</code>. <strong>That emptiness is the whole point.</strong> It tells me where I actually have coverage and where I&rsquo;ve been fooling myself.</p>
+        <p>The first is that the vault's holes become visible. If I've never captured anything about the CFO of a company, the node's CFO section is empty: not "here's what training data says," not a plausible sentence, but empty, or flagged <code>[not in vault]</code>. <strong>That emptiness is the whole point.</strong> It tells me where I actually have coverage and where I've been fooling myself.</p>
 
-        <p>The second is what happens when two sources in the vault disagree:say a 10-K says 4,000 stores and an investor call says 5,000. The old instinct (and Claude&rsquo;s instinct, unsupervised) is to pick a winner or paper over the difference. The skill instead <strong>logs both, with their original source paths, and marks the row as an unresolved conflict.</strong> The conflict is the point of building or invalidating a thesis. Silently resolving it is the failure mode.</p>
+        <p>The second is what happens when two sources in the vault disagree: say a 10-K says 4,000 stores and an investor call says 5,000. The old instinct (and Claude's instinct, unsupervised) is to pick a winner or paper over the difference. The skill instead <strong>logs both, with their original source paths, and marks the row as an unresolved conflict.</strong> The conflict is the point of building or invalidating a thesis. Silently resolving it is the failure mode.</p>
 
-        <p>Every skill I&rsquo;ve written over the last three months has moved further in this direction: training data is not a source, the vault is the world, gaps are honest output. It works here for the same reason it works in <a href="skill-architecture.html">the report pipeline</a>: the model can&rsquo;t reliably tell what it retrieved from what it recalls, but a closed source list is a set-membership test that a hundred lines of Python can enforce.<a href="#fn1" class="footnote-ref"><sup>1</sup></a></p>
+        <p>Every skill I've written over the last three months has moved further in this direction: training data is not a source, the vault is the world, gaps are honest output. It works here for the same reason it works in <a href="skill-architecture.html">the workflow I use to generate initiation reports</a>: the model can't reliably tell what it retrieved from what it recalls, but a closed source list is a set-membership test that a hundred lines of Python can enforce.<a href="#fn1" class="footnote-ref"><sup>1</sup></a></p>
 
         <h2>Two Weeks In</h2>
 
-        <p>The nodes look like they&rsquo;re compounding, which is the specific thing I hoped for and wasn&rsquo;t sure I&rsquo;d see.</p>
-
-        <p>The clearest signal is that when I add a new source:a fresh 10-K, a new call transcript, a batch of YouTube notes:and re-run the compile, the node gets sharper, not just longer. New evidence sometimes corroborates an existing claim, sometimes contradicts it (which the conflict-logging catches), sometimes adds a dimension the node didn&rsquo;t have. What I&rsquo;m <em>not</em> seeing, which I was worried about, is monotonic bloat:the compiled node isn&rsquo;t drifting toward &ldquo;everything I&rsquo;ve ever said,&rdquo; it&rsquo;s staying focused on what the entity actually is.</p>
+        <p>The nodes look like they're compounding. The clearest signal is that when I add a new source like a youtube summary, a new call transcript, my research notes on something I just read and re-run the compile, the node gets sharper, not just longer. New evidence sometimes corroborates an existing claim, sometimes contradicts it (which the conflict-logging catches), sometimes adds a dimension the node didn't have. What I'm <em>not</em> seeing, which I was worried about, is monotonic bloat: the compiled node isn't drifting toward "everything I've ever said," it's staying focused on what the entity actually is.</p>
 
         <p>Two weeks is not a real test but the direction seems right.</p>
 
-        <h2>If You&rsquo;re Building Your Own</h2>
+        <h2>If You're Building Your Own</h2>
 
-        <p>Some of this is specific to how I work; most of it isn&rsquo;t. The patterns that would generalise if you wanted to try the same shape on your own notes:</p>
+        <p>Some of this is specific to how I work; most of it is generic. The patterns that would generalise if you wanted to try the same shape on your own notes:</p>
 
         <div class="pattern-grid">
             <div class="pattern-card">
                 <div class="pattern-card-num">01</div>
                 <div class="pattern-card-name">Get to plaintext first</div>
-                <div class="pattern-card-desc">If your notes are locked in a vendor&rsquo;s format, the whole exercise is downstream of an export. Do the export first, put the folder somewhere the model can read directly, then start building.</div>
+                <div class="pattern-card-desc">If your notes are locked in a vendor's format, the whole exercise is downstream of an export. Do the export first, put the folder somewhere the model can read directly, then start building.</div>
             </div>
             <div class="pattern-card">
                 <div class="pattern-card-num">02</div>
@@ -247,49 +245,47 @@
             <div class="pattern-card">
                 <div class="pattern-card-num">03</div>
                 <div class="pattern-card-name">Force closed-book on the synthesiser</div>
-                <div class="pattern-card-desc">No web search, no training-data facts. It&rsquo;s one line in the skill file and it removes an entire failure mode. If the vault doesn&rsquo;t say it, the node doesn&rsquo;t say it.</div>
+                <div class="pattern-card-desc">No web search, no training-data facts. It's one line in the skill file and it removes an entire failure mode. If the vault doesn't say it, the node doesn't say it.</div>
             </div>
             <div class="pattern-card">
                 <div class="pattern-card-num">04</div>
-                <div class="pattern-card-name">Log conflicts, don&rsquo;t resolve them</div>
-                <div class="pattern-card-desc">When two sources disagree, keep both with provenance. The disagreement is thesis material:or invalidation material:and silently picking a winner throws that signal away.</div>
+                <div class="pattern-card-name">Log conflicts, don't resolve them</div>
+                <div class="pattern-card-desc">When two sources disagree, keep both with provenance. The disagreement is thesis material, or invalidation material, and silently picking a winner throws that signal away.</div>
             </div>
             <div class="pattern-card">
                 <div class="pattern-card-num">05</div>
                 <div class="pattern-card-name">One node per entity, updated in place</div>
-                <div class="pattern-card-desc">Compile per company, per person, per theme. Update in place. Do not regenerate from scratch:you&rsquo;ll lose the edits you already made, and the compounding is what you&rsquo;re building toward.</div>
+                <div class="pattern-card-desc">Compile per company, per person, per theme. Update in place. Do not regenerate from scratch: you'll lose the edits you already made, and the compounding is what you're building toward.</div>
             </div>
             <div class="pattern-card">
                 <div class="pattern-card-num">06</div>
                 <div class="pattern-card-name">Do the ontology work explicitly</div>
-                <div class="pattern-card-desc">Before writing the compile skill, spend a session teaching the model what your different note types are and how they relate. It looks like a detour. It&rsquo;s the actual work.</div>
+                <div class="pattern-card-desc">Before writing the compile skill, spend a session teaching the model what your different note types are and how they relate. It looks like a detour. It's the actual work.</div>
             </div>
             <div class="pattern-card">
                 <div class="pattern-card-num">07</div>
                 <div class="pattern-card-name">Design a delta path from day one</div>
-                <div class="pattern-card-desc">New source in, integrated into the existing node, node persists. If you can only rebuild-from-scratch, you don&rsquo;t have a wiki:you have a very slow LLM query.</div>
+                <div class="pattern-card-desc">New source in, integrated into the existing node, node persists. If you can only rebuild-from-scratch, you don't have a wiki: you have a very slow LLM query.</div>
             </div>
             <div class="pattern-card">
                 <div class="pattern-card-num">08</div>
                 <div class="pattern-card-name">Tag provenance on every claim</div>
-                <div class="pattern-card-desc">Every sentence in the compiled node carries the source file it came from. Without provenance you can&rsquo;t audit the node, and without an audit you can&rsquo;t trust it.</div>
+                <div class="pattern-card-desc">Every sentence in the compiled node carries the source file it came from. Without provenance you can't audit the node, and without an audit you can't trust it.</div>
             </div>
         </div>
 
-        <h2>In summary ... </h2>
+        <h2>In summary ...</h2>
 
-        <p>The meta-observation, since this is now the third or fourth skill family I&rsquo;ve built along these lines: <strong>I keep trusting the model with less and building more scaffolding around it.</strong> The scaffolding (indexes, ontologies, closed source lists, provenance tags, failure logs) is where the domain knowledge actually lives. The model is the fast, patient reader that fills the shape the scaffolding defines.</p>
+        <p>The meta-observation, since this is now the third or fourth skill family I've built along these lines: <strong>I keep trusting the model with less and building more scaffolding around it.</strong> The scaffolding (indexes, ontologies, closed source lists, provenance tags, failure logs) is where the domain knowledge actually lives. The model is the fast, patient reader that fills the shape the scaffolding defines.</p>
 
         <div class="insight-box">
-            <p>What I&rsquo;m curious about is <strong>how much of the scaffolding survives</strong> as models get better across horizontals, not particulary verticals. There&rsquo;s a version of the future where a model trained on enough of the world does the ontology-building on the fly and the harness collapses to a single prompt. There&rsquo;s another version where <strong>the domain knowledge in the harness</strong> (my notes, my ontology, my failure log, my sense of what a good source is) <strong>is what makes any of it useful</strong>, and general capability across horizontals increases don&rsquo;t touch that at all. <strong>My guess is closer to the second. To be seen ... </strong></p>
+            <p>What I'm curious about is <strong>how much of the scaffolding survives</strong> as models get better across horizontals, not particulary verticals. There's a version of the future where a model trained on enough of the world does the ontology-building on the fly and the harness collapses to a single prompt. There's another version where <strong>the domain knowledge in the harness</strong> (my notes, my ontology, my failure log, my sense of what a good source is) <strong>is what makes any of it useful</strong>, and general capability across horizontals increases don't touch that at all. <strong>My guess is closer to the second. To be seen ...</strong></p>
         </div>
-
-        <p>For now the vault is a folder of markdown files, the compile skill is a few hundred lines of Python around a Claude call, and the nodes are getting a little richer each week. Which was the point.</p>
 
     </article>
 
     <div class="footnotes">
-        <p id="fn1"><sup>1</sup> The reason a closed source list works and &ldquo;don&rsquo;t hallucinate&rdquo; doesn&rsquo;t is that the model has no internal flag separating a retrieved fact from a confidently recalled one. It&rsquo;s all just text to it. &ldquo;Don&rsquo;t cite anything outside this list of files&rdquo; is a set-membership test:a downstream Python check can enforce it deterministically, no model judgement required.</p>
+        <p id="fn1"><sup>1</sup> The reason a closed source list works and "don't hallucinate" doesn't is that the model has no internal flag separating a retrieved fact from a confidently recalled one. It's all just text to it. "Don't cite anything outside this list of files" is a set-membership test: a downstream Python check can enforce it deterministically, no model judgement required.</p>
     </div>
 
     <div class="article-footer">

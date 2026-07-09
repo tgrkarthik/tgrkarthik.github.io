@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Writing Skills.md — My Learnings on Self-Improving Code - Karthik Tiruvarur</title>
+    <title>Writing Skills.md: My Learnings on Self-Improving Code - Karthik Tiruvarur</title>
     <link rel="stylesheet" href="../styles.css">
     <style>
         .article-header { max-width: 1050px; margin: 3rem auto 2rem; padding: 0 2rem; }
@@ -43,7 +43,7 @@
             margin: 0;
         }
 
-        /* Timeline — reflowing dated blocks */
+        /* Timeline */
         .timeline {
             margin: 2rem 0;
         }
@@ -152,7 +152,7 @@
 
     <div class="article-header">
         <a href="../ai-experiments.html" class="back-link">&larr; Back to AI Experiments</a>
-        <h1 class="article-title">Writing Skills.md:My Learnings on Self-Improving Code</h1>
+        <h1 class="article-title">Writing Skills.md: My Learnings on Self-Improving Code</h1>
         <div class="article-meta">
             <span>June 2026</span>
             <span>&bull;</span>
@@ -167,7 +167,7 @@
             <p>Over three months I went from never having written several skills, to writing over a dozen, primarily for my professional work in finance, but also some routine day to day automation workflows. Each skills typically does something distinct, and the interesting evolution was that I kept relying on the model less and building more deterministic scaffolding around it. This is the field guide to what held up: provenance tags on every fact, a closed list of sources nothing may be cited outside of, web search as a switch rather than a default, failure logs read before every run, and gates written in plain Python that block delivery when something&rsquo;s wrong.</p>
         </div>
 
-        <p>I&rsquo;ve written about a dozen skills for Claude since March.The mental model I landed on is that <strong>Claude is a fast, fallible analyst.</strong> Quick, broadly capable, reads anything you put in front of it, and will hand you a confident wrong answer wearing the same face it uses for a right one. <strong>Almost everything I&rsquo;ve built since is a mechanism for catching that wrong answer before it ships.</strong> This is a companion to <a href="working-with-claude.html">the toolkit piece I wrote earlier</a>; that one is the what, this one is the how and the why.</p>
+        <p>I&rsquo;ve written about a dozen skills for Claude since March. The mental model I landed on is that <strong>Claude is a fast, fallible analyst.</strong> Quick, broadly capable, reads anything you put in front of it, and will hand you a confident wrong answer wearing the same face it uses for a right one. <strong>Almost everything I&rsquo;ve built since is a mechanism for catching that wrong answer before it ships.</strong> This is a companion to <a href="working-with-claude.html">the toolkit piece I wrote earlier</a>; that one is the what, this one is the how and the why.</p>
 
         <p>Here&rsquo;s the shape of it, oldest to newest.</p>
 
@@ -178,7 +178,7 @@
             </div>
             <div class="timeline-entry">
                 <div class="timeline-date">April</div>
-                <p><span class="timeline-skill">Initiation Merge.</span> A pure-Python script, no model involved, that stitches separate report stages into one document. The first step I deliberately took away from the model:because assembling text turned out to be a code problem, and model improvisation at the join is a defect, not a flourish.</p>
+                <p><span class="timeline-skill">Initiation Merge.</span> A pure-Python script, no model involved, that stitches separate report stages into one document. The first step I deliberately took away from the model: because assembling text turned out to be a code problem, and model improvisation at the join is a defect, not a flourish.</p>
             </div>
             <div class="timeline-entry">
                 <div class="timeline-date">April</div>
@@ -190,7 +190,7 @@
             </div>
             <div class="timeline-entry">
                 <div class="timeline-date">April</div>
-                <p><span class="timeline-skill">investment-moats.</span> Competitive-advantage analysis through four named frameworks:Helmer&rsquo;s 7 Powers, Greenwald&rsquo;s Earnings Power Value, Buffett-Munger, Porter. It proved the structure wasn&rsquo;t tied to reports; the same discipline carried straight over to a framework skill.</p>
+                <p><span class="timeline-skill">investment-moats.</span> Competitive-advantage analysis through four named frameworks: Helmer&rsquo;s 7 Powers, Greenwald&rsquo;s Earnings Power Value, Buffett-Munger, Porter. It proved the structure wasn&rsquo;t tied to reports; the same discipline carried straight over to a framework skill.</p>
             </div>
             <div class="timeline-entry">
                 <div class="timeline-date">April</div>
@@ -200,55 +200,49 @@
                 <div class="timeline-date">May</div>
                 <p><span class="timeline-skill">user-profile.</span> My standing instructions (identity, file paths, formatting standards, code conventions), loaded at the start of every task so nothing gets re-asked.</p>
             </div>
-            <div class="timeline-entry">
-                <div class="timeline-date">May &ndash; June</div>
-                <p><span class="timeline-skill">The personal-workflow trio.</span> Lighter skills for my own notes: YouTube summaries into Obsidian, investor-call transcripts into filed and backlinked notes, years of conversation notes rolled into a cross-referenced workbook. Same discipline, lighter weight, faster model.</p>
-            </div>
         </div>
 
-        <p>The arc, in five moves: a single-purpose framework, then a guardrail-heavy pipeline, then enforcement moved into code, then identity and voice, then repeatable personal workflows. <strong>What changes across it isn&rsquo;t the subject. It&rsquo;s how much of the work I trust the model to do unsupervised, which steadily shrinks, against how much deterministic scaffolding I build around it, which steadily grows.</strong></p>
+        <p>It&rsquo;s the amount of work I entrust to the model to perform automatically (and thus without supervision) that decreases, while the amount of deterministic structure that I place around it increases.</p>
 
-        <h2>Closed-book by default</h2>
+        <p><strong>What has changed over time wasn&rsquo;t the subject, i.e., the &ldquo;what.&rdquo; It was the degree of reliance I have on the model to produce accurate information for me.</strong></p>
 
-        <p>The first thing I got wrong was treating the model&rsquo;s own knowledge as a resource. It isn&rsquo;t. A model knows a great deal about most public companies from training, and that knowledge is invisible, unverifiable, and often a year or two stale. So the rule across every analytical skill became blunt: <strong>training data is not a source.</strong> If I can&rsquo;t point to a specific document I retrieved for a claim, the claim either gets tagged as unverified or doesn&rsquo;t get made.</p>
+        <h2>Default: Closed-Book</h2>
 
-        <p>Making that real took three mechanisms. The first is <strong>provenance as a type</strong>. Every number in a report carries a tag from a fixed, six-symbol vocabulary saying where it came from: the data feed, a filing in the project folder, an official exchange filing, a transcript, a live web lookup, or:honestly:not retrieved. The tags are ranked, so the skill knows to drop to a weaker source only when the stronger one is empty. And because the vocabulary is closed, a script downstream can check that nothing slipped through untagged.</p>
+        <p>I got something wrong early on when I treated the model&rsquo;s knowledge as a resource. I didn&rsquo;t realize that everything the model knows about most publicly traded companies comes from their training data. Therefore, much of the knowledge the model has acquired during the course of its training is likely old, unverifiable, and irrelevant. Thus, across every analytical capability, I have adopted a straightforward policy, namely, training data cannot be used as a reference. As such, if I cannot identify the original document that provided the basis for a particular assertion I make, the assertion will either be flagged as unverified or will not be made at all.</p>
 
-        <p>The second is <strong>an explicit, finite list of sources</strong>. Each report builds a log of every document it actually retrieved, and that log <em>is</em> the world. Nothing may be cited outside it, even if the model happens to know the contents. This is the sharpest idea I found in three months, because &ldquo;don&rsquo;t hallucinate&rdquo; is not an instruction a model can follow:it has no internal flag separating a retrieved fact from a confidently recalled one. &ldquo;Don&rsquo;t cite anything outside this list&rdquo; is a set-membership test, and a hundred lines of Python can enforce it.</p>
+        <p>To implement this principle required three additional components. First, I created a new type of provenance. All values in reports contain a six-character identifier indicating the source from which they came. These identifiers were developed based upon a closed dictionary; therefore, there is always an option available to determine whether a value in a report was properly sourced. Second, I established an explicit, finite list of allowable references. At the end of each report is a log listing all documents from which content was derived. Only references contained within this log are acceptable as citations. Thirdly, I implemented a mechanism to treat web searches as optional rather than mandatory. Web searches are only enabled during two steps within the report production process: once to obtain current market data, and again to enable access to external price and comparable data. All other steps rely exclusively on previously obtained data. By limiting use of web searches to these few steps, the potential exists for the entire provenance tracking mechanism to fail should data become accessible via web searches. This could occur whenever a numeric value enters a report via web searches but does not include an indication of its source.</p>
 
-        <p>The third is treating <strong>web search as a switch, not a default</strong>. In the report pipeline it&rsquo;s off for the first three phases and turns on in exactly two named places: one step to fetch live market data, every cell tagged accordingly, and the valuation phase for prices and comparables. Everywhere else, off. Once the model can reach the open web mid-analysis, the whole provenance system leaks, because a number can enter whose source is just &ldquo;something I found.&rdquo;</p>
+        <p>Thus, underlying all three mechanisms is an emotional premise that ultimately took me the longest time to recognize: <strong>a report that contains honest gaps is proper output.</strong> Conversely, a report containing at least one confidently incorrect numerical value is defective regardless of whether the incorrect value also happens to be numerically correct. An empty cell marked &ldquo;Not Retrieved&rdquo; represents success. While the model produces results that are extremely similar to those that would be produced manually, and in many cases appear almost identical, the fact remains that the model cannot distinguish between those results that are essentially accurate and those results that are inaccurate.</p>
 
-        <p>The reframe underneath all three is the one that took longest to accept emotionally: <strong>a report with honest gaps is correct output, and a report with a confident wrong number is broken</strong>:even if the number happens to be right, because the process that produced it can&rsquo;t tell the difference. An empty cell labelled &ldquo;not retrieved&rdquo; is a success. The model is so good at producing the plausible thing, and the plausible thing is usually close. Close is the whole problem.</p>
+        <h2>The Snowflake Run</h2>
 
-        <h2>The Snowflake run</h2>
+        <p>At one point I attempted to speed up development by using multiple agents to develop different parts of the report simultaneously: a merge agent, an audit agent, and several data extraction agents. Each agent had a narrowly defined role and clean architecture. However, I decided to examine some results from a single run carefully.</p>
 
-        <p>For a while I parallelised the long pipelines with sub-agents:a merge agent, an audit agent, a data-extraction agent. Clean architecture, narrow briefs. Then I checked the numbers on one run carefully.</p>
+        <p>One segment of the report included <strong>100 of 122 financial data elements that were fabricated</strong> by a data extraction agent. The agent had received clear instructions regarding what data it was expected to extract. The revenue and gross profit values were correct because they happened to be located near the beginning of the API response returned by the data provider. The remaining values had simply been manufactured along with the appropriate source indicators. The overall appearance of the report was normal. The results were incorrect for virtually every element.</p>
 
-        <p>One section had come back with <strong>100 of its 122 financial data points fabricated</strong>, by a sub-agent that had been given a perfectly clear instruction. Revenue and gross profit were right, because they were the first two fields in the API response. Everything after that was invented, with the correct source tags attached. The report read fine. It was wrong in nearly every detail.</p>
-
-        <p>The cause is architectural, not a bug. A sub-agent launches fresh. It can&rsquo;t see my instructions file, the failure log, or the conversation. So when it hits a gap it has nothing to fall back on except training data, and it fills the gap plausibly. The orchestrator then stitches plausible-but-wrong fragments together with no way to see the seams, because each fragment is internally well-formed. <strong>So the rule now is absolute: no sub-agents for analytical work.</strong> Everything runs in one conversation with full context carried forward. It&rsquo;s slower. <strong>It&rsquo;s the only architecture I&rsquo;ve found that delivers what it claims.</strong></p>
+        <p>The reason why this occurred is due to the architectural design of the system. When a sub-agent begins execution, it executes independently and has no visibility into the instructions file associated with the parent agent nor into the error logs generated during previous executions. Consequently, when it encounters an unknown field it relies entirely on training data to generate a plausible result. The merging agent subsequently generates a cohesive report comprised of plausible but incorrect segments, with no ability to visually detect the seams between them, since each individual segment is internally coherent. <strong>Because of this, I am compelled to adopt an absolute rule: no sub-agents will ever be permitted to execute within any analytical tasks.</strong> Every task will execute sequentially under the same conversation with all relevant contextual information passed down through that conversation. This approach is considerably slower than multi-agent approaches. <strong>However, it is currently the only architecture that consistently provides results consistent with expectations.</strong></p>
 
         <h2>The failure log</h2>
 
-        <p>Every serious skill has a file called <code>FAILURE_LOG.md</code> sitting next to it. It&rsquo;s append-only. Each entry records what broke, the run that triggered it, and the rule that now prevents it. <strong>Reading it is step one of every run</strong>, before any retrieval or writing.</p>
+        <p>All serious skills have a <code>FAILURE_LOG.md</code> file (append only). Each entry has: what broke, the run number, and the rule that now prevents the issue. <strong>Reading the log is the first step in every run</strong>, before any retrieval or writing.</p>
 
-        <p>It works because it closes the loop between &ldquo;something broke&rdquo; and &ldquo;the skill changed.&rdquo; Without a log, every fix is local:this report, this company, this bug:and the same mistake comes back the following week in slightly different clothes. With a log, every fix is structural: a rule in the skill, a check in a gate, a line in the instructions file. New failures get written down <strong>in the same session</strong> they happen, never deferred, because by next time the context is gone. Trace almost any rule I have back far enough and you find a logged failure at the root of it. The Snowflake run is one. A run where a bank&rsquo;s accounts got read with a software template, producing phantom debt that didn&rsquo;t exist, is another. The log is the thing the skills actually grew out of.</p>
+        <p>The log works because it closes the loop between &ldquo;something broke&rdquo; and &ldquo;the skill was changed.&rdquo; Without a log every fix is local: this report, this company, this bug, and the same mistake will come back next week in slightly different clothes. With a log every fix is structural: a rule in the skill, a check in the gate, a line in the instructions file. New failures get written down <strong>in the same session</strong> they happen, never deferred, because by next time the context is gone. Trace almost any rule I have back far enough and you&rsquo;ll find a logged failure at the root of it. The Snowflake run is one. A run where a bank&rsquo;s accounts got read with software template producing phantom debt that didn&rsquo;t exist, is another. <strong>The log is the thing the skills actually grew out of.</strong></p>
 
         <h2>The skill is the spec; the gate is the gate</h2>
 
-        <p>A skill file is a prompt, and a prompt is a suggestion. The model follows it most of the time and quietly ignores it some of the time, and you don&rsquo;t get told which run is which. For the rules that genuinely can&rsquo;t bend, the only honest enforcement is code that fails the build.</p>
+        <p>A skill file is a prompt; a prompt is a suggestion. The model follows the prompt most of the time and quietly ignores it some of the time; and you don&rsquo;t get told which run is which. For rules that can&rsquo;t bend, the only honest enforcement is code that fails the build.</p>
 
-        <p>So the rules I refuse to ship without are each backed by a small Python program that runs over the output and exits with an error when something&rsquo;s wrong. One runs regex over prose and hard-fails on the worst machine-writing tells. One runs five checks over a finished report: no leftover placeholder tags, no unretrieved numbers in historical columns, citations that actually resolve, a balance sheet that reconciles to the dollar. One diffs the written numbers against the raw data feed to catch exactly the Snowflake failure. <strong>Each gate is a hundred lines or less, runs in seconds, and uses no model at all.</strong> That last part is the point: <strong>you can&rsquo;t ask the thing that makes the mistake to also be the thing that reliably catches it.</strong> The catcher has to be dumber, deterministic, and incorruptible.</p>
+        <p>So all the rules I refuse to ship without are each backed by a small Python program that runs over the output and exits with an error when something&rsquo;s wrong. One runs regex over prose and hard-fails on the worst machine-writing tells. One runs five checks over a finished report: no leftover placeholder tags, no unretrieved numbers in historical columns, citations that actually resolve, a balance sheet that reconciles to the dollar. One diffs the written numbers against the raw data feed to catch exactly the Snowflake failure. <strong>Each gate is a hundred lines or less, runs in seconds, and uses no model at all.</strong> That last part is the point: <strong>you can&rsquo;t ask the thing that makes the mistake to also be the thing that reliably catches it.</strong> The catcher has to be dumber, deterministic, and incorruptible.</p>
 
-        <p>This is the same line drawn over and over. The model does judgment:reading, weighing, classifying, composing. Deterministic code does assembly, transformation, and checking. If a task has one correct output given its input, it belongs in code; if it needs reading and weighing, it belongs to the model, and its output then goes straight to code for assembly and verification. Most of my failures came from putting the model on the wrong side of that line: asking it to do bookkeeping and watching it improvise.</p>
+        <p>This is the same line drawn over and over again. The model does judgment: reading, weighing, classifying, composing. Deterministic code does assembly, transformation, and checking. If a task has one correct output given its input, it belongs in code; if it needs reading and weighing, it belongs to the model and then goes straight to code for assembly and verification. Most of my failures came from putting the model on the wrong side of that line: asking it to do bookkeeping and watching it improvise.</p>
 
         <h2>The smaller habits that compounded</h2>
 
-        <p>A few lighter patterns earned their place. <strong>Classify the input before you process it.</strong> The report pipeline decides whether a company is a software business, a bank, an insurer, a REIT, a marketplace, a miner, or a holding company <em>before</em> it touches the financials, because each needs a different template and the wrong one corrupts everything quietly. That step exists because a bank once got read as a software company and the output looked clean while being conceptually wrong.</p>
+        <p>I developed a few lighter patterns. <strong>Classify your input before you process it.</strong> The report pipeline determines whether a company is a software business, a bank, an insurer, a REIT, a marketplace, a miner, or holding co. before it touches the financials, because each needs a different template and the wrong one corrupts everything quietly. That step exists because a bank once got read as a software company and the output looked clean while being conceptually wrong.</p>
 
-        <p><strong>Tell the model where it may and may not exercise judgment.</strong> In my note-taking skills the body of a note is copied verbatim:no summarising, no improving:and the only authored parts are the title and a few lines of metadata. The model&rsquo;s instinct is to add value everywhere, and &ldquo;value&rdquo; often means paraphrase, which is destructive when the whole point is fidelity to the source.</p>
+        <p><strong>Tell your model where it may and may not exercise judgment.</strong> In my note-taking skills the body of a note is copied verbatim: no summarizing, no improving: and the only authored parts are the title and a few lines of metadata. The model instinctively wants to add value everywhere, and &ldquo;value&rdquo; often means paraphrase, which is destructive when the whole point is fidelity to source.</p>
 
-        <p><strong>Write the skill against the tool, not the vendor.</strong> The data source appears throughout as a single named parameter with a note that today it&rsquo;s one provider and tomorrow it might be another. Connectors change; a skill with the vendor&rsquo;s name welded into forty instructions becomes a rewrite, while a parameterised one is a one-line change. <strong>Pick the model deliberately</strong>:the faster one for mechanical work, the stronger one for judgment:and <strong>ask your questions in one batch up front</strong>, never one a time, and never a question whose answer is already sitting in what I just told it.</p>
+        <p><strong>Write your skill against the tool, not the vendor.</strong> The data source appears throughout as a single named parameter with a note that today it&rsquo;s one provider and tomorrow it might be another. Connectors change; a skill with the vendor&rsquo;s name welded into forty instructions becomes a rewrite, while a parameterized one is a one-line change.</p>
 
         <h2>The whole kit, on one page</h2>
 

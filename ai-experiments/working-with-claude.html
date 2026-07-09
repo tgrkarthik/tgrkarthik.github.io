@@ -43,7 +43,7 @@
             margin: 0;
         }
 
-        /* Doc quote (for Anthropic's own words) */
+        /* Doc quote */
         .doc-quote {
             border-left: 3px solid #cccccc;
             padding: 0.5rem 1.25rem;
@@ -119,7 +119,7 @@
 
     <div class="article-header">
         <a href="../ai-experiments.html" class="back-link">&larr; Back to AI Experiments</a>
-        <h1 class="article-title">Things I Wish I Knew in the First Few Months of Using Claude</h1>
+        <h1 class="article-title">Things I Wish I Had Known About Working With Claude During My First Couple of Months</h1>
         <div class="article-meta">
             <span>April 2026</span>
             <span>&bull;</span>
@@ -131,76 +131,76 @@
 
         <div class="article-tldr">
             <div class="article-tldr-label">TL;DR</div>
-            <p>Two months in, the gap between people who get a lot out of Claude (Cowork) and people who don&rsquo;t isn&rsquo;t just about prompts or designing workflows:me thinks it is about giving Claude the things it would have remembered, if it could. Some of the things I've incorporated are a working folder it never leaves, a CLAUDE.md file it reads at the start of every session, skills that encode the work I do repeatedly, and a voice DNA file so the writing comes out like mine. Below is the toolkit I&rsquo;ve ended up with, and the one I didn&rsquo;t see coming: building all of this taught me how I think more than it taught Claude how to help me.</p>
+            <p>In two months there is a large divide between those who get tremendous benefit from using Claude (Cowork) and those who do not. While the primary area of concern is certainly in relation to creating appropriate prompts and developing an efficient workflow process, I believe that providing Claude the means to recall information that it would have otherwise forgotten if it were able to remember is also critical. In addition to the above mentioned tools, I have created the following additional tools to assist with this task: a working folder that it will always reference, a CLAUDE.md file that it will reference at the beginning of each session, skills that reflect repeated actions I take during the course of my daily work, and a voice DNA file so that the writing produced by Claude reflects my own voice. The toolbox I developed for this purpose and the unanticipated tool I developed while doing this are outlined below: building this tool helped me better understand myself rather than build a tool for helping Claude provide better support for my work.</p>
         </div>
 
-        <p><strong>Claude is a colleague who forgets everything overnight.</strong> Brilliant, fast, broadly skilled. Reads what you put in front of it. Writes a draft, reviews a filing, explains a concept, runs a script. Then closes the laptop, and tomorrow morning has no memory that you exist.</p>
+        <p><strong>I am currently working with Claude as a colleague who does not retain any memory of our interactions from one day to the next.</strong> It is brilliant, fast, and capable of a wide range of skills. However, Claude cannot remember your input. Therefore, it can review your work and produce an initial draft. Additionally, Claude is capable of producing a report based upon your input, reviewing filings, explaining concepts, and running code-based scripts. After completing this work, Claude shuts off its computer and tomorrow morning has no memory of meeting you.</p>
 
-        <p>The first month I worked with Claude (Cowork , note: I've subsequently been spending time with Claude Code as well, where some of these issues are a bit redundant, but play on...), I kept at times being highly disappointed, frustrated and almost raging all alongside having the my mind routinely blown by what Claude actually produced. Jagged intelligence - jagged experience. Outputs that started strong drifted as projects went on. <strong>Each new conversation needed a re-introduction to the same problem. The fixes I asked for in one session would quietly come back undone in the next.</strong></p>
+        <p>During the first month I used Claude (Cowork), I often found myself extremely dissatisfied, angry, and even enraged. At the same time, many of the outputs Claude generated caused me to be amazed at what it produced. The output of Claude's intelligence was both jagged and uneven. Early in a project, Claude's output was often very strong. <strong>As the project continued however, this strength began to wane. Each subsequent interaction with Claude required me to reintroduce Claude to the same issue we were addressing. Many of the corrections I requested in one session were undone in the subsequent session without my ever requesting they be reversed.</strong></p>
 
-        <p>Then I realised the problem wasn&rsquo;t Claude. The problem was that <strong>I had no system for remembering things on Claude&rsquo;s behalf.</strong> A human colleague would have notes, calendar, a workspace (and of course, a brain that remembers what was explained in the past, hopefully ;)) Claude had none of that, and I was filling none of it in.  </p>
+        <p>At that point, I realized the issue was not Claude itself. Rather, <strong>I had not provided a mechanism for retaining knowledge on Claude's behalf.</strong> Like any other human colleague would retain knowledge through their notes, calendar, and physical workspace (as well as their ability to retain previously discussed topics in their memory), Claude retained no such knowledge. Further, I was failing to fill this void for Claude.</p>
 
-        <p>The second month was about building the system. A folder. A memory file. A growing set of skills. A voice file so the writing sounds like me. A failure log so the same mistake doesn&rsquo;t happen twice. Each piece small. Together, the difference between asking Claude things and working with it.</p>
+        <p>The second month consisted of establishing this retention mechanism. This included a folder for storing items I wanted to retain; a document titled CLAUDE.md which contained a history of our conversations; a series of skills which would repeat certain processes; a voice DNA file so that Claude would produce written content which sounded similar to my own voice; and finally, a failure log so that I would not repeat errors which occurred during previous sessions. Each item individually may seem minor. Collectively, they greatly increased the amount of time spent interacting with Claude and reduced significantly the number of times I needed to ask Claude questions regarding specific details related to prior conversations.</p>
 
-        <p>What I didn&rsquo;t expect was the side effect.</p>
+        <p>Additionally, I did not anticipate the secondary outcome.</p>
 
-        <p>Writing all of this down, in the form a stateless colleague could read at any time, forced me to make explicit a lot of things I&rsquo;d been holding loosely in my head. What I value in a research report. How I think a good email opens. Which thinkers I reach for when I write. Which mistakes I keep making. <strong>I was building infrastructure for Claude, but the artefact I ended up with was a clearer picture of how I actually work.</strong></p>
+        <p>Creating this repository of documentation which Claude could reference at any given moment compelled me to create clear definitions of various aspects of my professional life. These definitions include: what constitutes a high quality research report? How should a high quality email begin? Who are the individuals whose ideas I draw upon when writing? What are common errors I tend to make? <strong>The end result of creating this repository was a greater understanding of how I approach my work.</strong></p>
 
-        <p>Below is the toolkit, in three layers. Setup, memory, discipline.</p>
+        <p>The toolbox I established consists of three layers: Setup, memory, discipline.</p>
 
         <h2>Layer 1: Setup: Where Claude Works</h2>
 
-        <h3>1. The working folder</h3>
+        <h3>1. Establishing a working folder</h3>
 
-        <p>The single most useful thing I did in week one was point Claude at one folder on my machine and say: <strong>this is where you work.</strong> Everything I generate, edit, scrape, or save lives somewhere under <code>C:\Users\tgrka\CLAUDE GLOBAL FOLDER\</code>. Subfolders for skills, scrapers, reports, drafts. Nothing strays.</p>
+        <p>The single most valuable step I took in week 1 involved pointing Claude toward a single folder on my machine and stating: <strong>&ldquo;this is where you perform your work.&rdquo;</strong> All data that I generate or modify either manually or via scraping resides within <code>C:\Users\tgrka\CLAUDE GLOBAL FOLDER\</code>. I organize this folder into subdirectories representing different types of work I engage in (skills, scrapers, reports, drafts). None of this data leaves this location.</p>
 
-        <p><strong>The reason this matters is mundane and surprisingly load-bearing.</strong> When Claude can read and write inside one folder consistently, files persist across sessions, scripts find their inputs, and the same path I gave it last week still resolves today. When Claude is wandering across the filesystem on a per-task basis, things go missing or land in places I never look at again. A research report ends up in <code>Downloads</code>. A draft skill lands in <code>Documents</code>. A scraper writes its output to a temp directory and the next session can&rsquo;t find it.</p>
+        <p><strong>While the reasons behind why this is important may appear trivial or even unnecessary at first glance, it provides significant benefits.</strong> By allowing Claude to consistently read and write within a single folder, data persists between sessions; scripts continue to locate their inputs; and paths that I designated last week remain accessible today. Conversely, when Claude searches for files in a random manner throughout my file system each session, data goes missing or is placed in directories that I rarely access. A research report becomes lost in Downloads. A draft skill is saved in Documents. A scraper produces its output in temp and is unable to locate it in subsequent sessions.</p>
 
-        <p>Pick the folder. Don&rsquo;t move it.</p>
+        <p>Designate the folder; do not relocate it.</p>
 
-        <h3>2. Pick the right model for the job</h3>
+        <h3>2. Choosing the correct model for use</h3>
 
-        <p>Claude isn&rsquo;t one model; it&rsquo;s a family. Sonnet for most things. Opus when the work needs more reasoning depth or nuance:investment analysis, voice writing, anything I&rsquo;d describe as judgment-heavy. Haiku for fast, cheap, narrow tasks. Knowing which one I want before I start is a small habit and it changes the texture of the output more than people realise. <strong>Asking Sonnet to do Opus work produces something that looks fine and is subtly wrong; asking Opus to do Sonnet work is just slow and expensive.</strong></p>
+        <p>Claude represents multiple models; it is not one. For most purposes, Sonnet is sufficient. Opus is used whenever the task requires deeper reasoning or nuance (investment analysis, voice writing, etc.). Any type of decision-making activity falls under Haiku due to speed, cost and specificity. <strong>Identifying which model I need to utilize prior to initiating a task is a relatively small practice which impacts the quality of the output far more than most realize.</strong> When utilizing Sonnet for Opus-type activities, the output appears reasonable although lacks substance; utilizing Opus for Sonnet-type activities simply results in slower performance at higher costs.</p>
 
-        <p>I now ask the model selection question before anything non-trivial. Sonnet 4.6 or Opus 4.6? <strong>Two seconds of decision, hours of difference downstream.</strong></p>
+        <p>I now make decisions about which models will be used in each application in less than 2 seconds. <strong>Hours of differences follow downstream.</strong></p>
 
         <h2>Layer 2: Memory: What Claude Knows About You</h2>
 
-        <h3>3. CLAUDE.md and persistent memory</h3>
+        <p>Claude's &ldquo;persistent&rdquo; memory is actually very close to being mine, a record of what I have found useful while learning to work with an AI. This file remains regardless of any given conversation and is edited by no other user but myself.</p>
 
-        <p><strong>The single most important file in my Claude setup is one called <code>CLAUDE.md</code>.</strong> It lives at <code>C:\Users\tgrka\.claude\CLAUDE.md</code>, and Claude Code reads it automatically at the start of every session. Inside it: who I am, what I do, my hard rules (never fabricate financial data, never use sub-agents for analysis, always ask which model), the paths I work in, the projects I have running, and a changelog of every meaningful behavioural decision I&rsquo;ve made about how Claude should work for me.</p>
+        <h3>3. Persistent Memory: CLAUDE.md</h3>
 
-        <p>Today the file is around 140 lines. It started at twelve. <strong>Each time something went wrong:or something worked and I wanted to keep it:a line gets added.</strong> The fabrication incident with Snowflake&rsquo;s financials became Hard Rule 9: never spawn sub-agents. The misinterpretation of my "auto mode" instruction became Hard Rule 10: distinguish tool-internal errors from real permission prompts. The Pinegrow rationale for CSS variables, abandoned when I moved off Pinegrow, got rewritten in place.</p>
+        <p><strong>Perhaps the most crucial file associated with my Claude configuration is named <code>CLAUDE.md</code>.</strong> This resides at <code>C:\Users\tgrka\.claude\CLAUDE.md</code>, and Claude Code reads it at the beginning of every new session. Within it reside: details regarding who you are (and what you do); your hard rules (never create fabricated financial information; never use sub-agents to analyze; etc.), the directories where I work; project(s) I&rsquo;m actively engaged within; and a record of each major behavioral decision I&rsquo;ve made relative to how I want Claude to function for me.</p>
 
-        <p>This is the closest thing Claude has to persistent memory. <strong>It is also, more honestly, my own running document of what I&rsquo;ve learned about working with an AI.</strong> The file outlives any individual conversation, and I am the only person who edits it.</p>
+        <p>As of today, there are approximately 140 lines in the document. When it was first created, it had only 12. <strong>Every time something didn&rsquo;t go as planned, or something did go well, and I desired to retain functionality for future sessions, a new line would be added.</strong> For example, after the financial information incident with Snowflake, I designated Hard Rule #9, &ldquo;Do Not Create Sub-Agents.&rdquo; In addition, upon discovering that I had been misinterpreting my request for auto-mode as a permission prompt (Hard Rule #10), I added another rule, distinguishing tool-internal errors from legitimate permission prompts. Lastly, the Pinegrow CSS Variables were included as well because they represented yet another area where I desired to preserve the lessons learned during development.</p>
 
         <h3>4. Skills</h3>
 
-        <p>A skill is the next layer of memory. CLAUDE.md is what Claude knows about me in general; skills are what Claude knows about specific kinds of work I do.</p>
+        <p>Next is skills. Skills represent the second tier of memory. While CLAUDE.md represents everything Claude knows about me generally; <strong>skills represent everything Claude knows about different types of work I perform.</strong></p>
 
-        <p>From Anthropic&rsquo;s engineering team, here&rsquo;s the simplest description:</p>
+        <p>Here is the most basic definition from Anthropic&rsquo;s engineering team:</p>
 
         <div class="doc-quote">
-            <p>&ldquo;A skill is a directory that contains a SKILL.md file.&rdquo;</p>
-            <span class="doc-quote-attr">- Anthropic engineering, "Equipping agents for the real world with Agent Skills"</span>
+            <p>&ldquo;A skill is a directory containing a SKILL.md file.&rdquo;</p>
+            <span class="doc-quote-attr">- Anthropic Engineering, &ldquo;Agent Skills: Equipping Agents for Real World Applications&rdquo;</span>
         </div>
 
-        <p>The directory holds instructions, optional scripts, and reference material. The SKILL.md file describes what the skill does and when Claude should use it. Anthropic describes them as folders Claude can discover and load on demand for specific tasks.<a href="#fn1" class="footnote-ref"><sup>1</sup></a> Skills work the same way across Claude.ai, Claude Code, and the API.</p>
+        <p>Each directory includes directions, optional scripts and documentation references. The SKILL.md file defines exactly what the skill performs and under what conditions Claude should execute it. According to Anthropic, they provide a structure through which Claude may discover these folders and load them dynamically for specific tasks. Skills operate identically across both Claude.ai, Claude Code and the API.<a href="#fn1" class="footnote-ref"><sup>1</sup></a></p>
 
-        <p>What this means in practice: <strong>I can take a piece of work I do repeatedly (reading a 10-K, drafting an investment memo, writing a blog post in my voice) and turn the way I do it into a folder Claude reads.</strong> Next time I trigger that work, the folder loads automatically and Claude follows the instructions without me re-explaining.</p>
+        <p>In terms of practical application: <strong>I may convert an activity that I repeat regularly (i.e., reading a 10-K, creating an investment memo, writing a blog post in my voice) into a folder that Claude reads.</strong> The next time I engage in this task, the folder will automatically load and Claude will execute according to its defined parameters without requiring me to explain again.</p>
 
-        <p>Over two months I&rsquo;ve built about a dozen skills. They fall into three categories.</p>
+        <p>Over the last two months I have developed roughly half a dozen skills. They break down into three categories.</p>
 
-        <p><strong>Investment-process skills.</strong> The work I do as a portfolio manager, codified.</p>
+        <p><strong>Skills related to Investment Process.</strong> The process I complete as a Portfolio Manager, documented.</p>
 
         <div class="skills-grid">
             <div class="skill-card">
                 <div class="skill-card-name">SellSideInitiation</div>
-                <div class="skill-card-desc">A five-phase pipeline that produces a closed-book fundamental analysis of a public company:business model, financial history, management delivery, earnings sentiment, competitive ecosystem:sourced entirely from documents I provide. Output is a 25-page Word document. Triggered by one phrase. The skill encodes which financial template applies to which business model type, what counts as a fabricated figure, and how the seven verification gates run.</div>
+                <div class="skill-card-desc">A five-phase pipeline that produces a closed-book fundamental analysis of a public company: business model, financial history, management delivery, earnings sentiment, competitive ecosystem: sourced entirely from documents I provide. Output is a 25-page Word document. Triggered by one phrase. The skill encodes which financial template applies to which business model type, what counts as a fabricated figure, and how the seven verification gates run.</div>
             </div>
             <div class="skill-card">
                 <div class="skill-card-name">investment-moats</div>
-                <div class="skill-card-desc">Four frameworks for analysing competitive advantage:Helmer&rsquo;s 7 Powers, Greenwald&rsquo;s Earnings Power Value, Buffett-Munger mental models, and Porter&rsquo;s Five Forces:written in the same schema. Triggers when I ask about a company&rsquo;s moat or strategic position. Combines all four into a structured analysis.</div>
+                <div class="skill-card-desc">Four frameworks for analysing competitive advantage: Helmer&rsquo;s 7 Powers, Greenwald&rsquo;s Earnings Power Value, Buffett-Munger mental models, and Porter&rsquo;s Five Forces: written in the same schema. Triggers when I ask about a company&rsquo;s moat or strategic position. Combines all four into a structured analysis.</div>
             </div>
             <div class="skill-card">
                 <div class="skill-card-name">Earnings Sentiment</div>
@@ -208,7 +208,7 @@
             </div>
             <div class="skill-card">
                 <div class="skill-card-name">Initiation Merge</div>
-                <div class="skill-card-desc">A deterministic Python script that assembles outputs from the four pipeline stages into one report. Not an LLM:pure code, regex, and assertion checks. The merge step is where LLM creativity becomes a bug.</div>
+                <div class="skill-card-desc">A deterministic Python script that assembles outputs from the four pipeline stages into one report. Not an LLM: pure code, regex, and assertion checks. The merge step is where LLM creativity becomes a bug.</div>
             </div>
         </div>
 
@@ -230,7 +230,7 @@
         <div class="skills-grid">
             <div class="skill-card">
                 <div class="skill-card-name">Karthik_Coding / gstack</div>
-                <div class="skill-card-desc">Fast headless browser for QA testing my own website:navigate, interact, screenshot, verify state, diff before-and-after. Hundred milliseconds per command. Used when I want Claude to dogfood a change before I commit it.</div>
+                <div class="skill-card-desc">Fast headless browser for QA testing my own website: navigate, interact, screenshot, verify state, diff before-and-after. Hundred milliseconds per command. Used when I want Claude to dogfood a change before I commit it.</div>
             </div>
             <div class="skill-card">
                 <div class="skill-card-name">ir-scraper</div>
@@ -244,50 +244,31 @@
 
         <p>The voice-dna skill deserves its own line. It started as a way to get Claude to write blog posts that sounded less like a press release and more like me. It became something more useful than that.</p>
 
-        <p>The skill is built on close reading of sixteen of my actual writing samples spanning seven years:Substack essays, Medium pieces, IFC investment memos, board papers, technical posts. Three registers, four formats, a dial for how professional the output should be. <strong>It&rsquo;s the most opinionated file in my whole setup, and the one with the strongest deterministic enforcement.</strong></p>
+        <p>The skill is built on close reading of sixteen of my actual writing samples spanning seven years: Substack essays, Medium pieces, IFC investment memos, board papers, technical posts. Three registers, four formats, a dial for how professional the output should be. <strong>It&rsquo;s the most opinionated file in my whole setup, and the one with the strongest deterministic enforcement.</strong></p>
 
-        <p>The enforcement matters. A skill is a prompt, and prompts are suggestions. <a href="ai-experiments/llm-assembly-problem.html">Earlier this month I wrote about how LLMs are bad at the mechanical parts of work</a>; the same logic applies to writing. Some rules are non-negotiable:certain rhetorical patterns I always strip out, certain layouts I won&rsquo;t use (no pull-quote boxes containing one-line maxims), certain closings I won&rsquo;t accept (the kind that announces the takeaway):and the only honest way to enforce non-negotiable rules is with code that fails the build. So I built voice_gate.py: regex over the output, two tiers, hard violations block delivery. The skill is the spec; the gate is the gate.</p>
+        <p>The enforcement matters. A skill is a prompt, and prompts are suggestions. Earlier this month I wrote about how LLMs are bad at the mechanical parts of work; the same logic applies to writing. Some rules are non-negotiable: certain rhetorical patterns I always strip out, certain layouts I won&rsquo;t use (no pull-quote boxes containing one-line maxims), certain closings I won&rsquo;t accept (the kind that announces the takeaway): and the only honest way to enforce non-negotiable rules is with code that fails the build. So I built <code>voice_gate.py</code>: regex over the output, two tiers, hard violations block delivery. The skill is the spec; the gate is the gate.</p>
 
-        <h2>Layer 3: Discipline:how Claude does its work</h2>
+        <h2>Layer 3: Discipline: How Claude Does Its Work</h2>
 
-        <h3>6. The session recap</h3>
+        <h3>6. Session recap</h3>
 
-        <p>Towards the end of any non-trivial session, I ask Claude one question: what should we write down so the next session can pick this up? <strong>The answer almost always contains things I would have forgotten by next morning.</strong></p>
+        <p>At the end of just about every non-trivial session, I ask Claude one question: <strong>&ldquo;what do we need to document so the next session can build upon our last?&rdquo;</strong> That answer usually contains something I would forget by the next day.</p>
 
-        <p>The recap goes into CLAUDE.md if it&rsquo;s a behavioural rule, into a project-specific notes file if it&rsquo;s about the work, or into the skill itself if it&rsquo;s about how I want a particular kind of task done. The act of recapping is what makes the next session start from a higher baseline rather than from scratch.</p>
+        <p>The documentation then typically goes into either CLAUDE.md if it was a behavioral rule, into a project specific notes file if it pertains to the work at hand, or into the skill itself if it relates to how I wish to perform some type of task. <strong>Recalling what was accomplished during the previous session allows the subsequent sessions to begin at a higher baseline than having to start completely from scratch.</strong></p>
 
-        <h3>7. Failure logs</h3>
+        <h3>7. Logs of failure</h3>
 
-        <p>Each major skill of mine has a file called <code>FAILURE_LOG.md</code> sitting next to its SKILL.md. When something breaks:a fabricated figure, a misformatted table, a section that came back empty:the failure goes into the log with date, root cause, and what was changed to prevent it. The SellSideInitiation skill&rsquo;s log is twenty-four entries long and growing.</p>
+        <p>In addition to all of the major skills I am developing, there exists a file called <code>FAILURE_LOG.md</code> adjacent to the corresponding SKILL.md file. Whenever an error occurs (a fabricated number, improperly formatted tables, etc.) the details are documented along with the date, root cause, and solution implemented to avoid similar errors in the future. <strong>This single document alone represents the difference between a skill improving over time vs. continually breaking in the same manner on a bi-weekly basis.</strong></p>
 
-        <p><strong>This is the difference between a skill that improves and a skill that gets broken in the same way every other Wednesday.</strong> Without a log, every fix is local: this one report, this one company, this one bug. With the log, every fix is structural: a rule added to the skill, a check added to the verification gate, a sentence in CLAUDE.md.</p>
+        <p>Without this type of log system, each problem is addressed individually; i.e., the fix may apply only to the current report being produced for company X, but did not address the underlying issue that will occur again on the next Wednesday for company Y. However, once you implement a log system and track each instance where your skill failed to produce accurate results, <strong>each fix becomes more systemic</strong>: adding a new rule to your skill or verifying that certain information has been properly populated within your verification gate prior to producing a report.</p>
 
-        <h3>8. Verification before delivery, not after</h3>
+        <h3>8. Verify prior to delivery</h3>
 
-        <p>One habit changed more than anything else over these two months is that Claude should not deliver any non-trivial output without running an automated verification step over it. Not a vibe check. A script that exits non-zero when something is wrong.</p>
+        <p>A fundamental aspect of my workflow that has evolved more than anything else over the past two months is that <strong>Claude should not provide any material result to me without first executing an automatic verification routine against it.</strong> An example of verification is a script that returns a value greater than 0 if there is a problem and/or something is incorrect with regards to the output.</p>
 
-        <p>For financial reports, that&rsquo;s <code>final_gate.py</code>: cross-checks every cited number, fails on bare placeholder tags, verifies the balance sheet reconciles. For voice writing, it&rsquo;s <code>voice_gate.py</code>: regex over the prose, hard-fails on the worst LLM tells. For documents merged from multiple stages, it&rsquo;s the merge script&rsquo;s assertion checks: heading structure must match, broken bold count must be zero. Each gate is a hundred lines or less. Each takes two seconds to run. <strong>Each catches things a careful human read would miss.</strong></p>
+        <p>As such, verification routines are used in conjunction with all forms of reporting regardless of whether they relate to financial statements, written content (voice writing), or even documents that have been compiled from multiple sources. <code>final_gate.py</code> is used in conjunction with financial reports: cross-verifies all referenced figures, flags any references to placeholders, verifies the reconciliation between the balance sheet. <code>voice_gate.py</code> is used in conjunction with voice writing: utilizes regex against the generated prose and performs a hard fail on any of the worst responses provided by the LLM. The merge scripts' assertion checks verify that headings follow proper structure and ensure broken bold counts equal zero. <strong>All gates are generally short in length (fewer than 100 lines) and execute extremely quickly (approximately 2 seconds per execution); however, they catch many errors that would go unnoticed even if reviewed thoroughly by an experienced human reader.</strong></p>
 
-        <h3>9. Don&rsquo;t use sub-agents for analytical work</h3>
-
-        <p>This one was learned the hard way. For a while I was using sub-agents to parallelise long pipelines:the merge step, the audit step, the data-extraction step. The architecture looked clean. Each sub-agent was given a clear, narrow brief.</p>
-
-        <p>What I didn&rsquo;t see, until I checked the numbers carefully, was that <strong>sub-agents lose context</strong>. They can&rsquo;t see CLAUDE.md, the conversation history, the skills. They&rsquo;re launched fresh each time. And when they don&rsquo;t have what they need, they fill in plausibly from training data:and the orchestrator stitches the plausible-but-wrong outputs together with no way to tell.</p>
-
-        <p>The Snowflake run was the wake-up call. A hundred out of one hundred and twenty-two financial data points in one Section came back fabricated by a sub-agent that had been given a perfectly clear instruction. Revenue and gross profit were right because they were the first two fields in the API response. Everything after that was hallucinated, with the right tags attached. The report read fine. It was wrong in every detail.</p>
-
-        <p>So now: <strong>no sub-agents for analytical work.</strong> Everything runs sequentially in one conversation, with full context carried forward. Slower. The only architecture I&rsquo;ve found that actually delivers what it claims.</p>
-
-        <h2>What I didn&rsquo;t expect</h2>
-
-        <p>I started this thinking I was teaching Claude how to do my work. Two months in, the surprise is that <strong>Claude is teaching me how I do my work.</strong></p>
-
-        <p>Writing voice-dna meant articulating what makes my writing mine, in a way I&rsquo;d never had to make explicit. Writing SellSideInitiation meant naming, in order, every analytical step I run on a company:including the steps I do unconsciously. Writing the failure log meant being honest about every mistake I&rsquo;d been making and quietly not codifying. The artefacts that exist as instructions for a stateless colleague turned out to be the clearest description I&rsquo;ve ever had of how I work.</p>
-
-        <p>That wasn&rsquo;t the goal. It might be the most useful side effect.</p>
-
-        <p> <strong> The toolkit isn&rsquo;t finished. New skills get added, existing ones get rewritten when something breaks, the failure logs keep growing. What I&rsquo;ll know a year from now is different from what I know now. But the shape is set: a working folder, a memory file, skills for the work I repeat, voice DNA for the writing, recaps and failure logs for the things that broke, verification before anything goes out the door, and one conversation per task. </strong> </p>
-
+        <p><strong>The toolkit isn&rsquo;t finished. New skills get added, existing ones get rewritten when something breaks, the failure logs keep growing. What I&rsquo;ll know a year from now is different from what I know now. But the shape is set: a working folder, a memory file, skills for the work I repeat, voice DNA for the writing, recaps and failure logs for the things that broke, verification before anything goes out the door, and one conversation per task.</strong></p>
 
     </article>
 
